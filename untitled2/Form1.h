@@ -83,7 +83,17 @@ namespace untitled2 {
 				 // 
 				 // openFileDialog
 				 // 
-				 this->openFileDialog->FileName = L"openFileDialog";
+				 this->openFileDialog->DefaultExt = L"txt";
+				 this->openFileDialog->FileName = L"coordinates.txt";
+				 this->openFileDialog->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+				 this->openFileDialog->Title = L"Открыть файл";
+				 // 
+				 // saveFileDialog
+				 // 
+				 this->saveFileDialog->DefaultExt = L"txt";
+				 this->saveFileDialog->FileName = L"coordinates.txt";
+				 this->saveFileDialog->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+				 this->saveFileDialog->Title = L"Сгенерировать координаты";
 				 // 
 				 // Form1
 				 // 
@@ -92,6 +102,7 @@ namespace untitled2 {
 				 this->ClientSize = System::Drawing::Size(284, 262);
 				 this->Controls->Add(this->btnUpload);
 				 this->Controls->Add(this->btnOpen);
+				 this->KeyPreview = true;
 				 this->Name = L"Form1";
 				 this->RightToLeft = System::Windows::Forms::RightToLeft::No;
 				 this->Text = L"Form1";
@@ -178,16 +189,16 @@ namespace untitled2 {
 				 mat R, T1;
 				 switch(e->KeyCode) {
 				 case Keys::W :
-					 move(0, -1, R);
+					 move(0, -2, R);
 					 break;
 				 case Keys::S :
-					 move(0, 1, R);
+					 move(0, 2, R);
 					 break;
 				 case Keys::A :
-					 move(-1, 0, R);
+					 move(-2, 0, R);
 					 break;
 				 case Keys::D :
-					 move(1, 0, R);
+					 move(2, 0, R);
 					 break;
 				 case Keys::E :
 					 rotate(0.05, R);

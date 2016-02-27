@@ -1,6 +1,5 @@
 #include <fstream>
 #include <sstream>
-#include <iostream>
 
 value struct point {
 	float x, y;

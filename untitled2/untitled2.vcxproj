@@ -87,13 +87,12 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\Mod\Projects\untitled2\untitled2\Transform.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
-    <ClCompile Include="Paint.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Transform.cpp" />
     <ClCompile Include="untitled2.cpp" />
   </ItemGroup>
   <ItemGroup>

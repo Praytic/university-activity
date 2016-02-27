@@ -1,6 +1,5 @@
-#pragma once
-#include "stdafx.h"
-#include "Transform.h"
+#include <iostream>
+#include <fstream>
 
 System::Void Make_Line(std::ofstream& out, int x1, int y1, int x2, int y2) {
 	out << x1 << ' ' << y1 << ' ' << x2 << ' ' << y2 << '\n';
