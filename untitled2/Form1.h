@@ -188,23 +188,41 @@ namespace untitled2 {
 	private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 				 mat R, T1;
 				 switch(e->KeyCode) {
-				 case Keys::W :
-					 move(0, -2, R);
-					 break;
+				 case Keys::W :			
+					 move(0, -2, R);	//move up
+					 break;	
 				 case Keys::S :
-					 move(0, 2, R);
+					 move(0, 2, R);		//move down
 					 break;
 				 case Keys::A :
-					 move(-2, 0, R);
+					 move(-2, 0, R);	//move left
 					 break;
 				 case Keys::D :
-					 move(2, 0, R);
+					 move(2, 0, R);		//move right
+					 break;
+				 case Keys::T :			
+					 move(0, -20, R);	//move up long
+					 break;	
+				 case Keys::G :
+					 move(0, 20, R);	//move down long
+					 break;
+				 case Keys::F :
+					 move(-20, 0, R);	//move left long
+					 break;
+				 case Keys::H :
+					 move(20, 0, R);	//move right long
 					 break;
 				 case Keys::E :
-					 rotate(0.05, R);
+					 rotate(0.05, R);	//rotate clockwise
+					 break;
+				case Keys::Q :
+					 rotate(-0.05, R);	//rotate counterclockwise
 					 break;
 				 case Keys::X :
-					 scale(1.1, R);
+					 scale(1.1, R);		//scale increase
+					 break;
+				 case Keys::Z :
+					 scale(0.9, R);		//scale decrease
 					 break;
 				 default :
 					 unit(R);
