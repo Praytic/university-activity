@@ -189,6 +189,7 @@ namespace untitled2 {
 				 mat R, T1;
 				 Rectangle rect = Form::ClientRectangle;
 				 point center = { rect.Width / 2, rect.Height / 2 };
+				 point utmost = { rect.Width, rect.Height };
 				 switch(e->KeyCode) {
 				 case Keys::W :			// move up
 					 move(0, -2, R);	
@@ -238,48 +239,65 @@ namespace untitled2 {
 					 set(T1, T);
 					 move(center.x, center.y, R);
 					 break;
+				 case Keys::U :			// reflect vertically center
+					 move(utmost.x, 0, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 scaleVertically(-1, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 move(-utmost.x, 0, R);
+					 break;
+				 case Keys::J :			// refect horizontally center
+					 move(0, utmost.y, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 scaleHorizontally(-1, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 move(0, -utmost.y, R);		
+					 break;
 				 case Keys::X :			// scale increase
 					 scale(1.1, R);		
 					 break;
 				 case Keys::Z :			// scale decrease
 					 scale(0.9, R);		
 					 break;
-				 case Keys::I :			// scale decrease vertical
-					 move(0, -center.y, R);
+				 case Keys::I :			// scale decrease horizontal
+					 move(-center.x, -center.y, R);
 					 times(R, T, T1);
 					 set(T1, T);
-					 scale(0.9, R);
+					 scaleHorizontally(0.9, R);
 					 times(R, T, T1);
 					 set(T1, T);	
-					 move(0, center.y, R);
+					 move(center.x, center.y, R);	
 					 break;
-				 case Keys::O :			// scale increase vertical
-					 move(0, -center.y, R);
+				 case Keys::O :			// scale inscrease horizontal
+					 move(-center.x, -center.y, R);
 					 times(R, T, T1);
 					 set(T1, T);
-					 scale(1.1, R);
+					 scaleHorizontally(1.1, R);
 					 times(R, T, T1);
 					 set(T1, T);	
-					 move(0, center.y, R);		
+					 move(center.x, center.y, R);	
 					 break;
-				 case Keys::K :			// scale decrease horizontal
-					 move(-center.x, 0, R);
+				 case Keys::K :			// scale decrease vertical
+					 move(-center.x, -center.y, R);
 					 times(R, T, T1);
 					 set(T1, T);
-					 scale(0.9, R);
+					 scaleVertically(0.9, R);
 					 times(R, T, T1);
 					 set(T1, T);	
-					 move(center.x, 0, R);		
+					 move(center.x, center.y, R);		
 					 break;
-				 case Keys::L :			// scale inscrease horizontal
-					 scale(0.9, R);		
-					 move(-center.x, 0, R);
+				 case Keys::L :			// scale increase vertical
+					 move(-center.x, -center.y, R);
 					 times(R, T, T1);
 					 set(T1, T);
-					 scale(1.1, R);
+					 scaleVertically(1.1, R);
 					 times(R, T, T1);
 					 set(T1, T);	
-					 move(center.x, 0, R);	
+					 move(center.x, center.y, R);	
 					 break;
 				 default :
 					 unit(R);
