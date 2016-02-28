@@ -240,22 +240,16 @@ namespace untitled2 {
 					 move(center.x, center.y, R);
 					 break;
 				 case Keys::U :			// reflect vertically center
-					 move(utmost.x, 0, R);
-					 times(R, T, T1);
-					 set(T1, T);
 					 scaleVertically(-1, R);
-					 times(R, T, T1);
-					 set(T1, T);
-					 move(-utmost.x, 0, R);
+					 times(R,T,T1);
+					 set(T1,T);
+					 move(0, utmost.y, R);
 					 break;
 				 case Keys::J :			// refect horizontally center
-					 move(0, utmost.y, R);
-					 times(R, T, T1);
-					 set(T1, T);
 					 scaleHorizontally(-1, R);
-					 times(R, T, T1);
-					 set(T1, T);
-					 move(0, -utmost.y, R);		
+					 times(R,T,T1);
+					 set(T1,T);
+					 move(utmost.x, 0, R);
 					 break;
 				 case Keys::X :			// scale increase
 					 scale(1.1, R);		
