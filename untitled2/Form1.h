@@ -187,47 +187,104 @@ namespace untitled2 {
 			 }
 	private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 				 mat R, T1;
+				 Rectangle rect = Form::ClientRectangle;
+				 point center = { rect.Width / 2, rect.Height / 2 };
 				 switch(e->KeyCode) {
-				 case Keys::W :			
-					 move(0, -2, R);	//move up
+				 case Keys::W :			// move up
+					 move(0, -2, R);	
 					 break;	
-				 case Keys::S :
-					 move(0, 2, R);		//move down
+				 case Keys::S :			// move down
+					 move(0, 2, R);		
 					 break;
-				 case Keys::A :
-					 move(-2, 0, R);	//move left
+				 case Keys::A :			// move left
+					 move(-2, 0, R);	
 					 break;
-				 case Keys::D :
-					 move(2, 0, R);		//move right
+				 case Keys::D :			// move right
+					 move(2, 0, R);		
 					 break;
-				 case Keys::T :			
-					 move(0, -20, R);	//move up long
+				 case Keys::T :			// move up long
+					 move(0, -20, R);	
 					 break;	
-				 case Keys::G :
-					 move(0, 20, R);	//move down long
+				 case Keys::G :			// move down long
+					 move(0, 20, R);	
 					 break;
-				 case Keys::F :
-					 move(-20, 0, R);	//move left long
+				 case Keys::F :			// move left long
+					 move(-20, 0, R);	
 					 break;
-				 case Keys::H :
-					 move(20, 0, R);	//move right long
+				 case Keys::H :			// move right long
+					 move(20, 0, R);	
 					 break;
-				 case Keys::E :
-					 rotate(0.05, R);	//rotate clockwise
+				 case Keys::E :			// rotate clockwise
+					 rotate(0.05, R);	
 					 break;
-				case Keys::Q :
-					 rotate(-0.05, R);	//rotate counterclockwise
+				 case Keys::Q :			// rotate counterclockwise
+					 rotate(-0.05, R);	
 					 break;
-				 case Keys::X :
-					 scale(1.1, R);		//scale increase
+				 case Keys::R :			// rotate clockwise center
+					 move(-center.x, -center.y, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 rotate(0.05, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 move(center.x, center.y, R);
 					 break;
-				 case Keys::Z :
-					 scale(0.9, R);		//scale decrease
+				 case Keys::Y :			// rotate counterclockwise center
+					 move(-center.x, -center.y, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 rotate(-0.05, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 move(center.x, center.y, R);
+					 break;
+				 case Keys::X :			// scale increase
+					 scale(1.1, R);		
+					 break;
+				 case Keys::Z :			// scale decrease
+					 scale(0.9, R);		
+					 break;
+				 case Keys::I :			// scale decrease vertical
+					 move(0, -center.y, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 scale(0.9, R);
+					 times(R, T, T1);
+					 set(T1, T);	
+					 move(0, center.y, R);
+					 break;
+				 case Keys::O :			// scale increase vertical
+					 move(0, -center.y, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 scale(1.1, R);
+					 times(R, T, T1);
+					 set(T1, T);	
+					 move(0, center.y, R);		
+					 break;
+				 case Keys::K :			// scale decrease horizontal
+					 move(-center.x, 0, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 scale(0.9, R);
+					 times(R, T, T1);
+					 set(T1, T);	
+					 move(center.x, 0, R);		
+					 break;
+				 case Keys::L :			// scale inscrease horizontal
+					 scale(0.9, R);		
+					 move(-center.x, 0, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 scale(1.1, R);
+					 times(R, T, T1);
+					 set(T1, T);	
+					 move(center.x, 0, R);	
 					 break;
 				 default :
 					 unit(R);
 				 }
-				 times(R,T,T1);
+				 times(R, T, T1);
 				 set(T1, T);
 				 this->Refresh();
 			 }
