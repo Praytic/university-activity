@@ -45,7 +45,3 @@ void scale(float S, mat c);
 void scaleHorizontally(float S, mat c);
 // Процедура масштабирования по вертикали
 void scaleVertically(float S, mat c);
-// Процедура отражения по вертикали
-void reflectHorizontally(float S, mat c);
-// Процедура отражения по вертикали
-void reflectVertically(float S, mat c);

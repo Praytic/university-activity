@@ -1,7 +1,7 @@
 // untitled2.cpp: главный файл проекта.
 #include "stdafx.h"
-#include "Paint.h"
 #include "Transform.h"
+#include "Paint.h"
 #include "Form1.h"
 
 using namespace untitled2;

@@ -1,58 +1,71 @@
 #include <iostream>
 #include <fstream>
 
-System::Void Make_Line(std::ofstream& out, int x1, int y1, int x2, int y2) {
-	out << x1 << ' ' << y1 << ' ' << x2 << ' ' << y2 << '\n';
+line Make_Line(int x1, int y1, int x2, int y2) {
+	line l = { { x1, y1 }, { x2, y2 } };
+	return l;
 }
 
-System::Void Make_House(std::ofstream& out) {
-	Make_Line(out, 80, 0, 210, 0);
-	Make_Line(out, 80, 150, 210, 150);
-	Make_Line(out, 80, 0, 80, 150);
-	Make_Line(out, 210, 0, 210, 150);
-	Make_Line(out, 140, 120, 160, 120);
-	Make_Line(out, 140, 120, 140, 150);
-	Make_Line(out, 160, 120, 160, 150);
+System::Void Make_House(point p, System::Collections::Generic::List<line>^ lines) {
+	lines->Add(Make_Line(p.x, p.y, p.x + 130, p.y));
+	lines->Add(Make_Line(p.x, p.y + 150, p.x + 130, p.y + 150));
+	lines->Add(Make_Line(p.x, p.y, p.x, p.y + 150));
+	lines->Add(Make_Line(p.x + 130, p.y, p.x + 130, p.y + 150));
+	lines->Add(Make_Line(p.x + 60, p.y + 120, p.x + 80, p.y + 120));
+	lines->Add(Make_Line(p.x + 60, p.y + 120, p.x + 60, p.y + 150));
+	lines->Add(Make_Line(p.x + 80, p.y + 120, p.x + 80, p.y + 150));
 }
 
-System::Void Make_Window(std::ofstream& out, int x, int y) {
-	Make_Line(out, x, y, x, y - 30);
-	Make_Line(out, x, y, x + 10, y);
-	Make_Line(out, x + 10, y, x + 10, y - 30);
-	Make_Line(out, x, y - 30, x + 10, y - 30);
+System::Void Make_Window(point p, System::Collections::Generic::List<line>^ lines) {
+	lines->Add(Make_Line(p.x, p.y, p.x, p.y - 30));
+	lines->Add(Make_Line(p.x, p.y, p.x + 10, p.y));
+	lines->Add(Make_Line(p.x + 10, p.y, p.x + 10, p.y - 30));
+	lines->Add(Make_Line(p.x, p.y - 30, p.x + 10, p.y - 30));
 }
 
-System::Void Make_Balcon(std::ofstream& out, int x, int y) {
-	Make_Line(out, x, y, x, y - 10);
-	Make_Line(out, x, y, x + 30, y);
-	Make_Line(out, x + 30, y, x + 30, y - 10);
-	Make_Line(out, x, y - 10, x + 30, y - 10);
-	Make_Line(out, x + 10, y - 10, x + 20, y - 10);
-	Make_Line(out, x + 10, y - 10, x + 10, y - 30);
-	Make_Line(out, x + 20, y - 10, x + 20, y - 30);
-	Make_Line(out, x + 10, y - 30, x + 20, y - 30);
+System::Void Make_Balcon(point p, System::Collections::Generic::List<line>^ lines) {
+	lines->Add(Make_Line(p.x, p.y, p.x, p.y - 10));
+	lines->Add(Make_Line(p.x, p.y, p.x + 30, p.y));
+	lines->Add(Make_Line(p.x + 30, p.y, p.x + 30, p.y - 10));
+	lines->Add(Make_Line(p.x, p.y - 10, p.x + 30, p.y - 10));
+	lines->Add(Make_Line(p.x + 10, p.y - 10, p.x + 20, p.y - 10));
+	lines->Add(Make_Line(p.x + 10, p.y - 10, p.x + 10, p.y - 30));
+	lines->Add(Make_Line(p.x + 20, p.y - 10, p.x + 20, p.y - 30));
+	lines->Add(Make_Line(p.x + 10, p.y - 30, p.x + 20, p.y - 30));
 }
 
-System::Void Make_Asset(std::ofstream& out, int x, int y) {
-	Make_Line(out, x, y, x, y - 5);
-	Make_Line(out, x, y, x + 40, y);
-	Make_Line(out, x + 40, y, x + 40, y - 5);
-	Make_Line(out, x, y - 5, x + 40, y - 5);
-	Make_Line(out, x + 20, y - 5, x + 20, y - 20);
-	Make_Line(out, x, y - 20, x + 20, y - 30);
-	Make_Line(out, x + 40, y - 20, x + 20, y - 30);
-	Make_Line(out, x, y - 20, x + 40, y - 20);
+System::Void Make_Asset(point p, System::Collections::Generic::List<line>^ lines) {
+	lines->Add(Make_Line(p.x, p.y, p.x, p.y - 5));
+	lines->Add(Make_Line(p.x, p.y, p.x + 40, p.y));
+	lines->Add(Make_Line(p.x + 40, p.y, p.x + 40, p.y - 5));
+	lines->Add(Make_Line(p.x, p.y - 5, p.x + 40, p.y - 5));
+	lines->Add(Make_Line(p.x + 20, p.y - 5, p.x + 20, p.y - 20));
+	lines->Add(Make_Line(p.x, p.y - 20, p.x + 20, p.y - 30));
+	lines->Add(Make_Line(p.x + 40, p.y - 20, p.x + 20, p.y - 30));
+	lines->Add(Make_Line(p.x, p.y - 20, p.x + 40, p.y - 20));
 }
 
-System::Void Fill_Coordinates_File(std::ofstream& out) {
-	Make_House(out);
-	Make_Window(out, 100, 140);
-	Make_Window(out, 180, 140);
-	Make_Balcon(out, 90, 90);
-	Make_Balcon(out, 130, 90);
-	Make_Balcon(out, 170, 90);
-	Make_Balcon(out, 90, 40);
-	Make_Balcon(out, 130, 40);
-	Make_Balcon(out, 170, 40);
-	Make_Asset(out, 20, 150);
+System::Collections::Generic::List<line>^ GenerateSourceImage() {
+	System::Collections::Generic::List<line>^ lines;
+	point house = { 80, 0 },
+		window1 = { 100, 140 },
+		window2 = { 180, 140 },
+		balcon1 = { 90, 90 },
+		balcon2 = { 130, 90 },
+		balcon3 = { 170, 90 },
+		balcon4 = { 90, 40 },
+		balcon5 = { 130, 40 },
+		balcon6 = { 170, 40 },
+		asset = { 20, 150 };
+	Make_House(house, lines);
+	Make_Window(window1, lines);
+	Make_Window(window2, lines);
+	Make_Balcon(balcon1, lines);
+	Make_Balcon(balcon2, lines);
+	Make_Balcon(balcon3, lines);
+	Make_Balcon(balcon4, lines);
+	Make_Balcon(balcon5, lines);
+	Make_Balcon(balcon6, lines);
+	Make_Asset(asset, lines);
+	return lines;
 }

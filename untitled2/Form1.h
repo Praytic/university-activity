@@ -15,6 +15,7 @@ namespace untitled2 {
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
 	private: point center;
+	private: System::Windows::Forms::Button^  btnUpload;
 	private: point utmost;
 
 	public:
@@ -43,7 +44,7 @@ namespace untitled2 {
 	private: System::Collections::Generic::List<line> lines;
 
 	private: System::Windows::Forms::Button^  btnOpen;
-	private: System::Windows::Forms::Button^  btnUpload;
+
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog;
 	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog;
 
@@ -62,32 +63,21 @@ namespace untitled2 {
 			 void InitializeComponent(void)
 			 {
 				 this->btnOpen = (gcnew System::Windows::Forms::Button());
-				 this->btnUpload = (gcnew System::Windows::Forms::Button());
 				 this->openFileDialog = (gcnew System::Windows::Forms::OpenFileDialog());
 				 this->saveFileDialog = (gcnew System::Windows::Forms::SaveFileDialog());
+				 this->btnUpload = (gcnew System::Windows::Forms::Button());
 				 this->SuspendLayout();
 				 // 
 				 // btnOpen
 				 // 
 				 this->btnOpen->ImageAlign = System::Drawing::ContentAlignment::BottomRight;
-				 this->btnOpen->Location = System::Drawing::Point(197, 227);
+				 this->btnOpen->Location = System::Drawing::Point(12, 12);
 				 this->btnOpen->Name = L"btnOpen";
 				 this->btnOpen->Size = System::Drawing::Size(75, 23);
 				 this->btnOpen->TabIndex = 0;
 				 this->btnOpen->Text = L"Открыть";
 				 this->btnOpen->UseVisualStyleBackColor = true;
 				 this->btnOpen->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
-				 // 
-				 // btnUpload
-				 // 
-				 this->btnUpload->ImageAlign = System::Drawing::ContentAlignment::BottomLeft;
-				 this->btnUpload->Location = System::Drawing::Point(13, 227);
-				 this->btnUpload->Name = L"btnUpload";
-				 this->btnUpload->Size = System::Drawing::Size(178, 23);
-				 this->btnUpload->TabIndex = 1;
-				 this->btnUpload->Text = L"Сгенерировать координаты";
-				 this->btnUpload->UseVisualStyleBackColor = true;
-				 this->btnUpload->Click += gcnew System::EventHandler(this, &Form1::button1_Click_1);
 				 // 
 				 // openFileDialog
 				 // 
@@ -103,6 +93,17 @@ namespace untitled2 {
 				 this->saveFileDialog->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
 				 this->saveFileDialog->Title = L"Сгенерировать координаты";
 				 // 
+				 // btnUpload
+				 // 
+				 this->btnUpload->ImageAlign = System::Drawing::ContentAlignment::BottomLeft;
+				 this->btnUpload->Location = System::Drawing::Point(12, 41);
+				 this->btnUpload->Name = L"btnUpload";
+				 this->btnUpload->Size = System::Drawing::Size(75, 23);
+				 this->btnUpload->TabIndex = 1;
+				 this->btnUpload->Text = L"Выгрузить";
+				 this->btnUpload->UseVisualStyleBackColor = true;
+				 this->btnUpload->Click += gcnew System::EventHandler(this, &Form1::button1_Click_1);
+				 // 
 				 // Form1
 				 // 
 				 this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -117,6 +118,7 @@ namespace untitled2 {
 				 this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
 				 this->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::Form1_Paint);
 				 this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::Form1_KeyDown);
+				 this->Resize += gcnew System::EventHandler(this, &Form1::Form1_Resize);
 				 this->ResumeLayout(false);
 
 			 }
@@ -136,6 +138,11 @@ namespace untitled2 {
 			 }
 	private: System::Void Form1_Resize(System::Object^  sender, System::EventArgs^  e) {
 				 this->Refresh();
+				 Rectangle rect = Form::ClientRectangle;
+				 point center = { rect.Width / 2, rect.Height / 2 };
+				 point utmost = { rect.Width, rect.Height };
+				this->center = center;
+				this->utmost = utmost;
 			 }
 	private: System::Void Form1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 				 Graphics^ g = e->Graphics;
@@ -198,7 +205,19 @@ namespace untitled2 {
 						 std::ofstream out;
 						 out.open(fileName);
 						 if ( out.is_open() ) {
-							 Fill_Coordinates_File(out);
+							 for (int i = 0; i < lines.Count; i++) {
+								 vec A, B;
+								 point2vec(lines[i].start, A);
+								 point2vec(lines[i].end, B);
+								 vec A1, B1;
+								 timesMatVec(T,A,A1);
+								 timesMatVec(T,B,B1);
+								 point a, b;
+								 vec2point(A1, a);
+								 vec2point(B1, b);
+								 out << a.x << ' ' << a.y << ' ' 
+									 << b.x << ' ' << b.y << '\n';
+							 }
 						 }
 						 this->Refresh();
 				 }
@@ -328,7 +347,7 @@ namespace untitled2 {
 					 break;
 				 case Keys::Escape :	// reset image
 					 unit(R);
-					 Restore_Image();	
+					 Restore_Image();
 					 break;
 				 default :
 					 unit(R);
