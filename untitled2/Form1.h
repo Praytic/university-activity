@@ -14,10 +14,18 @@ namespace untitled2 {
 	/// </summary>
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
+	private: point center;
+	private: point utmost;
+
 	public:
 		Form1(void)
 		{
 			InitializeComponent();
+			Rectangle rect = Form::ClientRectangle;
+			point center = { rect.Width / 2, rect.Height / 2 };
+			point utmost = { rect.Width, rect.Height };
+			this->center = center;
+			this->utmost = utmost;
 		}
 
 	protected:
@@ -113,6 +121,15 @@ namespace untitled2 {
 
 			 }
 #pragma endregion
+	private: System::Void Restore_Image() {
+				 unit(T);
+				 mat N,T1,T2;
+				 move(0, -utmost.y, N);
+				 times(N,T,T1);
+				 scaleVertically(-1, N);
+				 times(N,T1,T2);
+				 set(T2, T);
+			 }
 	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 				 lines.Clear();
 				 unit(T);
@@ -167,6 +184,7 @@ namespace untitled2 {
 								 getline(in, str);
 							 }
 						 }
+						 Restore_Image();
 						 this->Refresh();
 				 }
 			 }
@@ -187,9 +205,6 @@ namespace untitled2 {
 			 }
 	private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 				 mat R, T1;
-				 Rectangle rect = Form::ClientRectangle;
-				 point center = { rect.Width / 2, rect.Height / 2 };
-				 point utmost = { rect.Width, rect.Height };
 				 switch(e->KeyCode) {
 				 case Keys::W :			// move up
 					 move(0, -2, R);	
@@ -257,6 +272,24 @@ namespace untitled2 {
 				 case Keys::Z :			// scale decrease
 					 scale(0.9, R);		
 					 break;
+				 case Keys::C :			// scale increase center
+					 move(-center.x, -center.y, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 scale(1.1, R);		
+					 times(R, T, T1);
+					 set(T1, T);	
+					 move(center.x, center.y, R);	
+					 break;
+				 case Keys::V :			// scale decrease center
+					 move(-center.x, -center.y, R);
+					 times(R, T, T1);
+					 set(T1, T);
+					 scale(0.9, R);		
+					 times(R, T, T1);
+					 set(T1, T);	
+					 move(center.x, center.y, R);	
+					 break;
 				 case Keys::I :			// scale decrease horizontal
 					 move(-center.x, -center.y, R);
 					 times(R, T, T1);
@@ -292,6 +325,10 @@ namespace untitled2 {
 					 times(R, T, T1);
 					 set(T1, T);	
 					 move(center.x, center.y, R);	
+					 break;
+				 case Keys::Escape :	// reset image
+					 unit(R);
+					 Restore_Image();	
 					 break;
 				 default :
 					 unit(R);
