@@ -14,10 +14,10 @@ namespace untitled2 {
 	/// </summary>
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
-	private: point center;
 	private: System::Windows::Forms::Button^  btnUpload;
 
 	private: point utmost;
+	private: point center;
 
 	public:
 		Form1(void)
@@ -43,6 +43,9 @@ namespace untitled2 {
 		}
 
 	private: System::Collections::Generic::List<line> lines;
+	private: float left, right, top, bottom;
+	private: float Wcx, Wcy, Wx, Wy;
+	private: float Vcx, Vcy, Vx, Vy;
 
 	private: System::Windows::Forms::Button^  btnOpen;
 
@@ -113,6 +116,7 @@ namespace untitled2 {
 				 this->Controls->Add(this->btnUpload);
 				 this->Controls->Add(this->btnOpen);
 				 this->KeyPreview = true;
+				 this->MinimumSize = System::Drawing::Size(50, 50);
 				 this->Name = L"Form1";
 				 this->RightToLeft = System::Windows::Forms::RightToLeft::No;
 				 this->Text = L"Form1";
@@ -124,6 +128,12 @@ namespace untitled2 {
 
 			 }
 #pragma endregion
+	private: System::Void RefreshBorderCoordinates() {
+				 Wcx = left;
+				 Wcy = Form::ClientRectangle.Height - bottom;
+				 Wx  = Form::ClientRectangle.Width  - left - right;
+				 Wy  = Form::ClientRectangle.Height - top - bottom;
+			 }
 	private: System::Void Restore_Image() {
 				 unit(T);
 				 mat N,T1,T2;
@@ -135,21 +145,45 @@ namespace untitled2 {
 			 }
 	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 				 lines.Clear();
+				 RefreshBorderCoordinates();
 				 unit(T);
 			 }
 	private: System::Void Form1_Resize(System::Object^  sender, System::EventArgs^  e) {
-				 this->Refresh();
+				 float oldWx = Wx, oldWy = Wy;
 				 Rectangle rect = Form::ClientRectangle;
 				 point center = { rect.Width / 2, rect.Height / 2 };
 				 point utmost = { rect.Width, rect.Height };
-				this->center = center;
-				this->utmost = utmost;
+				 this->center = center;
+				 this->utmost = utmost;
+				 RefreshBorderCoordinates();
+
+				 mat R, T1;
+
+				 move(-Wcx, top, R);
+				times(R, T, T1);
+				set(T1, T);
+
+				scaleHorizontally(Wx / oldWx, R);		
+				times(R, T, T1);
+				set(T1, T);	
+
+				scaleVertically(Wy / oldWy, R);		
+				times(R, T, T1);
+				set(T1, T);	
+
+				move(Wcx, top, R);	
+				times(R, T, T1);
+				set(T1, T);	
+				 this->Refresh();
 			 }
 	private: System::Void Form1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 				 Graphics^ g = e->Graphics;
 				 g->Clear(Color::White);
 				 Pen^ blackPen = gcnew Pen(Color::Black);
+				 Pen^ rectPen = gcnew Pen(Color::Red);
 				 blackPen->Width = 1;
+				 rectPen->Width = 2;
+
 				 for (int i = 0; i < lines.Count; i++) {
 					 vec A, B;
 					 point2vec(lines[i].start, A);
@@ -162,6 +196,7 @@ namespace untitled2 {
 					 vec2point(B1, b);
 					 g->DrawLine(blackPen, a.x, a.y, b.x, b.y);
 				 }
+				 g->DrawRectangle(rectPen, Wcx, top, Wx, Wy);
 			 }
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 				 if (this->openFileDialog->ShowDialog() ==
@@ -178,6 +213,20 @@ namespace untitled2 {
 							 unit(T);
 							 std::string str;
 							 getline (in, str);
+							 if (in) {
+								 if ((str.find_first_not_of(" \t\r\n") != std::string::npos)
+									 && (str[0] != '#')) {
+										 std::stringstream s(str);
+										 line l;
+										 float oVcx, oVcy, oVx, oVy;
+										 s >> oVcx >> oVcy >> oVx >> oVy;
+										 Vcx = oVcx;
+										 Vcy = oVcy;
+										 Vx = oVx;
+										 Vy = oVy;
+								 }
+								 getline(in, str);
+							 }
 							 while (in) {
 								 if ((str.find_first_not_of(" \t\r\n") != std::string::npos)
 									 && (str[0] != '#')) {
@@ -192,6 +241,7 @@ namespace untitled2 {
 								 getline(in, str);
 							 }
 						 }
+						 frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T, utmost);
 						 Restore_Image();
 						 this->Refresh();
 				 }
@@ -348,6 +398,7 @@ namespace untitled2 {
 					 break;
 				 case Keys::Escape :	// reset image
 					 unit(R);
+					 frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T, utmost);
 					 Restore_Image();
 					 break;
 				 default :
@@ -357,6 +408,6 @@ namespace untitled2 {
 				 set(T1, T);
 				 this->Refresh();
 			 }
-};
+	};
 }
 

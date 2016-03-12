@@ -45,3 +45,7 @@ void scale(float S, mat c);
 void scaleHorizontally(float S, mat c);
 // Процедура масштабирования по вертикали
 void scaleVertically(float S, mat c);
+// Процедура кадрирования
+void frame(float Vx, float Vy, float Vcx, float Vcy,
+			float Wx, float Wy, float Wcx, float Wcy,
+			mat c, point utmost);
