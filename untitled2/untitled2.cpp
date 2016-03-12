@@ -1,6 +1,7 @@
 // untitled2.cpp: главный файл проекта.
 #include "stdafx.h"
 #include "Transform.h"
+#include "Clip.h"
 #include "Form1.h"
 
 using namespace untitled2;

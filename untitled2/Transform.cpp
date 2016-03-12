@@ -71,6 +71,11 @@ void scale(float S, mat c) {
 	c[0][0] = S; c[1][1] = S;
 }
 
+void scale(float Sx, float Sy, mat c) {
+	unit (c);
+	c[0][0] = Sx; c[1][1] = Sy;
+}
+
 void scaleHorizontally(float S, mat c) {
 	unit (c);
 	c[0][0] = S;
@@ -79,4 +84,32 @@ void scaleHorizontally(float S, mat c) {
 void scaleVertically(float S, mat c) {
 	unit (c);
 	c[1][1] = S;
+}
+
+void frame (float Vx, float Vy, float Vcx, float Vcy,
+			float Wx, float Wy, float Wcx, float Wcy,
+			mat c, point utmost) {
+	unit(c);
+
+	mat T1, T2;
+	set(T, T2);
+
+	move(-Vcx, -Vcy, T1);
+	times(T1, T2, c);
+	set(c, T2);
+
+	scale(Wx / Vx, Wy / Vy, T1);
+	times(T1, T2, c);
+	set(c, T2);
+
+	scaleHorizontally(-1, T1);
+	times(T1, T2, c);
+	set(c, T2);
+	
+	move(0, utmost.y, T1);
+	times(T1, T2, c);
+	set(c, T2);
+
+	move(Wcx, Wcy, T1);
+	times(T1, T2, c);
 }
