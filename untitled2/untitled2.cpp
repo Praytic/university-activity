@@ -1,9 +1,9 @@
-// graphics-4.cpp: главный файл проекта.
-
+// untitled2.cpp: главный файл проекта.
 #include "stdafx.h"
+#include "Transform.h"
 #include "Form1.h"
 
-using namespace graphics4;
+using namespace untitled2;
 
 [STAThreadAttribute]
 int main(array<System::String ^> ^args)

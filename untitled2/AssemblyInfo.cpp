@@ -11,11 +11,11 @@ using namespace System::Security::Permissions;
 // атрибутов. Отредактируйте значения этих атрибутов, чтобы изменить
 // общие сведения об этой сборке.
 //
-[assembly:AssemblyTitleAttribute("graphics4")];
+[assembly:AssemblyTitleAttribute("untitled2")];
 [assembly:AssemblyDescriptionAttribute("")];
 [assembly:AssemblyConfigurationAttribute("")];
 [assembly:AssemblyCompanyAttribute("Win-Yagd")];
-[assembly:AssemblyProductAttribute("graphics4")];
+[assembly:AssemblyProductAttribute("untitled2")];
 [assembly:AssemblyCopyrightAttribute("Copyright (c) Win-Yagd 2016")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
