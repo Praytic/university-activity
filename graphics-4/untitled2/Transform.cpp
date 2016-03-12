@@ -70,3 +70,13 @@ void scale(float S, mat c) {
 	unit (c);
 	c[0][0] = S; c[1][1] = S;
 }
+
+void scaleHorizontally(float S, mat c) {
+	unit (c);
+	c[0][0] = S;
+}
+
+void scaleVertically(float S, mat c) {
+	unit (c);
+	c[1][1] = S;
+}

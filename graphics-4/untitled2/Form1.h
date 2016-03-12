@@ -16,6 +16,7 @@ namespace untitled2 {
 	{
 	private: point center;
 	private: System::Windows::Forms::Button^  btnUpload;
+
 	private: point utmost;
 
 	public:
@@ -356,6 +357,6 @@ namespace untitled2 {
 				 set(T1, T);
 				 this->Refresh();
 			 }
-	};
+};
 }
 
