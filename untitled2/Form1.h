@@ -129,6 +129,10 @@ namespace untitled2 {
 			 }
 #pragma endregion
 	private: System::Void RefreshBorderCoordinates() {
+				left = 20;
+				right = 20;
+				top = 20;
+				bottom = 20;
 				 Wcx = left;
 				 Wcy = Form::ClientRectangle.Height - bottom;
 				 Wx  = Form::ClientRectangle.Width  - left - right;
@@ -145,45 +149,39 @@ namespace untitled2 {
 			 }
 	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 				 lines.Clear();
-				 RefreshBorderCoordinates();
 				 unit(T);
+				 RefreshBorderCoordinates();
 			 }
 	private: System::Void Form1_Resize(System::Object^  sender, System::EventArgs^  e) {
-				 float oldWx = Wx, oldWy = Wy;
 				 Rectangle rect = Form::ClientRectangle;
 				 point center = { rect.Width / 2, rect.Height / 2 };
 				 point utmost = { rect.Width, rect.Height };
 				 this->center = center;
 				 this->utmost = utmost;
-				 RefreshBorderCoordinates();
 
+				 float oldWx = Wx, oldWy = Wy;
 				 mat R, T1;
+				 RefreshBorderCoordinates();
 
 				 move(-Wcx, top, R);
 				times(R, T, T1);
 				set(T1, T);
-
-				scaleHorizontally(Wx / oldWx, R);		
+				scale(Wx / oldWx, Wy / oldWy, R);		
 				times(R, T, T1);
 				set(T1, T);	
-
-				scaleVertically(Wy / oldWy, R);		
-				times(R, T, T1);
-				set(T1, T);	
-
 				move(Wcx, top, R);	
 				times(R, T, T1);
 				set(T1, T);	
+
 				 this->Refresh();
 			 }
 	private: System::Void Form1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 				 Graphics^ g = e->Graphics;
 				 g->Clear(Color::White);
-				 Pen^ blackPen = gcnew Pen(Color::Black);
-				 Pen^ rectPen = gcnew Pen(Color::Red);
-				 blackPen->Width = 1;
-				 rectPen->Width = 2;
+				 Pen^ blackPen = gcnew Pen(Color::Black, 1);
+				 Pen^ rectPen = gcnew Pen(Color::Red, 2);
 
+				 g->DrawRectangle(rectPen, Wcx, top, Wx, Wy);
 				 for (int i = 0; i < lines.Count; i++) {
 					 vec A, B;
 					 point2vec(lines[i].start, A);
@@ -196,7 +194,6 @@ namespace untitled2 {
 					 vec2point(B1, b);
 					 g->DrawLine(blackPen, a.x, a.y, b.x, b.y);
 				 }
-				 g->DrawRectangle(rectPen, Wcx, top, Wx, Wy);
 			 }
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 				 if (this->openFileDialog->ShowDialog() ==
@@ -241,8 +238,8 @@ namespace untitled2 {
 								 getline(in, str);
 							 }
 						 }
-						 frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T, utmost);
 						 Restore_Image();
+						 frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T, utmost);
 						 this->Refresh();
 				 }
 			 }

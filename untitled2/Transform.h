@@ -41,6 +41,7 @@ void rotate(float phi, mat c);
 void rotatePoint(float phi, mat c, point p);
 // Процедура масштабирования
 void scale(float S, mat c);
+void scale(float Sx, float Sy, mat c);
 // Процедура масштабирования по горизонтали
 void scaleHorizontally(float S, mat c);
 // Процедура масштабирования по вертикали
