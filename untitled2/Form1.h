@@ -319,10 +319,10 @@ namespace untitled2 {
 					 rotateCounterclockwisePoint(0.05, center.x, center.y, R);
 					 break;
 				 case Keys::U :			// reflect vertically center
-					 reflectHorizontally(center.x, R);
+					 reflectHorizontally(center.y, R);
 					 break;
 				 case Keys::J :			// refect horizontally center
-					 reflectVertically(center.y, R);
+					 reflectVertically(center.x, R);
 					 break;
 				 case Keys::X :			// scale increase
 					 scaleOverPivot(1.1, R);		
@@ -337,16 +337,16 @@ namespace untitled2 {
 					 scaleOverPoint(0.9, center.x, center.y, R);
 					 break;
 				 case Keys::I :			// scale decrease horizontal
-					 scaleHorizontally(0.9, center.x, R);
+					 scaleHorizontally(0.9, center.y, R);
 					 break;
 				 case Keys::O :			// scale inscrease horizontal
-					 scaleHorizontally(1.1, center.x, R);
+					 scaleHorizontally(1.1, center.y, R);
 					 break;
 				 case Keys::K :			// scale decrease vertical
-					 scaleVertically(0.9, center.y, R);	
+					 scaleVertically(0.9, center.x, R);	
 					 break;
 				 case Keys::L :			// scale increase vertical
-					 scaleVertically(1.1, center.y, R);
+					 scaleVertically(1.1, center.x, R);
 					 break;
 				 case Keys::Escape :	// reset image
 					 unit(R);

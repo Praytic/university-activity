@@ -66,16 +66,16 @@ void scaleOverPoint(float scalar, float x, float y, mat result);
 void scaleOverPoint(float scalarX, float scalarY, float x, float y, mat result);
 
 // Процедура масштабирования относительно горизонтальной линии
-void scaleHorizontally(float scalar, float lineX, mat result);
+void scaleHorizontally(float scalar, float lineY, mat result);
 
 // Процедура масштабирования относительно вертикальной линии
-void scaleVertically(float scalar, float lineY, mat result);
+void scaleVertically(float scalar, float lineX, mat result);
 
 // Процедура отображения изображения относительно горизонтальной линии
-void reflectHorizontally(float lineX, mat result);
+void reflectHorizontally(float lineY, mat result);
 
 // Процедура отображения изображения относительно вертикальной линии
-void reflectVertically(float lineY, mat result);
+void reflectVertically(float lineX, mat result);
 
 // Процедура кадрирования
 void frame(float Vx, float Vy, float Vcx, float Vcy,
