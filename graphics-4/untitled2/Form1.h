@@ -17,7 +17,7 @@ namespace untitled2 {
 	private: System::Windows::Forms::Button^  btnUpload;
 
 	private: point utmost;
-	private: point center;
+			 point center;
 
 	public:
 		Form1(void)
@@ -43,14 +43,15 @@ namespace untitled2 {
 		}
 
 	private: System::Collections::Generic::List<line> lines;
-	private: float left, right, top, bottom;
-	private: float Wcx, Wcy, Wx, Wy;
-	private: float Vcx, Vcy, Vx, Vy;
+			 bool drawNames;
+			 float left, right, top, bottom;
+			 float Wcx, Wcy, Wx, Wy;
+			 float Vcx, Vcy, Vx, Vy;
 
 	private: System::Windows::Forms::Button^  btnOpen;
 
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog;
-	private: System::Windows::Forms::SaveFileDialog^  saveFileDialog;
+			 System::Windows::Forms::SaveFileDialog^  saveFileDialog;
 
 
 
@@ -129,10 +130,10 @@ namespace untitled2 {
 			 }
 #pragma endregion
 	private: System::Void RefreshBorderCoordinates() {
-				left = 20;
-				right = 20;
-				top = 20;
-				bottom = 20;
+				 left = 20;
+				 right = 20;
+				 top = 20;
+				 bottom = 20;
 				 Wcx = left;
 				 Wcy = Form::ClientRectangle.Height - bottom;
 				 Wx  = Form::ClientRectangle.Width  - left - right;
@@ -148,6 +149,7 @@ namespace untitled2 {
 				 set(T2, T);
 			 }
 	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
+				 drawNames = false;
 				 lines.Clear();
 				 unit(T);
 				 RefreshBorderCoordinates();
@@ -164,14 +166,14 @@ namespace untitled2 {
 				 RefreshBorderCoordinates();
 
 				 move(-Wcx, top, R);
-				times(R, T, T1);
-				set(T1, T);
-				scale(Wx / oldWx, Wy / oldWy, R);		
-				times(R, T, T1);
-				set(T1, T);	
-				move(Wcx, top, R);	
-				times(R, T, T1);
-				set(T1, T);	
+				 times(R, T, T1);
+				 set(T1, T);
+				 scale(Wx / oldWx, Wy / oldWy, R);		
+				 times(R, T, T1);
+				 set(T1, T);	
+				 move(Wcx, top, R);	
+				 times(R, T, T1);
+				 set(T1, T);	
 
 				 this->Refresh();
 			 }
@@ -180,6 +182,8 @@ namespace untitled2 {
 				 g->Clear(Color::White);
 				 Pen^ blackPen = gcnew Pen(Color::Black, 1);
 				 Pen^ rectPen = gcnew Pen(Color::Red, 2);
+				 System::Drawing::Font^ font = gcnew System::Drawing::Font("Arial", 8);
+				 SolidBrush^ fontBrush = gcnew SolidBrush(Color::Black);
 
 				 g->DrawRectangle(rectPen, Wcx, top, Wx, Wy);
 				 for (int i = 0; i < lines.Count; i++) {
@@ -193,7 +197,11 @@ namespace untitled2 {
 					 vec2point(A1, a);
 					 vec2point(B1, b);
 					 g->DrawLine(blackPen, a.x, a.y, b.x, b.y);
-				 }
+
+					 if (drawNames) {
+						 g->DrawString(lines[i].name, font, fontBrush, (a.x+((b.x-a.x)/2)), (a.y+((b.y-a.y)/2)));
+					 }
+				 }	
 			 }
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 				 if (this->openFileDialog->ShowDialog() ==
@@ -397,6 +405,10 @@ namespace untitled2 {
 					 unit(R);
 					 frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T, utmost);
 					 Restore_Image();
+					 break;
+				 case Keys::P :
+					 drawNames = !drawNames;
+					 unit(R);
 					 break;
 				 default :
 					 unit(R);
