@@ -20,32 +20,63 @@ typedef float mat[M][M];
 extern mat T;
 
 // Умножение матрицы a на матрицу b и запись результата в матрицу c
-void times(mat a, mat b, mat c);
+void times(mat a, mat b, mat result);
+
 // Умножение матрицы a на вектор b и запись результата в вектор c
-void timesMatVec(mat a, vec b, vec c);
+void timesMatVec(mat a, vec b, vec result);
+
 // Присвоение матрицы а матрице b
-void set(mat a, mat b);
+void set(mat a, mat result);
+
 // Преобразует декартовы координаты точки в однородные координаты (вектор)
 void point2vec(point a, vec b);
+
 // Преобразует однородные координаты (вектор) в декартовы координаты точки
 void vec2point(vec a, point &b);
+
 // Преобразует декартовы координаты точки в однородные координаты (вектор)
 void makeHomogenVec(float x, float y, vec c);
+
 // Преобразование матрицы в еденичную матрицу
 void unit(mat a);
-// Процедура поворота
-void move(float Tx, float Ty, mat c);
-// Процедура вращения
-void rotate(float phi, mat c);
-// Процедура вращения относительно точки
-void rotatePoint(float phi, mat c, point p);
-// Процедура масштабирования
-void scale(float S, mat c);
-void scale(float Sx, float Sy, mat c);
-// Процедура масштабирования по горизонтали
-void scaleHorizontally(float S, mat c);
-// Процедура масштабирования по вертикали
-void scaleVertically(float S, mat c);
+
+// Процедура передвижения изображения к точке
+void move(float x, float y, mat result);
+
+// Процедура вращения изображения против часовой стрелки относительно крайней точки окна
+void rotateCounterclockwisePivot(float angle, mat result);
+
+// Процедура вращения изображения по часовой стрелки относительно крайней точки окна
+void rotateClockwisePivot(float angle, mat result);
+
+// Процедура вращения изображения против часовой стрелки относительно заданной точки
+void rotateCounterclockwisePoint(float angle, float x, float y, mat result);
+
+// Процедура вращения изображения по часовой стрелки относительно заданной точки
+void rotateClockwisePoint(float angle, float x, float y, mat result);
+
+// Процедура масштабирования относительной крайней точки окна
+void scaleOverPivot(float scalar, mat result);
+
+void scaleOverPivot(float scalarX, float scalarY, mat result);
+
+// Процедура масштабирования относительной заданной точки
+void scaleOverPoint(float scalar, float x, float y, mat result);
+
+void scaleOverPoint(float scalarX, float scalarY, float x, float y, mat result);
+
+// Процедура масштабирования относительно горизонтальной линии
+void scaleHorizontally(float scalar, float lineX, mat result);
+
+// Процедура масштабирования относительно вертикальной линии
+void scaleVertically(float scalar, float lineY, mat result);
+
+// Процедура отображения изображения относительно горизонтальной линии
+void reflectHorizontally(float lineX, mat result);
+
+// Процедура отображения изображения относительно вертикальной линии
+void reflectVertically(float lineY, mat result);
+
 // Процедура кадрирования
 void frame(float Vx, float Vy, float Vcx, float Vcy,
 			float Wx, float Wy, float Wcx, float Wcy,
