@@ -239,7 +239,7 @@ void reflectVertically(float lineX, mat result){
 
 void frame (float Vx, float Vy, float Vcx, float Vcy,
 			float Wx, float Wy, float Wcx, float Wcy,
-			mat result, point utmost) {
+			mat result) {
 	unit (result);
 	mat R, T1;
 	move(-Vcx, -Vcy, R);
@@ -254,10 +254,4 @@ void frame (float Vx, float Vy, float Vcx, float Vcy,
 	move(Wcx, Wcy, R);
 	times(R, result, T1);
 	set(T1, result);
-	//scaleOverPoint(Wx/Vx, -Wy/Vy, Wcx-((Vcx*Wx)/Vx), Wcy+((Vcy*Wy)/Vy), result);
-
-	//result[0][0] = Wx/Vx;  
-	//result[1][1] = -Wy/Vy; 
-	//result[0][2] = Wcx-((Vcx*Wx)/Vx);
-	//result[1][2] = Wcy+((Vcy*Wy)/Vy);
 }
