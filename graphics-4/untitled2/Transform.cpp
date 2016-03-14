@@ -174,29 +174,20 @@ void scaleOverPoint(float scalarX, float scalarY, float x, float y, mat result) 
 	unit (result);
 	float Sx = scalarX;
 	float Sy = scalarY;
+	float X = x*(1-Sx);
+	float Y = y*(1-Sy);
 	/*
-	* | Sx 0  0 |
-	* | 0  Sy 0 |
+	* | Sx 0  X |
+	* | 0  Sy Y |
 	* | 0  0  1 |
 	*/
-	result[0][0] = Sx;
-	result[1][1] = Sy;
-}
-
-void scaleHorizontally(float scalar, float lineX, mat result) {
-	unit (result);
-	float S = scalar;
-	float X = lineX*(1-S);
-	/*
-	* | 1 0 X |
-	* | 0 S 0 |
-	* | 0 0 1 |
-	*/
-	result[0][0] = S; 
+	result[0][0] = Sx; 
+	result[1][1] = Sy; 
 	result[0][2] = X;
+	result[1][2] = Y;
 }
 
-void scaleVertically(float scalar, float lineY, mat result) {
+void scaleHorizontally(float scalar, float lineY, mat result) {
 	unit (result);
 	float S = scalar;
 	float Y = lineY*(1-S);
@@ -209,19 +200,20 @@ void scaleVertically(float scalar, float lineY, mat result) {
 	result[1][2] = Y;
 }
 
-void reflectHorizontally(float lineX, mat result){
+void scaleVertically(float scalar, float lineX, mat result) {
 	unit (result);
-	float L = lineX*2;
+	float S = scalar;
+	float X = lineX*(1-S);
 	/*
-	* | -1 0 L |
-	* |  0 1 0 |
-	* |  0 0 1 |
+	* | 1 0 X |
+	* | 0 S 0 |
+	* | 0 0 1 |
 	*/
-	result[0][0] = -1; 
-	result[0][2] = L;
+	result[0][0] = S; 
+	result[0][2] = X;
 }
 
-void reflectVertically(float lineY, mat result){
+void reflectHorizontally(float lineY, mat result){
 	unit (result);
 	float L = lineY*2;
 	/*
@@ -233,33 +225,39 @@ void reflectVertically(float lineY, mat result){
 	result[1][2] = L;
 }
 
+void reflectVertically(float lineX, mat result){
+	unit (result);
+	float L = lineX*2;
+	/*
+	* | -1 0 L |
+	* |  0 1 0 |
+	* |  0 0 1 |
+	*/
+	result[0][0] = -1; 
+	result[0][2] = L;
+}
+
 void frame (float Vx, float Vy, float Vcx, float Vcy,
 			float Wx, float Wy, float Wcx, float Wcy,
 			mat result, point utmost) {
-	/*unit(c);
-
-	mat T1, T2;
-	set(c, T2);
-
-	move(-Vcx, -Vcy, T1);
-	times(T1, T2, c);
-	set(c, T2);
-
-	scale(Wx / Vx, Wy / Vy, T1);
-	times(T1, T2, c);
-	set(c, T2);
-
-	scaleHorizontally(-1, T1);
-	times(T1, T2, c);
-	set(c, T2);
-	
-	move(0, utmost.y, T1);
-	times(T1, T2, c);
-	set(c, T2);
-
-	move(Vcx, Vcy, T1);
-	times(T1, T2, c);*/
 	unit (result);
-	result[0][0] = Wx/Vx;  result[0][2] = Wcx-((Vcx*Wx)/Vx);
-	result[1][1] = -Wy/Vy; result[1][2] = Wcy+((Vcy*Wy)/Vy);
+	mat R, T1;
+	move(-Vcx, -Vcy, R);
+	times(R, result, T1);
+	set(T1, result);
+	scaleOverPivot(Wx/Vx, Wy/Vy, R);
+	times(R, result, T1);
+	set(T1, result);
+	reflectHorizontally(0, R);
+	times(R, result, T1);
+	set(T1, result);
+	move(Wcx, Wcy, R);
+	times(R, result, T1);
+	set(T1, result);
+	//scaleOverPoint(Wx/Vx, -Wy/Vy, Wcx-((Vcx*Wx)/Vx), Wcy+((Vcy*Wy)/Vy), result);
+
+	//result[0][0] = Wx/Vx;  
+	//result[1][1] = -Wy/Vy; 
+	//result[0][2] = Wcx-((Vcx*Wx)/Vx);
+	//result[1][2] = Wcy+((Vcy*Wy)/Vy);
 }
