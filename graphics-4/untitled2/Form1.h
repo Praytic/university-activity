@@ -1,5 +1,7 @@
 #pragma once
 
+#include <msclr/marshal_cppstd.h>
+
 namespace untitled2 {
 
 	using namespace System;
@@ -23,7 +25,7 @@ namespace untitled2 {
 		Form1(void)
 		{
 			InitializeComponent();
-			Rectangle rect = Form::ClientRectangle;
+			System::Drawing::Rectangle rect = Form::ClientRectangle;
 			point center = { rect.Width / 2, rect.Height / 2 };
 			point utmost = { rect.Width, rect.Height };
 			this->center = center;
@@ -113,7 +115,7 @@ namespace untitled2 {
 				 // 
 				 this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 				 this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-				 this->ClientSize = System::Drawing::Size(284, 262);
+				 this->ClientSize = System::Drawing::Size(789, 424);
 				 this->Controls->Add(this->btnUpload);
 				 this->Controls->Add(this->btnOpen);
 				 this->KeyPreview = true;
@@ -141,12 +143,10 @@ namespace untitled2 {
 			 }
 	private: System::Void Restore_Image() {
 				 unit(T);
-				 mat N,T1,T2;
-				 move(0, -utmost.y, N);
-				 times(N,T,T1);
-				 scaleVertically(-1, N);
-				 times(N,T1,T2);
-				 set(T2, T);
+				 mat R, T1;
+				 reflectHorizontally(utmost.y, R);
+				 times(R, T, T1);
+				 set(T1, T);
 			 }
 	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 				 drawNames = false;
@@ -155,7 +155,7 @@ namespace untitled2 {
 				 RefreshBorderCoordinates();
 			 }
 	private: System::Void Form1_Resize(System::Object^  sender, System::EventArgs^  e) {
-				 Rectangle rect = Form::ClientRectangle;
+				 System::Drawing::Rectangle rect = Form::ClientRectangle;
 				 point center = { rect.Width / 2, rect.Height / 2 };
 				 point utmost = { rect.Width, rect.Height };
 				 this->center = center;
@@ -164,14 +164,7 @@ namespace untitled2 {
 				 float oldWx = Wx, oldWy = Wy;
 				 mat R, T1;
 				 RefreshBorderCoordinates();
-
-				 move(-Wcx, top, R);
-				 times(R, T, T1);
-				 set(T1, T);
-				 scale(Wx / oldWx, Wy / oldWy, R);		
-				 times(R, T, T1);
-				 set(T1, T);	
-				 move(Wcx, top, R);	
+				 scaleOverPoint(Wx / oldWx, Wy / oldWy, Wcx, top, R);
 				 times(R, T, T1);
 				 set(T1, T);	
 
@@ -261,6 +254,12 @@ namespace untitled2 {
 						 std::ofstream out;
 						 out.open(fileName);
 						 if ( out.is_open() ) {
+							 float oVcx = Vcx,
+								 oVcy = Vcy,
+								 oVx = Vx,
+								 oVy = Vy;
+							out << oVcx << ' ' << oVcy << ' ' 
+								<< oVx << ' ' << oVy << '\n';
 							 for (int i = 0; i < lines.Count; i++) {
 								 vec A, B;
 								 point2vec(lines[i].start, A);
@@ -271,8 +270,10 @@ namespace untitled2 {
 								 point a, b;
 								 vec2point(A1, a);
 								 vec2point(B1, b);
+								std::string nameOut = msclr::interop::marshal_as<std::string>(lines[i].name);
 								 out << a.x << ' ' << a.y << ' ' 
-									 << b.x << ' ' << b.y << '\n';
+									 << b.x << ' ' << b.y << ' '
+									 << nameOut << '\n';
 							 }
 						 }
 						 this->Refresh();
@@ -306,105 +307,51 @@ namespace untitled2 {
 					 move(20, 0, R);	
 					 break;
 				 case Keys::E :			// rotate clockwise
-					 rotate(0.05, R);	
+					 rotateClockwisePivot(0.05, R);	
 					 break;
 				 case Keys::Q :			// rotate counterclockwise
-					 rotate(-0.05, R);	
+					 rotateCounterclockwisePivot(0.05, R);	
 					 break;
 				 case Keys::R :			// rotate clockwise center
-					 move(-center.x, -center.y, R);
-					 times(R, T, T1);
-					 set(T1, T);
-					 rotate(0.05, R);
-					 times(R, T, T1);
-					 set(T1, T);
-					 move(center.x, center.y, R);
+					 rotateClockwisePoint(0.05, center.x, center.y, R);
 					 break;
 				 case Keys::Y :			// rotate counterclockwise center
-					 move(-center.x, -center.y, R);
-					 times(R, T, T1);
-					 set(T1, T);
-					 rotate(-0.05, R);
-					 times(R, T, T1);
-					 set(T1, T);
-					 move(center.x, center.y, R);
+					 rotateCounterclockwisePoint(0.05, center.x, center.y, R);
 					 break;
 				 case Keys::U :			// reflect vertically center
-					 scaleVertically(-1, R);
-					 times(R,T,T1);
-					 set(T1,T);
-					 move(0, utmost.y, R);
+					 reflectHorizontally(center.x, R);
 					 break;
 				 case Keys::J :			// refect horizontally center
-					 scaleHorizontally(-1, R);
-					 times(R,T,T1);
-					 set(T1,T);
-					 move(utmost.x, 0, R);
+					 reflectVertically(center.y, R);
 					 break;
 				 case Keys::X :			// scale increase
-					 scale(1.1, R);		
+					 scaleOverPivot(1.1, R);		
 					 break;
 				 case Keys::Z :			// scale decrease
-					 scale(0.9, R);		
+					 scaleOverPivot(0.9, R);		
 					 break;
 				 case Keys::C :			// scale increase center
-					 move(-center.x, -center.y, R);
-					 times(R, T, T1);
-					 set(T1, T);
-					 scale(1.1, R);		
-					 times(R, T, T1);
-					 set(T1, T);	
-					 move(center.x, center.y, R);	
+					 scaleOverPoint(1.1, center.x, center.y, R);
 					 break;
 				 case Keys::V :			// scale decrease center
-					 move(-center.x, -center.y, R);
-					 times(R, T, T1);
-					 set(T1, T);
-					 scale(0.9, R);		
-					 times(R, T, T1);
-					 set(T1, T);	
-					 move(center.x, center.y, R);	
+					 scaleOverPoint(0.9, center.x, center.y, R);
 					 break;
 				 case Keys::I :			// scale decrease horizontal
-					 move(-center.x, -center.y, R);
-					 times(R, T, T1);
-					 set(T1, T);
-					 scaleHorizontally(0.9, R);
-					 times(R, T, T1);
-					 set(T1, T);	
-					 move(center.x, center.y, R);	
+					 scaleHorizontally(0.9, center.x, R);
 					 break;
 				 case Keys::O :			// scale inscrease horizontal
-					 move(-center.x, -center.y, R);
-					 times(R, T, T1);
-					 set(T1, T);
-					 scaleHorizontally(1.1, R);
-					 times(R, T, T1);
-					 set(T1, T);	
-					 move(center.x, center.y, R);	
+					 scaleHorizontally(1.1, center.x, R);
 					 break;
 				 case Keys::K :			// scale decrease vertical
-					 move(-center.x, -center.y, R);
-					 times(R, T, T1);
-					 set(T1, T);
-					 scaleVertically(0.9, R);
-					 times(R, T, T1);
-					 set(T1, T);	
-					 move(center.x, center.y, R);		
+					 scaleVertically(0.9, center.y, R);	
 					 break;
 				 case Keys::L :			// scale increase vertical
-					 move(-center.x, -center.y, R);
-					 times(R, T, T1);
-					 set(T1, T);
-					 scaleVertically(1.1, R);
-					 times(R, T, T1);
-					 set(T1, T);	
-					 move(center.x, center.y, R);	
+					 scaleVertically(1.1, center.y, R);
 					 break;
 				 case Keys::Escape :	// reset image
 					 unit(R);
+					unit(T);
 					 frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T, utmost);
-					 Restore_Image();
 					 break;
 				 case Keys::P :
 					 drawNames = !drawNames;

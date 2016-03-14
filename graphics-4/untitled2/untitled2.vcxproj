@@ -84,6 +84,7 @@
   <ItemGroup>
     <None Include="app.ico" />
     <None Include="coordinates.txt" />
+    <None Include="coordinates2.txt" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
