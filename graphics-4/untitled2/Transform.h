@@ -80,4 +80,4 @@ void reflectVertically(float lineX, mat result);
 // Процедура кадрирования
 void frame(float Vx, float Vy, float Vcx, float Vcy,
 			float Wx, float Wy, float Wcx, float Wcy,
-			mat c, point utmost);
+			mat c);

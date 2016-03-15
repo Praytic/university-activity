@@ -179,6 +179,14 @@ namespace untitled2 {
 				 SolidBrush^ fontBrush = gcnew SolidBrush(Color::Black);
 
 				 g->DrawRectangle(rectPen, Wcx, top, Wx, Wy);
+
+				 point Pmin, Pmax;
+
+				Pmin.x = Wcx;
+				Pmin.y = Wcy-Wy;
+				Pmax.x = Wcx + Wx;
+				Pmax.y = Wcy;
+
 				 for (int i = 0; i < lines.Count; i++) {
 					 vec A, B;
 					 point2vec(lines[i].start, A);
@@ -189,7 +197,10 @@ namespace untitled2 {
 					 point a, b;
 					 vec2point(A1, a);
 					 vec2point(B1, b);
-					 g->DrawLine(blackPen, a.x, a.y, b.x, b.y);
+
+					if (clip(a, b, Pmin, Pmax)) {
+						 g->DrawLine(blackPen, a.x, a.y, b.x, b.y);
+					}
 
 					 if (drawNames) {
 						 g->DrawString(lines[i].name, font, fontBrush, (a.x+((b.x-a.x)/2)), (a.y+((b.y-a.y)/2)));
@@ -240,7 +251,7 @@ namespace untitled2 {
 							 }
 						 }
 						 Restore_Image();
-						 frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T, utmost);
+						 frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T);
 						 this->Refresh();
 				 }
 			 }
@@ -351,7 +362,7 @@ namespace untitled2 {
 				 case Keys::Escape :	// reset image
 					 unit(R);
 					unit(T);
-					 frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T, utmost);
+					 frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T);
 					 break;
 				 case Keys::P :
 					 drawNames = !drawNames;
