@@ -25,7 +25,7 @@ bool clip(point &A, point &B, point Pmin, point Pmax) {
 		if (C1 == C2 && C2 == 0) 
 			return true;
 	
-		if (C1 & C2 != 0) 
+		if ((C1 & C2) != 0) 
 			return false;
 
 		if (C1 == 0) {
@@ -34,19 +34,19 @@ bool clip(point &A, point &B, point Pmin, point Pmax) {
 			int tmp2 = C1; C1 = C2; C2 = tmp2;
 		}
 
-		if (C1 & 1 != 0) {
+		if ((C1 & 1) != 0) {
 			y1 = y2 - (x2 - xmin) * (y2 - y1) / (x2 - x1);
 			x1 = xmin;
 		}
-		else if (C1 & 2 != 0) {
+		if ((C1 & 2) != 0) {
 			y1 = y2 - (x2 - xmax) * (y2 - y1) / (x2 - x1);
 			x1 = xmax;
 		}
-		else if (C1 & 4 != 0) {
+		if ((C1 & 4) != 0) {
 			x1 = x2 - (y2 - ymin) * (x2 - x1) / (y2 - y1);
 			y1 = ymin;
 		}
-		else if (C1 & 8 != 0) {
+		if ((C1 & 8) != 0) {
 			x1 = x2 - (y2 - ymax) * (x2 - x1) / (y2 - y1);
 			y1 = ymax;
 		}
