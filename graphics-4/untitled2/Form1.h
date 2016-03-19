@@ -217,8 +217,6 @@ namespace untitled2 {
 				 SolidBrush^ fontBrush = gcnew SolidBrush(Color::Black);
 
 				 g->DrawRectangle(rectPen, Wcx, top, Wx, Wy);
-				 //char buffer[30];
-				//sprintf(buffer, "%f", T[0][0]);
 				 System::Text::StringBuilder^ sb = gcnew System::Text::StringBuilder();
 				 sb->Append(T[0][0].ToString() + " " + T[0][1].ToString() + " " + T[0][2].ToString());
 				 sb->AppendLine();
