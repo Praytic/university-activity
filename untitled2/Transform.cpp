@@ -4,14 +4,18 @@
 #include <math.h>
 
 mat T;
+mat lastR;
 
 void times(mat a, mat b, mat result) {
 	for(int i = 0; i < M; i++) {
 		for(int j = 0; j < M; j++) {
-			float scalar = 0;
-			for(int k = 0; k < M; k++)
-				scalar += a[i][k] * b[k][j];
-			result[i][j] = scalar;
+			double scalar = 0;
+			for(int k = 0; k < M; k++) {
+				double av = a[i][k];
+				double bv = b[k][j];
+				scalar += av * bv;
+			}
+			result[i][j] = (float)scalar;
 		}
 	}
 }
@@ -28,12 +32,11 @@ void timesMatVec(mat a, vec b, vec result) {
 void set(mat a, mat result) {
 	for(int i = 0; i < M; i++)
 		for (int j = 0; j < M; j++) {
-			if (std::abs(a[i][j]) < 0.0001f && a[i][j] != 0)
-				result[i][j] = 0.0001f * (a[i][j]/abs(a[i][j]));
+			if (abs(a[i][j]) < 1e-4f && a[i][j] != 0)
+				result[i][j] = 1e-4f * (a[i][j]/abs(a[i][j]));
 			else
 				result[i][j] = a[i][j];
 		}
-
 }
 
 void point2vec(point a, vec result) {

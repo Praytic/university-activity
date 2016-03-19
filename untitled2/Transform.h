@@ -18,6 +18,7 @@ typedef float mat[M][M];
 
 // Матрица совмещенного преобразования
 extern mat T;
+extern mat lastR;
 
 // Умножение матрицы a на матрицу b и запись результата в матрицу c
 void times(mat a, mat b, mat result);
