@@ -16,25 +16,12 @@ namespace untitled2 {
 	/// </summary>
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
-
-
-
-
-	private: point utmost;
+	private: point utmost, center;
 	private: System::Windows::Forms::Button^  btnOpen;
 	private: System::Windows::Forms::Label^  matrix00;
 	private: System::Windows::Forms::Button^  btnUpload;
 	private: System::Windows::Forms::Panel^  panel1;
-
-
-
-
-
-
-
-
-
-			 point center;
+	private: System::Windows::Forms::Label^  matrix01;
 
 	public:
 		Form1(void)
@@ -89,6 +76,7 @@ namespace untitled2 {
 				 this->matrix00 = (gcnew System::Windows::Forms::Label());
 				 this->btnUpload = (gcnew System::Windows::Forms::Button());
 				 this->panel1 = (gcnew System::Windows::Forms::Panel());
+				 this->matrix01 = (gcnew System::Windows::Forms::Label());
 				 this->SuspendLayout();
 				 // 
 				 // openFileDialog
@@ -145,11 +133,21 @@ namespace untitled2 {
 				 this->panel1->Size = System::Drawing::Size(0, 0);
 				 this->panel1->TabIndex = 3;
 				 // 
+				 // matrix01
+				 // 
+				 this->matrix01->AutoSize = true;
+				 this->matrix01->Location = System::Drawing::Point(751, 41);
+				 this->matrix01->Name = L"matrix01";
+				 this->matrix01->Size = System::Drawing::Size(26, 13);
+				 this->matrix01->TabIndex = 4;
+				 this->matrix01->Text = L"T01";
+				 // 
 				 // Form1
 				 // 
 				 this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 				 this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 				 this->ClientSize = System::Drawing::Size(789, 424);
+				 this->Controls->Add(this->matrix01);
 				 this->Controls->Add(this->matrix00);
 				 this->Controls->Add(this->btnUpload);
 				 this->Controls->Add(this->panel1);
@@ -189,6 +187,8 @@ namespace untitled2 {
 				 drawNames = false;
 				 lines.Clear();
 				 unit(T);
+				 matrix00->Location = Point(utmost.x - 150.0f, 12.0f);
+				 matrix01->Location = Point(utmost.x - 150.0f, 70.0f);
 				 RefreshBorderCoordinates();
 			 }
 	private: System::Void Form1_Resize(System::Object^  sender, System::EventArgs^  e) {
@@ -205,8 +205,9 @@ namespace untitled2 {
 				 times(R, T, T1);
 				 set(T1, T);	
 
-				 this->Refresh();
 				 matrix00->Location = Point(utmost.x - 150.0f, 12.0f);
+				 matrix01->Location = Point(utmost.x - 150.0f, 70.0f);
+				 this->Refresh();
 			 }
 	private: System::Void Form1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 				 Graphics^ g = e->Graphics;
@@ -218,12 +219,22 @@ namespace untitled2 {
 
 				 g->DrawRectangle(rectPen, Wcx, top, Wx, Wy);
 				 System::Text::StringBuilder^ sb = gcnew System::Text::StringBuilder();
+				 sb->Append("T matrix\n");
 				 sb->Append(T[0][0].ToString() + " " + T[0][1].ToString() + " " + T[0][2].ToString());
 				 sb->AppendLine();
 				 sb->Append(T[1][0].ToString() + " " + T[1][1].ToString() + " " + T[1][2].ToString());
 				 sb->AppendLine();
 				 sb->Append(T[2][0].ToString() + " " + T[2][1].ToString() + " " + T[2][2].ToString());
 				matrix00->Text = sb->ToString();
+				
+				 System::Text::StringBuilder^ sb2 = gcnew System::Text::StringBuilder();
+				 sb2->Append("R matrix\n");
+				 sb2->Append(lastR[0][0].ToString() + " " + lastR[0][1].ToString() + " " + lastR[0][2].ToString());
+				 sb2->AppendLine();
+				 sb2->Append(lastR[1][0].ToString() + " " + lastR[1][1].ToString() + " " + lastR[1][2].ToString());
+				 sb2->AppendLine();
+				 sb2->Append(lastR[2][0].ToString() + " " + lastR[2][1].ToString() + " " + lastR[2][2].ToString());
+				matrix01->Text = sb2->ToString();
 
 				 point Pmin, Pmax;
 
@@ -418,6 +429,8 @@ namespace untitled2 {
 				 }
 				 times(R, T, T1);
 				 set(T1, T);
+				 set(R, lastR);
+
 				 this->Refresh();
 			 }
 	};
