@@ -27,8 +27,13 @@ void timesMatVec(mat a, vec b, vec result) {
 
 void set(mat a, mat result) {
 	for(int i = 0; i < M; i++)
-		for (int j = 0; j < M; j++)
-			result[i][j] = a[i][j];
+		for (int j = 0; j < M; j++) {
+			if (std::abs(a[i][j]) < 0.0001f && a[i][j] != 0)
+				result[i][j] = 0.0001f * (a[i][j]/abs(a[i][j]));
+			else
+				result[i][j] = a[i][j];
+		}
+
 }
 
 void point2vec(point a, vec result) {
@@ -51,7 +56,6 @@ void unit(mat result) {
 			else result[i][j] = 0;
 		}
 	}
-
 }
 
 void move(float x, float y, mat result) {

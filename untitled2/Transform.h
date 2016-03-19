@@ -40,6 +40,9 @@ void makeHomogenVec(float x, float y, vec c);
 // ѕреобразование матрицы в еденичную матрицу
 void unit(mat a);
 
+// ¬осстановление изображени€ к минимальному размеру
+void limit(mat a);
+
 // ѕроцедура передвижени€ изображени€ к точке
 void move(float x, float y, mat result);
 
