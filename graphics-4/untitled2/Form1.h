@@ -16,9 +16,24 @@ namespace untitled2 {
 	/// </summary>
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
-	private: System::Windows::Forms::Button^  btnUpload;
+
+
+
 
 	private: point utmost;
+	private: System::Windows::Forms::Button^  btnOpen;
+	private: System::Windows::Forms::Label^  matrix00;
+	private: System::Windows::Forms::Button^  btnUpload;
+	private: System::Windows::Forms::Panel^  panel1;
+
+
+
+
+
+
+
+
+
 			 point center;
 
 	public:
@@ -50,7 +65,6 @@ namespace untitled2 {
 			 float Wcx, Wcy, Wx, Wy;
 			 float Vcx, Vcy, Vx, Vy;
 
-	private: System::Windows::Forms::Button^  btnOpen;
 
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog;
 			 System::Windows::Forms::SaveFileDialog^  saveFileDialog;
@@ -69,22 +83,13 @@ namespace untitled2 {
 			 /// </summary>
 			 void InitializeComponent(void)
 			 {
-				 this->btnOpen = (gcnew System::Windows::Forms::Button());
 				 this->openFileDialog = (gcnew System::Windows::Forms::OpenFileDialog());
 				 this->saveFileDialog = (gcnew System::Windows::Forms::SaveFileDialog());
+				 this->btnOpen = (gcnew System::Windows::Forms::Button());
+				 this->matrix00 = (gcnew System::Windows::Forms::Label());
 				 this->btnUpload = (gcnew System::Windows::Forms::Button());
+				 this->panel1 = (gcnew System::Windows::Forms::Panel());
 				 this->SuspendLayout();
-				 // 
-				 // btnOpen
-				 // 
-				 this->btnOpen->ImageAlign = System::Drawing::ContentAlignment::BottomRight;
-				 this->btnOpen->Location = System::Drawing::Point(12, 12);
-				 this->btnOpen->Name = L"btnOpen";
-				 this->btnOpen->Size = System::Drawing::Size(75, 23);
-				 this->btnOpen->TabIndex = 0;
-				 this->btnOpen->Text = L"Открыть";
-				 this->btnOpen->UseVisualStyleBackColor = true;
-				 this->btnOpen->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
 				 // 
 				 // openFileDialog
 				 // 
@@ -100,6 +105,26 @@ namespace untitled2 {
 				 this->saveFileDialog->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
 				 this->saveFileDialog->Title = L"Сгенерировать координаты";
 				 // 
+				 // btnOpen
+				 // 
+				 this->btnOpen->ImageAlign = System::Drawing::ContentAlignment::BottomRight;
+				 this->btnOpen->Location = System::Drawing::Point(12, 12);
+				 this->btnOpen->Name = L"btnOpen";
+				 this->btnOpen->Size = System::Drawing::Size(75, 23);
+				 this->btnOpen->TabIndex = 0;
+				 this->btnOpen->Text = L"Открыть";
+				 this->btnOpen->UseVisualStyleBackColor = true;
+				 this->btnOpen->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
+				 // 
+				 // matrix00
+				 // 
+				 this->matrix00->AutoSize = true;
+				 this->matrix00->Location = System::Drawing::Point(751, 9);
+				 this->matrix00->Name = L"matrix00";
+				 this->matrix00->Size = System::Drawing::Size(26, 13);
+				 this->matrix00->TabIndex = 2;
+				 this->matrix00->Text = L"T00";
+				 // 
 				 // btnUpload
 				 // 
 				 this->btnUpload->ImageAlign = System::Drawing::ContentAlignment::BottomLeft;
@@ -111,15 +136,26 @@ namespace untitled2 {
 				 this->btnUpload->UseVisualStyleBackColor = true;
 				 this->btnUpload->Click += gcnew System::EventHandler(this, &Form1::button1_Click_1);
 				 // 
+				 // panel1
+				 // 
+				 this->panel1->AutoSize = true;
+				 this->panel1->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+				 this->panel1->Location = System::Drawing::Point(12, 12);
+				 this->panel1->Name = L"panel1";
+				 this->panel1->Size = System::Drawing::Size(0, 0);
+				 this->panel1->TabIndex = 3;
+				 // 
 				 // Form1
 				 // 
 				 this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 				 this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 				 this->ClientSize = System::Drawing::Size(789, 424);
+				 this->Controls->Add(this->matrix00);
 				 this->Controls->Add(this->btnUpload);
+				 this->Controls->Add(this->panel1);
 				 this->Controls->Add(this->btnOpen);
 				 this->KeyPreview = true;
-				 this->MinimumSize = System::Drawing::Size(50, 50);
+				 this->MinimumSize = System::Drawing::Size(400, 200);
 				 this->Name = L"Form1";
 				 this->RightToLeft = System::Windows::Forms::RightToLeft::No;
 				 this->Text = L"Form1";
@@ -128,6 +164,7 @@ namespace untitled2 {
 				 this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::Form1_KeyDown);
 				 this->Resize += gcnew System::EventHandler(this, &Form1::Form1_Resize);
 				 this->ResumeLayout(false);
+				 this->PerformLayout();
 
 			 }
 #pragma endregion
@@ -169,6 +206,7 @@ namespace untitled2 {
 				 set(T1, T);	
 
 				 this->Refresh();
+				 matrix00->Location = Point(utmost.x - 150.0f, 12.0f);
 			 }
 	private: System::Void Form1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 				 Graphics^ g = e->Graphics;
@@ -179,6 +217,15 @@ namespace untitled2 {
 				 SolidBrush^ fontBrush = gcnew SolidBrush(Color::Black);
 
 				 g->DrawRectangle(rectPen, Wcx, top, Wx, Wy);
+				 //char buffer[30];
+				//sprintf(buffer, "%f", T[0][0]);
+				 System::Text::StringBuilder^ sb = gcnew System::Text::StringBuilder();
+				 sb->Append(T[0][0].ToString() + " " + T[0][1].ToString() + " " + T[0][2].ToString());
+				 sb->AppendLine();
+				 sb->Append(T[1][0].ToString() + " " + T[1][1].ToString() + " " + T[1][2].ToString());
+				 sb->AppendLine();
+				 sb->Append(T[2][0].ToString() + " " + T[2][1].ToString() + " " + T[2][2].ToString());
+				matrix00->Text = sb->ToString();
 
 				 point Pmin, Pmax;
 
@@ -205,7 +252,7 @@ namespace untitled2 {
 					 if (drawNames) {
 						 g->DrawString(lines[i].name, font, fontBrush, (a.x+((b.x-a.x)/2)), (a.y+((b.y-a.y)/2)));
 					 }
-				 }	
+				 }
 			 }
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 				 if (this->openFileDialog->ShowDialog() ==
