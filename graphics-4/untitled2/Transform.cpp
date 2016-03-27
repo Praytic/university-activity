@@ -78,7 +78,7 @@ void rotateCounterclockwisePivot(float angle, mat result) {
 	/*
 	* | cos(A) -sin(A) 0 |
 	* | sin(A)  cos(A) 0 |
-	* | 0		0	   1 |
+	* | 0       0     1 |
 	*/
 	result[0][0] = cos(A); 
 	result[0][1] = -sin(A);
@@ -92,7 +92,7 @@ void rotateClockwisePivot(float angle, mat result) {
 	/*
 	* | cos(A)  sin(A) 0 |
 	* | -sin(A) cos(A) 0 |
-	* | 0		0	   1 |
+	* | 0       0      1 |
 	*/
 	result[0][0] = cos(A);  
 	result[0][1] = sin(A);
@@ -108,7 +108,7 @@ void rotateCounterclockwisePoint(float angle, float x, float y, mat result) {
 	/*
 	* | cos(A) -sin(A) X |
 	* | sin(A)  cos(A) Y |
-	* | 0		0	   1 |
+	* | 0       0      1 |
 	*/
 	result[0][0] = cos(A); 
 	result[0][1] = -sin(A); 
@@ -126,7 +126,7 @@ void rotateClockwisePoint(float angle, float x, float y, mat result) {
 	/*
 	* | cos(A)  sin(A) Rx |
 	* | -sin(A) cos(A) Ry |
-	* | 0		0	   1  |
+	* | 0       0      1  |
 	*/
 	result[0][0] = cos(A);  
 	result[0][1] = sin(A); 
