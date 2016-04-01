@@ -59,11 +59,12 @@ namespace untitled2 {
     {
         System::Drawing::Font^ font = gcnew System::Drawing::Font("Arial", 8);
         SolidBrush^ fontBrush = gcnew SolidBrush(Color::Black);
+		float scale = 0.4;
         for (int i = 0; i < lines.Count; i++) {
-            g->DrawLine(pen, lines[i].start.x, lines[i].start.y, lines[i].end.x, lines[i].end.y);
+            g->DrawLine(pen, lines[i].start.x * scale, lines[i].start.y * scale, lines[i].end.x * scale, lines[i].end.y * scale);
 
             if (drawNames) {
-                g->DrawString(lines[i].name, font, fontBrush, (lines[i].start.x + ((lines[i].end.x - lines[i].start.x) / 2)), (lines[i].start.y + ((lines[i].end.y - lines[i].start.y) / 2)));
+               // g->DrawString(lines[i].name, font, fontBrush, (lines[i].start.x + ((lines[i].end.x - lines[i].start.x) / 2)), (lines[i].start.y + ((lines[i].end.y - lines[i].start.y) / 2)));
             }
         }
     }
@@ -166,14 +167,6 @@ namespace untitled2 {
 				 Wy  = Form::ClientRectangle.Height - top - bottom;
 			 }
 
-	private: System::Void Restore_Image() {
-				 unit(T);
-				 mat R, T1;
-				 reflectHorizontally(utmost.y, R);
-				 times(R, T, T1);
-				 set(T1, T);
-			 }
-
 	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 				 drawNames = false;
 				 lines.Clear();
@@ -208,9 +201,13 @@ namespace untitled2 {
                  g->DrawRectangle(rectPen, rect);
                  g->Clip = gcnew System::Drawing::Region(rect);
 
-                 g->Transform = gcnew System::Drawing::Drawing2D::Matrix(T[0][0], T[1][0], T[0][1], T[1][1], T[0][2], T[1][2]);
 
-				 DrawFigure(g, blackPen);
+				 for (int i = 0; i < matrices.size(); i++) {
+					mat C;
+					times(T, matrices[i], C);
+					g->Transform = gcnew System::Drawing::Drawing2D::Matrix(C[0][0], C[1][0], C[0][1], C[1][1], C[0][2], C[1][2]);
+					DrawFigure(g, blackPen);
+				 }
 			 }
 
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -242,7 +239,6 @@ namespace untitled2 {
 								 getline(in, str);
 							 }
 						 }
-						 Restore_Image();
 						 frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T);
 						 this->Refresh();
 				 }

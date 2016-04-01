@@ -19,6 +19,7 @@
       <Filter>Файлы ресурсов</Filter>
     </None>
     <None Include="coordinates.txt" />
+    <None Include="comands.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="untitled2.cpp">
