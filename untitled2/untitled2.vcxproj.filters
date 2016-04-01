@@ -15,13 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
     <None Include="app.ico">
       <Filter>Файлы ресурсов</Filter>
     </None>
-    <None Include="coordinates.txt">
-      <Filter>Файлы ресурсов</Filter>
-    </None>
+    <None Include="coordinates.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="untitled2.cpp">
@@ -50,15 +47,13 @@
     <ClInclude Include="Transform.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="PaintElements.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">
       <Filter>Файлы ресурсов</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Form1.resX">
-      <Filter>Файлы ресурсов</Filter>
-    </EmbeddedResource>
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
 // untitled2.cpp: главный файл проекта.
+
 #include "stdafx.h"
 #include <fstream>
 #include <sstream>
