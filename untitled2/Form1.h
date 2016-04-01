@@ -19,7 +19,7 @@ namespace untitled2 {
 	private: point utmost, center;
 	private: System::Windows::Forms::Button^  btnOpen;
 
-	private: System::Windows::Forms::Button^  btnUpload;
+
 	private: System::Windows::Forms::Panel^  panel1;
 
 
@@ -56,6 +56,18 @@ namespace untitled2 {
 	private: System::Windows::Forms::OpenFileDialog^  openFileDialog;
 			 System::Windows::Forms::SaveFileDialog^  saveFileDialog;
 
+    private: void DrawFigure(Graphics^ g, Pen^ pen)
+    {
+        System::Drawing::Font^ font = gcnew System::Drawing::Font("Arial", 8);
+        SolidBrush^ fontBrush = gcnew SolidBrush(Color::Black);
+        for (int i = 0; i < lines.Count; i++) {
+            g->DrawLine(pen, lines[i].start.x, lines[i].start.y, lines[i].end.x, lines[i].end.y);
+
+            if (drawNames) {
+                g->DrawString(lines[i].name, font, fontBrush, (lines[i].start.x + ((lines[i].end.x - lines[i].start.x) / 2)), (lines[i].start.y + ((lines[i].end.y - lines[i].start.y) / 2)));
+            }
+        }
+    }
 
 
 			 /// <summary>
@@ -73,7 +85,6 @@ namespace untitled2 {
                  this->openFileDialog = (gcnew System::Windows::Forms::OpenFileDialog());
                  this->saveFileDialog = (gcnew System::Windows::Forms::SaveFileDialog());
                  this->btnOpen = (gcnew System::Windows::Forms::Button());
-                 this->btnUpload = (gcnew System::Windows::Forms::Button());
                  this->panel1 = (gcnew System::Windows::Forms::Panel());
                  this->SuspendLayout();
                  // 
@@ -102,17 +113,6 @@ namespace untitled2 {
                  this->btnOpen->UseVisualStyleBackColor = true;
                  this->btnOpen->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
                  // 
-                 // btnUpload
-                 // 
-                 this->btnUpload->ImageAlign = System::Drawing::ContentAlignment::BottomLeft;
-                 this->btnUpload->Location = System::Drawing::Point(12, 41);
-                 this->btnUpload->Name = L"btnUpload";
-                 this->btnUpload->Size = System::Drawing::Size(75, 23);
-                 this->btnUpload->TabIndex = 1;
-                 this->btnUpload->Text = L"Выгрузить";
-                 this->btnUpload->UseVisualStyleBackColor = true;
-                 this->btnUpload->Click += gcnew System::EventHandler(this, &Form1::button1_Click_1);
-                 // 
                  // panel1
                  // 
                  this->panel1->AutoSize = true;
@@ -127,7 +127,6 @@ namespace untitled2 {
                  this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
                  this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
                  this->ClientSize = System::Drawing::Size(789, 424);
-                 this->Controls->Add(this->btnUpload);
                  this->Controls->Add(this->panel1);
                  this->Controls->Add(this->btnOpen);
                  this->KeyPreview = true;
@@ -188,30 +187,14 @@ namespace untitled2 {
 				 g->Clear(Color::White);
 				 Pen^ blackPen = gcnew Pen(Color::Black, 1);
 				 Pen^ rectPen = gcnew Pen(Color::Red, 2);
-				 System::Drawing::Font^ font = gcnew System::Drawing::Font("Arial", 8);
-				 SolidBrush^ fontBrush = gcnew SolidBrush(Color::Black);
                 
                  System::Drawing::Rectangle rect = System::Drawing::Rectangle(Wcx, top, Wx, Wy);
                  g->DrawRectangle(rectPen, rect);
                  g->Clip = gcnew System::Drawing::Region(rect);
 
-				 for (int i = 0; i < lines.Count; i++) {
-					 vec A, B;
-					 point2vec(lines[i].start, A);
-					 point2vec(lines[i].end, B);
-					 vec A1, B1;
-					 timesMatVec(T,A,A1);
-					 timesMatVec(T,B,B1);
-					 point a, b;
-					 vec2point(A1, a);
-					 vec2point(B1, b);
+                 g->Transform = gcnew System::Drawing::Drawing2D::Matrix(T[0][0], T[1][0], T[0][1], T[1][1], T[0][2], T[1][2]);
 
-					 g->DrawLine(blackPen, a.x, a.y, b.x, b.y);
-
-					 if (drawNames) {
-						 g->DrawString(lines[i].name, font, fontBrush, (a.x+((b.x-a.x)/2)), (a.y+((b.y-a.y)/2)));
-					 }
-				 }
+				 DrawFigure(g, blackPen);
 			 }
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 				 if (this->openFileDialog->ShowDialog() ==
@@ -258,41 +241,6 @@ namespace untitled2 {
 						 }
 						 Restore_Image();
 						 frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T);
-						 this->Refresh();
-				 }
-			 }
-	private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
-				 if (this->saveFileDialog->ShowDialog() ==
-					 System::Windows::Forms::DialogResult::OK) {
-						 wchar_t fileName[1024];
-						 for (int i = 0; i < saveFileDialog->FileName->Length; i++)
-							 fileName[i] = saveFileDialog->FileName[i];
-						 fileName[saveFileDialog->FileName->Length] = '\0';
-						 std::ofstream out;
-						 out.open(fileName);
-						 if ( out.is_open() ) {
-							 float oVcx = Vcx,
-								 oVcy = Vcy,
-								 oVx = Vx,
-								 oVy = Vy;
-							out << oVcx << ' ' << oVcy << ' ' 
-								<< oVx << ' ' << oVy << '\n';
-							 for (int i = 0; i < lines.Count; i++) {
-								 vec A, B;
-								 point2vec(lines[i].start, A);
-								 point2vec(lines[i].end, B);
-								 vec A1, B1;
-								 timesMatVec(T,A,A1);
-								 timesMatVec(T,B,B1);
-								 point a, b;
-								 vec2point(A1, a);
-								 vec2point(B1, b);
-								std::string nameOut = msclr::interop::marshal_as<std::string>(lines[i].name);
-								 out << a.x << ' ' << a.y << ' ' 
-									 << b.x << ' ' << b.y << ' '
-									 << nameOut << '\n';
-							 }
-						 }
 						 this->Refresh();
 				 }
 			 }
