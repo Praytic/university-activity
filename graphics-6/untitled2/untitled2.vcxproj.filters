@@ -15,16 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
     <None Include="app.ico">
       <Filter>Файлы ресурсов</Filter>
     </None>
-    <None Include="coordinates.txt">
-      <Filter>Файлы ресурсов</Filter>
-    </None>
-    <None Include="coordinates2.txt">
-      <Filter>Файлы ресурсов</Filter>
-    </None>
+    <None Include="coordinates.txt" />
+    <None Include="comands.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="untitled2.cpp">
@@ -37,9 +32,6 @@
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Файлы исходного кода</Filter>
-    </ClCompile>
-    <ClCompile Include="Clip.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,7 +48,7 @@
     <ClInclude Include="Transform.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="Clip.h">
+    <ClInclude Include="PaintElements.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
@@ -64,10 +56,5 @@
     <ResourceCompile Include="app.rc">
       <Filter>Файлы ресурсов</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Form1.resX">
-      <Filter>Файлы ресурсов</Filter>
-    </EmbeddedResource>
   </ItemGroup>
 </Project>
