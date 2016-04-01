@@ -86,11 +86,9 @@
   <ItemGroup>
     <None Include="app.ico" />
     <None Include="coordinates.txt" />
-    <None Include="coordinates2.txt" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Clip.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -100,7 +98,6 @@
     <ClCompile Include="untitled2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Clip.h" />
     <ClInclude Include="Form1.h">
       <FileType>CppForm</FileType>
     </ClInclude>

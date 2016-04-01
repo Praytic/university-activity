@@ -1,7 +1,5 @@
 #pragma once
 
-#include <msclr/marshal_cppstd.h>
-
 namespace untitled2 {
 
 	using namespace System;
@@ -18,6 +16,7 @@ namespace untitled2 {
 	{
 	private: point utmost, center;
 	private: System::Windows::Forms::Button^  btnOpen;
+    private: System::Windows::Forms::Button^  button1;
 
 
 	private: System::Windows::Forms::Panel^  panel1;
@@ -86,6 +85,7 @@ namespace untitled2 {
                  this->saveFileDialog = (gcnew System::Windows::Forms::SaveFileDialog());
                  this->btnOpen = (gcnew System::Windows::Forms::Button());
                  this->panel1 = (gcnew System::Windows::Forms::Panel());
+                 this->button1 = (gcnew System::Windows::Forms::Button());
                  this->SuspendLayout();
                  // 
                  // openFileDialog
@@ -107,9 +107,9 @@ namespace untitled2 {
                  this->btnOpen->ImageAlign = System::Drawing::ContentAlignment::BottomRight;
                  this->btnOpen->Location = System::Drawing::Point(12, 12);
                  this->btnOpen->Name = L"btnOpen";
-                 this->btnOpen->Size = System::Drawing::Size(75, 23);
+                 this->btnOpen->Size = System::Drawing::Size(87, 23);
                  this->btnOpen->TabIndex = 0;
-                 this->btnOpen->Text = L"Открыть";
+                 this->btnOpen->Text = L"Координаты";
                  this->btnOpen->UseVisualStyleBackColor = true;
                  this->btnOpen->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
                  // 
@@ -122,11 +122,23 @@ namespace untitled2 {
                  this->panel1->Size = System::Drawing::Size(0, 0);
                  this->panel1->TabIndex = 3;
                  // 
+                 // button1
+                 // 
+                 this->button1->ImageAlign = System::Drawing::ContentAlignment::BottomRight;
+                 this->button1->Location = System::Drawing::Point(105, 12);
+                 this->button1->Name = L"button1";
+                 this->button1->Size = System::Drawing::Size(75, 23);
+                 this->button1->TabIndex = 4;
+                 this->button1->Text = L"Команды";
+                 this->button1->UseVisualStyleBackColor = true;
+                 this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click_1);
+                 // 
                  // Form1
                  // 
                  this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
                  this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
                  this->ClientSize = System::Drawing::Size(789, 424);
+                 this->Controls->Add(this->button1);
                  this->Controls->Add(this->panel1);
                  this->Controls->Add(this->btnOpen);
                  this->KeyPreview = true;
@@ -153,6 +165,7 @@ namespace untitled2 {
 				 Wx  = Form::ClientRectangle.Width  - left - right;
 				 Wy  = Form::ClientRectangle.Height - top - bottom;
 			 }
+
 	private: System::Void Restore_Image() {
 				 unit(T);
 				 mat R, T1;
@@ -160,12 +173,14 @@ namespace untitled2 {
 				 times(R, T, T1);
 				 set(T1, T);
 			 }
+
 	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 				 drawNames = false;
 				 lines.Clear();
 				 unit(T);
 				 RefreshBorderCoordinates();
 			 }
+
 	private: System::Void Form1_Resize(System::Object^  sender, System::EventArgs^  e) {
 				 System::Drawing::Rectangle rect = Form::ClientRectangle;
 				 point center = { rect.Width / 2, rect.Height / 2 };
@@ -182,6 +197,7 @@ namespace untitled2 {
 
 				 this->Refresh();
 			 }
+
 	private: System::Void Form1_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 				 Graphics^ g = e->Graphics;
 				 g->Clear(Color::White);
@@ -196,6 +212,7 @@ namespace untitled2 {
 
 				 DrawFigure(g, blackPen);
 			 }
+
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 				 if (this->openFileDialog->ShowDialog() ==
 					 System::Windows::Forms::DialogResult::OK) {
@@ -211,20 +228,6 @@ namespace untitled2 {
 							 unit(T);
 							 std::string str;
 							 getline (in, str);
-							 if (in) {
-								 if ((str.find_first_not_of(" \t\r\n") != std::string::npos)
-									 && (str[0] != '#')) {
-										 std::stringstream s(str);
-										 line l;
-										 float oVcx, oVcy, oVx, oVy;
-										 s >> oVcx >> oVcy >> oVx >> oVy;
-										 Vcx = oVcx;
-										 Vcy = oVcy;
-										 Vx = oVx;
-										 Vy = oVy;
-								 }
-								 getline(in, str);
-							 }
 							 while (in) {
 								 if ((str.find_first_not_of(" \t\r\n") != std::string::npos)
 									 && (str[0] != '#')) {
@@ -244,6 +247,7 @@ namespace untitled2 {
 						 this->Refresh();
 				 }
 			 }
+
 	private: System::Void Form1_KeyDown(System::Object^  sender, System::Windows::Forms::KeyEventArgs^  e) {
 				 mat R, T1;
 				 switch(e->KeyCode) {
@@ -327,10 +331,87 @@ namespace untitled2 {
 				 }
 				 times(R, T, T1);
 				 set(T1, T);
-				 set(R, lastR);
 
 				 this->Refresh();
 			 }
-	};
+
+    private: System::Void button1_Click_1(System::Object^  sender, System::EventArgs^  e) {
+        if (this->openFileDialog->ShowDialog() ==
+            System::Windows::Forms::DialogResult::OK) {
+            wchar_t fileName[1024];
+            for (int i = 0; i < openFileDialog->FileName->Length; i++)
+            {
+                fileName[i] = openFileDialog->FileName[i];
+            }
+            fileName[openFileDialog->FileName->Length] = '\0';
+            std::ifstream in;
+            in.open(fileName);
+            if (in.is_open()) {
+                matrices.clear();
+                std::stack<mat> matStack;
+                mat K;
+                unit(K);
+                unit(T);
+                std::string str;
+                getline(in, str);
+                while (in) {
+                    if ((str.find_first_not_of(" \t\r\n") != std::string::npos)
+                        && (str[0] != '#')) {
+                        std::stringstream s(str);
+                        std::string cmd;
+                        s >> cmd;
+                        if (cmd == "frame") {
+                            line l;
+                            s >> l.start.x >> l.start.y >> l.end.x >> l.end.y;
+                            Vcx = l.start.x;
+                            Vcy = l.start.y;
+                            Vx = l.end.x;
+                            Vy = l.end.y;
+                            frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T);
+                        }
+                        else if (cmd == "figure") {
+                            matrices.push_back(K);
+                        }
+                        else if (cmd == "pushTransform") {
+                            matStack.push(K);
+                        }
+                        else if (cmd == "popTransform") {
+                            K = matStack.top();
+                            matStack.pop();
+                        }
+                        else if (cmd == "translate") {
+                            float Tx, Ty;
+                            s >> Tx >> Ty;
+                            mat C, C1;
+                            move(Tx, Ty, C);
+                            times(K, C, C1);
+                            K = C1;
+                        }
+                        else if (cmd == "scale") {
+                            float S;
+                            s >> S;
+                            mat C, C1;
+                            scaleOverPivot(S, C);
+                            times(K, C, C1);
+                            K = C1;
+                        }
+                        else if (cmd == "rotate") {
+                            float Phi;
+                            s >> Phi;
+                            float pi = 3.1415926535;
+                            float PhiR = Phi*(pi / 180);
+                            mat C, C1;
+                            rotateCounterclockwisePivot(PhiR, C);
+                            times(K, C, C1);
+                            K = C1;
+                        }
+                    }
+                    getline(in, str);
+                }
+            }
+            this->Refresh();
+        }
+        }
+};
 }
 

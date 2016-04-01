@@ -3,10 +3,10 @@
 #include "Transform.h"
 #include <math.h>
 
-mat T;
-mat lastR;
+mat T, R;
+std::vector<mat> matrices(0);
 
-void times(mat a, mat b, mat result) {
+void times(mat a, mat b, mat &result) {
 	for(int i = 0; i < M; i++) {
 		for(int j = 0; j < M; j++) {
 			double scalar = 0;
@@ -20,7 +20,7 @@ void times(mat a, mat b, mat result) {
 	}
 }
 
-void timesMatVec(mat a, vec b, vec result) {
+void timesMatVec(mat a, vec b, vec &result) {
 	for(int i = 0; i < M; i++) {
 		float scalar = 0;
 		for(int j = 0; j < M; j++)
@@ -29,7 +29,7 @@ void timesMatVec(mat a, vec b, vec result) {
 	}
 }
 
-void set(mat a, mat result) {
+void set(mat a, mat &result) {
 	for(int i = 0; i < M; i++)
 		for (int j = 0; j < M; j++) {
 			if (abs(a[i][j]) < 1e-4f && a[i][j] != 0)
@@ -39,7 +39,7 @@ void set(mat a, mat result) {
 		}
 }
 
-void point2vec(point a, vec result) {
+void point2vec(point a, vec &result) {
 	result[0] = a.x; result[1] = a.y; result[2] = 1;
 }
 
@@ -52,7 +52,7 @@ void makeHomogenVec(float x, float y, vec result){
 	result[0] = x; result[1] = y; result[2] = 1;
 }
 
-void unit(mat result) {
+void unit(mat &result) {
 	for (int i = 0; i < M; i++) {
 		for (int j = 0; j < M; j++) {
 			if (i == j) result[i][j] = 1;
@@ -61,7 +61,7 @@ void unit(mat result) {
 	}
 }
 
-void move(float x, float y, mat result) {
+void move(float x, float y, mat &result) {
 	unit (result);
 	/*
 	* | 1 0 x |
@@ -72,7 +72,7 @@ void move(float x, float y, mat result) {
 	result[1][M-1] = y;
 }
 
-void rotateCounterclockwisePivot(float angle, mat result) {
+void rotateCounterclockwisePivot(float angle, mat &result) {
 	unit (result);
 	float A = angle;
 	/*
@@ -86,7 +86,7 @@ void rotateCounterclockwisePivot(float angle, mat result) {
 	result[1][1] = cos(A);
 }
 
-void rotateClockwisePivot(float angle, mat result) {
+void rotateClockwisePivot(float angle, mat &result) {
 	unit (result);
 	float A = angle;
 	/*
@@ -100,7 +100,7 @@ void rotateClockwisePivot(float angle, mat result) {
 	result[1][1] = cos(A);
 }
 
-void rotateCounterclockwisePoint(float angle, float x, float y, mat result) {
+void rotateCounterclockwisePoint(float angle, float x, float y, mat &result) {
 	unit (result);
 	float A = angle;
 	float X = x*(1-cos(A))+y*sin(A);
@@ -118,7 +118,7 @@ void rotateCounterclockwisePoint(float angle, float x, float y, mat result) {
 	result[1][2] = Y;
 }
 
-void rotateClockwisePoint(float angle, float x, float y, mat result) {
+void rotateClockwisePoint(float angle, float x, float y, mat &result) {
 	unit (result);
 	float A = angle;
 	float Rx = x*(1-cos(A))+x*sin(A);
@@ -136,7 +136,7 @@ void rotateClockwisePoint(float angle, float x, float y, mat result) {
 	result[1][2] = Ry;
 }
 
-void scaleOverPivot(float scalar, mat result) {
+void scaleOverPivot(float scalar, mat &result) {
 	unit (result);
 	float S = scalar;
 	/*
@@ -148,7 +148,7 @@ void scaleOverPivot(float scalar, mat result) {
 	result[1][1] = S;
 }
 
-void scaleOverPivot(float scalarX, float scalarY, mat result) {
+void scaleOverPivot(float scalarX, float scalarY, mat &result) {
 	unit (result);
 	float Sx = scalarX;
 	float Sy = scalarY;
@@ -161,7 +161,7 @@ void scaleOverPivot(float scalarX, float scalarY, mat result) {
 	result[1][1] = Sy;
 }
 
-void scaleOverPoint(float scalar, float x, float y, mat result) {
+void scaleOverPoint(float scalar, float x, float y, mat &result) {
 	unit (result);
 	float S = scalar;
 	float X = x*(1-S);
@@ -177,7 +177,7 @@ void scaleOverPoint(float scalar, float x, float y, mat result) {
 	result[1][2] = Y;
 }
 
-void scaleOverPoint(float scalarX, float scalarY, float x, float y, mat result) {
+void scaleOverPoint(float scalarX, float scalarY, float x, float y, mat &result) {
 	unit (result);
 	float Sx = scalarX;
 	float Sy = scalarY;
@@ -194,7 +194,7 @@ void scaleOverPoint(float scalarX, float scalarY, float x, float y, mat result) 
 	result[1][2] = Y;
 }
 
-void scaleHorizontally(float scalar, float lineY, mat result) {
+void scaleHorizontally(float scalar, float lineY, mat &result) {
 	unit (result);
 	float S = scalar;
 	float Y = lineY*(1-S);
@@ -207,7 +207,7 @@ void scaleHorizontally(float scalar, float lineY, mat result) {
 	result[1][2] = Y;
 }
 
-void scaleVertically(float scalar, float lineX, mat result) {
+void scaleVertically(float scalar, float lineX, mat &result) {
 	unit (result);
 	float S = scalar;
 	float X = lineX*(1-S);
@@ -220,7 +220,7 @@ void scaleVertically(float scalar, float lineX, mat result) {
 	result[0][2] = X;
 }
 
-void reflectHorizontally(float lineY, mat result){
+void reflectHorizontally(float lineY, mat &result){
 	unit (result);
 	float L = lineY*2;
 	/*
@@ -232,7 +232,7 @@ void reflectHorizontally(float lineY, mat result){
 	result[1][2] = L;
 }
 
-void reflectVertically(float lineX, mat result){
+void reflectVertically(float lineX, mat &result){
 	unit (result);
 	float L = lineX*2;
 	/*
@@ -246,7 +246,7 @@ void reflectVertically(float lineX, mat result){
 
 void frame (float Vx, float Vy, float Vcx, float Vcy,
 			float Wx, float Wy, float Wcx, float Wcy,
-			mat result) {
+			mat &result) {
 	unit (result);
 	mat R, T1;
 	move(-Vcx, -Vcy, R);
