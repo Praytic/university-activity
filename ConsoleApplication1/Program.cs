@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +10,9 @@ namespace ConsoleApplication1
     {
         private static void Main()
         {
+            int stringLength = 0;
+            string originalString = "";
+            string incodedString = "";
             var charMap = new Dictionary<char, int>();
             var finalCodeMap = new Dictionary<char, string>();
 
@@ -19,6 +21,7 @@ namespace ConsoleApplication1
                 while (!sr.EndOfStream)
                 {
                     var line = sr.ReadLine();
+                    originalString += line + "\n";
                     if (line == null) continue;
                     var readLine = line.ToCharArray();
                     foreach (var charValue in readLine)
@@ -31,6 +34,7 @@ namespace ConsoleApplication1
                         {
                             charMap.Add(charValue, 1);
                         }
+                        stringLength++;
                     }
                 }
             }
@@ -61,10 +65,26 @@ namespace ConsoleApplication1
             {
                 finalCodeMap[mapEntry.Key] = charCodedList[index++];
             }
+            int incodingStringLength = 0;
             foreach (var code in finalCodeMap)
             {
                 Console.WriteLine(code);
+                incodingStringLength += code.Value.Length * charMap[code.Key];
             }
+            Console.WriteLine("Simple incoding: " + ((int) Math.Log(charMap.Count, 2) + 1) * stringLength);
+            Console.WriteLine("Huffman incoding: " + incodingStringLength);
+            foreach (var originalChar in originalString)
+            {
+                if (originalChar == '\n')
+                {
+                    incodedString += originalChar;
+                }
+                else
+                {
+                    incodedString += finalCodeMap[originalChar];
+                }
+            }
+            Console.Write("Incoded string:\n" + incodedString);
         }
     }
 }
