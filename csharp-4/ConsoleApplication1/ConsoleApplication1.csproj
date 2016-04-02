@@ -44,7 +44,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataStructure\BinaryTree.cs" />
+    <Compile Include="DataStructure\HuffmanTree.cs" />
+    <Compile Include="DataStructure\HummanNode.cs" />
     <Compile Include="DataStructure\Node.cs" />
+    <Compile Include="MobileNetworkOperator\DataStructure\SubscriberBinaryTree.cs" />
+    <Compile Include="MobileNetworkOperator\DataStructure\SubscriberNode.cs" />
+    <Compile Include="MobileNetworkOperator\MobileNetworkRegister.cs" />
+    <Compile Include="MobileNetworkOperator\MobileNetworkUnit\Subscriber.cs" />
+    <Compile Include="MobileNetworkOperator\MobileNetworkUnit\SubscriberComparable.cs" />
+    <Compile Include="MobileNetworkOperator\MobileNetworkUnit\SubscriberComparer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -53,6 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resource\input.txt" />
+    <Content Include="Resource\input2.txt" />
+    <Content Include="Resource\TextFile1.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
