@@ -287,27 +287,6 @@ namespace ConsoleApplication1.DataStructure
             Console.ResetColor();
         }
 
-        public static void GetCodeList(Node<T> node, ref List<string> codeList, StringBuilder code = null)
-        {
-            if (code == null)
-            {
-                code = new StringBuilder("");
-            }
-            if (node == null)
-            {
-                code.Length--;
-            } else {
-                code.Append('0');
-                GetCodeList(node.Left, ref codeList, code);
-                code.Append('1');
-                GetCodeList(node.Right, ref codeList, code);
-                if (node.Right == null && node.Left == null) {
-                    codeList.Add(code.ToString());
-                }
-                code.Length = (code.Length > 0) ? code.Length-1 : 0;
-            }
-        } 
-
         private static int GetNodeDeltaCounter(Node<T> node)
         {
             int leftCounter = (node._left != null) ? node._left._counter : 0,

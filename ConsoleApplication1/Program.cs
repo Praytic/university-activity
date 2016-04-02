@@ -2,89 +2,97 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using ConsoleApplication1.DataStructure;
+using ConsoleApplication1.MobileNetworkOperator;
+using ConsoleApplication1.MobileNetworkOperator.MobileNetworkUnit;
 
 namespace ConsoleApplication1
 {
     public class Program
     {
-        private static void Main()
-        {
-            int stringLength = 0;
-            string originalString = "";
-            string incodedString = "";
-            var charMap = new Dictionary<char, int>();
-            var finalCodeMap = new Dictionary<char, string>();
+        private static void Main() {
+            var stringOrigin = ReadString("../../Resource/input.txt");
+            var subscribersOrigin = ReadSubscribers("../../Resource/input2.txt");
 
-            using (var sr = new StreamReader("../../Resource/input.txt"))
-            {
-                while (!sr.EndOfStream)
-                {
+            var stringIncoded = "";
+            var subscribersIncoded = "";
+
+            var frequencyString = GetFrequencyDictionary(stringOrigin);
+            var frequencySubscribers = GetFrequencyDictionary(subscribersOrigin);
+
+            var huffmanTreeString = new HuffmanTree<char>(frequencyString);
+            var huffmanTreeSubscribers = new HuffmanTree<Subscriber>(frequencySubscribers);
+
+            var incodedStringDictionary = huffmanTreeString.GetIncodedDictionary();
+            var incodedSubscribersDictionary = huffmanTreeSubscribers.GetIncodedDictionary();
+
+            foreach (var elementOrigin in stringOrigin) {
+                stringIncoded += incodedStringDictionary[elementOrigin];
+            }
+            foreach (var elementOrigin in subscribersOrigin) {
+                subscribersIncoded += incodedSubscribersDictionary[elementOrigin];
+            }
+
+            Console.WriteLine("\n=== STRING ===\n");
+            foreach (var i in incodedStringDictionary) {
+                Console.WriteLine(i);
+            }
+            Console.WriteLine("Simple incoding: " + ((int) Math.Log(huffmanTreeString.Count, 2) + 1) * stringOrigin.Length);
+            Console.WriteLine("Huffman incoding: " + stringIncoded.Length);
+            Console.WriteLine("Incoded string:\n" + stringIncoded);
+
+            Console.WriteLine("\n=== SUBSCRIBERS ===\n");
+            foreach (var i in incodedSubscribersDictionary) {
+                Console.WriteLine(i);
+            }
+            Console.WriteLine("Simple incoding: " + ((int) Math.Log(huffmanTreeSubscribers.Count, 2) + 1) * subscribersOrigin.Count);
+            Console.WriteLine("Huffman incoding: " + subscribersIncoded.Length);
+            Console.WriteLine("Incoded subscribers:\n" + subscribersIncoded);
+        }
+
+        private static string ReadString(string path)
+        {
+            StringBuilder readString = new StringBuilder();
+            using (var sr = new StreamReader(path)) {
+                while (!sr.EndOfStream) {
                     var line = sr.ReadLine();
-                    originalString += line + "\n";
-                    if (line == null) continue;
-                    var readLine = line.ToCharArray();
-                    foreach (var charValue in readLine)
-                    {
-                        if (charMap.ContainsKey(charValue))
-                        {
-                            charMap[charValue]++;
-                        }
-                        else
-                        {
-                            charMap.Add(charValue, 1);
-                        }
-                        stringLength++;
+                    readString.Append(line);
+                }
+            }
+            return readString.ToString();
+        }
+
+        private static List<Subscriber> ReadSubscribers(string path) {
+            MobileNetworkRegister registry = MobileNetworkRegister.Instance;
+            var subscriberList = new List<Subscriber>();
+            using (var sr = new StreamReader(path)) {
+                while (!sr.EndOfStream) {
+                    var readLine = sr.ReadLine();
+                    if (readLine != null) {
+                        var inputList = readLine
+                            .Split(" \t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                            .ToArray();
+                        subscriberList.Add(registry.RegisterSubscriber(
+                            inputList[0],
+                            inputList[1],
+                            inputList[2]));
                     }
                 }
             }
-            var charSortedMap = charMap.OrderBy(a => a.Value);
-            var charSortedList = new List<Node<int>>();
-            foreach (var valuePair in charSortedMap)
-            {
-                charSortedList.Add(new Node<int>(valuePair.Value));
-            }
+            return subscriberList;
+        }
 
-            Node<int> mergeNode = (charSortedList.Count == 0) ? null : charSortedList[0];
-            while (charSortedList.Count > 1)
-            {
-                var leftNode = charSortedList[0];
-                var rightNode = charSortedList[1];
-                mergeNode = new Node<int>(leftNode.Value + rightNode.Value);
-                Node<int>.AddNodeLeft(ref mergeNode, leftNode);
-                Node<int>.AddNodeRight(ref mergeNode, rightNode);
-                charSortedList.RemoveRange(0, 2);
-                charSortedList.Add(mergeNode);
-                charSortedList.Sort((a, b) => a.Value.CompareTo(b.Value));
-            }
-            var charCodedList = new List<string>();
-            Node<int>.GetCodeList(mergeNode, ref charCodedList);
-            charCodedList.Reverse();
-            int index = 0;
-            foreach (var mapEntry in charSortedMap)
-            {
-                finalCodeMap[mapEntry.Key] = charCodedList[index++];
-            }
-            int incodingStringLength = 0;
-            foreach (var code in finalCodeMap)
-            {
-                Console.WriteLine(code);
-                incodingStringLength += code.Value.Length * charMap[code.Key];
-            }
-            Console.WriteLine("Simple incoding: " + ((int) Math.Log(charMap.Count, 2) + 1) * stringLength);
-            Console.WriteLine("Huffman incoding: " + incodingStringLength);
-            foreach (var originalChar in originalString)
-            {
-                if (originalChar == '\n')
-                {
-                    incodedString += originalChar;
-                }
-                else
-                {
-                    incodedString += finalCodeMap[originalChar];
+        private static Dictionary<T, int> GetFrequencyDictionary<T>(IEnumerable<T> enumerableOrigin) {
+            var frequencyDictionary = new Dictionary<T, int>();
+            foreach (var entityOrigin in enumerableOrigin) {
+                if (frequencyDictionary.ContainsKey(entityOrigin)) {
+                    frequencyDictionary[entityOrigin]++;
+                } else {
+                    frequencyDictionary.Add(entityOrigin, 1);
                 }
             }
-            Console.Write("Incoded string:\n" + incodedString);
+            return frequencyDictionary;
         }
     }
 }
