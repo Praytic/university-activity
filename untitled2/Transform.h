@@ -16,6 +16,7 @@ value struct line {
 #define M 3
 typedef std::tr1::array<float, M> vec;
 typedef std::tr1::array<vec, M> mat;
+typedef System::Collections::Generic::List<point> polygon;
 
 // Матрица совмещенного преобразования
 extern mat T, R;

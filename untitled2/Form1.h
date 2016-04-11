@@ -46,6 +46,7 @@ namespace untitled2 {
 		}
 
 	private: System::Collections::Generic::List<line> lines;
+			 System::Collections::Generic::List<polygon^> polygons;
 			 bool drawNames;
 			 float left, right, top, bottom;
 			 float Wcx, Wcy, Wx, Wy;
@@ -169,6 +170,7 @@ namespace untitled2 {
 
 	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 				 drawNames = false;
+				 polygons.Clear();
 				 lines.Clear();
 				 unit(T);
 				 RefreshBorderCoordinates();
@@ -357,50 +359,25 @@ namespace untitled2 {
                         std::string cmd;
                         s >> cmd;
                         if (cmd == "frame") {
-                            line l;
-                            s >> l.start.x >> l.start.y >> l.end.x >> l.end.y;
-                            Vcx = l.start.x;
-                            Vcy = l.start.y;
-                            Vx = l.end.x;
-                            Vy = l.end.y;
-                            frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T);
-                        }
-                        else if (cmd == "figure") {
-                            matrices.push_back(K);
-                        }
-                        else if (cmd == "pushTransform") {
-                            matStack.push(K);
-                        }
-                        else if (cmd == "popTransform") {
-                            K = matStack.top();
-                            matStack.pop();
-                        }
-                        else if (cmd == "translate") {
-                            float Tx, Ty;
-                            s >> Tx >> Ty;
-                            mat C, C1;
-                            move(Tx, Ty, C);
-                            times(K, C, C1);
-                            K = C1;
-                        }
-                        else if (cmd == "scale") {
-                            float S;
-                            s >> S;
-                            mat C, C1;
-                            scaleOverPivot(S, C);
-                            times(K, C, C1);
-                            K = C1;
-                        }
-                        else if (cmd == "rotate") {
-                            float Phi;
-                            s >> Phi;
-                            float pi = 3.1415926535;
-                            float PhiR = Phi*(pi / 180);
-                            mat C, C1;
-                            rotateCounterclockwisePivot(PhiR, C);
-                            times(K, C, C1);
-                            K = C1;
-                        }
+							float newVcx, newVcy, newVx, newVy;
+							s >> newVcx >> newVcy >> newVx >> newVy;
+							Vcx = newVcx;
+							Vcy = newVcy;
+							Vx = newVx;
+							Vy = newVy;
+							frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T);
+						}
+						else if (cmd == "polygon") {
+							int numpoint;
+							s >> numpoint;
+							polygon^ P = gcnew polygon(0);
+							for (int i = 0; i < numpoint; i++) {
+								point p;
+								s >> p.x >> p.y;
+								P->Add(p);
+							}
+							polygons.Add(P);
+						}
                     }
                     getline(in, str);
                 }
