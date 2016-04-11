@@ -203,12 +203,36 @@ namespace untitled2 {
                  g->DrawRectangle(rectPen, rect);
                  g->Clip = gcnew System::Drawing::Region(rect);
 
+				 point Pmin, Pmax;
 
-				 for (int i = 0; i < matrices.size(); i++) {
-					mat C;
-					times(T, matrices[i], C);
-					g->Transform = gcnew System::Drawing::Drawing2D::Matrix(C[0][0], C[1][0], C[0][1], C[1][1], C[0][2], C[1][2]);
-					DrawFigure(g, blackPen);
+				Pmin.x = Wcx;
+				Pmin.y = Wcy - Wy;
+				Pmax.x = Wcx + Wx;
+				Pmax.y = Wcy;
+
+				 for (int i = 0; i < polygons.Count; i++) {
+						 polygon^ p = polygons[i];
+						 polygon^ p1 = gcnew polygon(0);
+						 point a, b, c;
+						 vec A, B, A1, B1;
+						 for (int j = 0; j < p->Count; j++)
+						 {
+							 point2vec(p[j], B);
+							 timesMatVec(T, B, B1);
+							 vec2point(B1, b);
+							 p1->Add(b);
+						 }
+						 p1 = Pclip(p1, Pmin, Pmax);
+						 if (p1->Count != 0)
+						 {
+							 a = p1[p1->Count - 1];
+							 for (int j = 0; j < p1->Count; j++)
+							 {
+								 b = p1[j];
+								 g->DrawLine(blackPen, a.x, a.y, b.x, b.y);
+								 a = b;
+							 }
+						 }
 				 }
 			 }
 

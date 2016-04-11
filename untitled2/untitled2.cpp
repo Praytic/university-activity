@@ -7,6 +7,7 @@
 #include <vector>
 #include <stack>
 #include "Transform.h"
+#include "PClip.h"
 #include "Form1.h"
 
 using namespace untitled2;
