@@ -15,7 +15,7 @@ namespace untitled2 {
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
 	private: point utmost, center;
-	private: System::Windows::Forms::Button^  btnOpen;
+
     private: System::Windows::Forms::Button^  button1;
 
 
@@ -83,79 +83,66 @@ namespace untitled2 {
 			 /// </summary>
 			 void InitializeComponent(void)
 			 {
-                 this->openFileDialog = (gcnew System::Windows::Forms::OpenFileDialog());
-                 this->saveFileDialog = (gcnew System::Windows::Forms::SaveFileDialog());
-                 this->btnOpen = (gcnew System::Windows::Forms::Button());
-                 this->panel1 = (gcnew System::Windows::Forms::Panel());
-                 this->button1 = (gcnew System::Windows::Forms::Button());
-                 this->SuspendLayout();
-                 // 
-                 // openFileDialog
-                 // 
-                 this->openFileDialog->DefaultExt = L"txt";
-                 this->openFileDialog->FileName = L"coordinates.txt";
-                 this->openFileDialog->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
-                 this->openFileDialog->Title = L"Открыть файл";
-                 // 
-                 // saveFileDialog
-                 // 
-                 this->saveFileDialog->DefaultExt = L"txt";
-                 this->saveFileDialog->FileName = L"coordinates.txt";
-                 this->saveFileDialog->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
-                 this->saveFileDialog->Title = L"Сгенерировать координаты";
-                 // 
-                 // btnOpen
-                 // 
-                 this->btnOpen->ImageAlign = System::Drawing::ContentAlignment::BottomRight;
-                 this->btnOpen->Location = System::Drawing::Point(12, 12);
-                 this->btnOpen->Name = L"btnOpen";
-                 this->btnOpen->Size = System::Drawing::Size(87, 23);
-                 this->btnOpen->TabIndex = 0;
-                 this->btnOpen->Text = L"Координаты";
-                 this->btnOpen->UseVisualStyleBackColor = true;
-                 this->btnOpen->Click += gcnew System::EventHandler(this, &Form1::button1_Click);
-                 // 
-                 // panel1
-                 // 
-                 this->panel1->AutoSize = true;
-                 this->panel1->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-                 this->panel1->Location = System::Drawing::Point(12, 12);
-                 this->panel1->Name = L"panel1";
-                 this->panel1->Size = System::Drawing::Size(0, 0);
-                 this->panel1->TabIndex = 3;
-                 // 
-                 // button1
-                 // 
-                 this->button1->ImageAlign = System::Drawing::ContentAlignment::BottomRight;
-                 this->button1->Location = System::Drawing::Point(105, 12);
-                 this->button1->Name = L"button1";
-                 this->button1->Size = System::Drawing::Size(75, 23);
-                 this->button1->TabIndex = 4;
-                 this->button1->Text = L"Команды";
-                 this->button1->UseVisualStyleBackColor = true;
-                 this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click_1);
-                 // 
-                 // Form1
-                 // 
-                 this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
-                 this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-                 this->ClientSize = System::Drawing::Size(789, 424);
-                 this->Controls->Add(this->button1);
-                 this->Controls->Add(this->panel1);
-                 this->Controls->Add(this->btnOpen);
-                 this->KeyPreview = true;
-                 this->MinimumSize = System::Drawing::Size(400, 200);
-                 this->Name = L"Form1";
-                 this->RightToLeft = System::Windows::Forms::RightToLeft::No;
-                 this->Text = L"Form1";
-                 this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
-                 this->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::Form1_Paint);
-                 this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::Form1_KeyDown);
-                 this->Resize += gcnew System::EventHandler(this, &Form1::Form1_Resize);
-                 this->ResumeLayout(false);
-                 this->PerformLayout();
+				 this->openFileDialog = (gcnew System::Windows::Forms::OpenFileDialog());
+				 this->saveFileDialog = (gcnew System::Windows::Forms::SaveFileDialog());
+				 this->panel1 = (gcnew System::Windows::Forms::Panel());
+				 this->button1 = (gcnew System::Windows::Forms::Button());
+				 this->SuspendLayout();
+				 // 
+				 // openFileDialog
+				 // 
+				 this->openFileDialog->DefaultExt = L"txt";
+				 this->openFileDialog->FileName = L"coordinates.txt";
+				 this->openFileDialog->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+				 this->openFileDialog->Title = L"Открыть файл";
+				 // 
+				 // saveFileDialog
+				 // 
+				 this->saveFileDialog->DefaultExt = L"txt";
+				 this->saveFileDialog->FileName = L"coordinates.txt";
+				 this->saveFileDialog->Filter = L"Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
+				 this->saveFileDialog->Title = L"Сгенерировать координаты";
+				 // 
+				 // panel1
+				 // 
+				 this->panel1->AutoSize = true;
+				 this->panel1->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+				 this->panel1->Location = System::Drawing::Point(12, 12);
+				 this->panel1->Name = L"panel1";
+				 this->panel1->Size = System::Drawing::Size(0, 0);
+				 this->panel1->TabIndex = 3;
+				 // 
+				 // button1
+				 // 
+				 this->button1->ImageAlign = System::Drawing::ContentAlignment::BottomRight;
+				 this->button1->Location = System::Drawing::Point(18, 12);
+				 this->button1->Name = L"button1";
+				 this->button1->Size = System::Drawing::Size(75, 23);
+				 this->button1->TabIndex = 4;
+				 this->button1->Text = L"Команды";
+				 this->button1->UseVisualStyleBackColor = true;
+				 this->button1->Click += gcnew System::EventHandler(this, &Form1::button1_Click_1);
+				 // 
+				 // Form1
+				 // 
+				 this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
+				 this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+				 this->ClientSize = System::Drawing::Size(789, 424);
+				 this->Controls->Add(this->button1);
+				 this->Controls->Add(this->panel1);
+				 this->KeyPreview = true;
+				 this->MinimumSize = System::Drawing::Size(400, 200);
+				 this->Name = L"Form1";
+				 this->RightToLeft = System::Windows::Forms::RightToLeft::No;
+				 this->Text = L"Form1";
+				 this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
+				 this->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::Form1_Paint);
+				 this->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &Form1::Form1_KeyDown);
+				 this->Resize += gcnew System::EventHandler(this, &Form1::Form1_Resize);
+				 this->ResumeLayout(false);
+				 this->PerformLayout();
 
-             }
+			 }
 #pragma endregion
 	private: System::Void RefreshBorderCoordinates() {
 				 left = 20;
@@ -211,62 +198,28 @@ namespace untitled2 {
 				Pmax.y = Wcy;
 
 				 for (int i = 0; i < polygons.Count; i++) {
-						 polygon^ p = polygons[i];
-						 polygon^ p1 = gcnew polygon(0);
-						 point a, b, c;
-						 vec A, B, A1, B1;
-						 for (int j = 0; j < p->Count; j++)
-						 {
-							 point2vec(p[j], B);
-							 timesMatVec(T, B, B1);
-							 vec2point(B1, b);
-							 p1->Add(b);
-						 }
-						 p1 = Pclip(p1, Pmin, Pmax);
-						 if (p1->Count != 0)
-						 {
-							 a = p1[p1->Count - 1];
-							 for (int j = 0; j < p1->Count; j++)
-							 {
-								 b = p1[j];
-								 g->DrawLine(blackPen, a.x, a.y, b.x, b.y);
-								 a = b;
-							 }
-						 }
-				 }
-			 }
-
-	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-				 if (this->openFileDialog->ShowDialog() ==
-					 System::Windows::Forms::DialogResult::OK) {
-						 wchar_t fileName[1024];
-						 for (int i = 0; i < openFileDialog->FileName->Length; i++) {
-							 fileName[i] = openFileDialog->FileName[i];
-						 }
-						 fileName[openFileDialog->FileName->Length] = '\0';
-						 std::ifstream in;
-						 in.open(fileName);
-						 if ( in.is_open() ) {
-							 lines.Clear();
-							 unit(T);
-							 std::string str;
-							 getline (in, str);
-							 while (in) {
-								 if ((str.find_first_not_of(" \t\r\n") != std::string::npos)
-									 && (str[0] != '#')) {
-										 std::stringstream s(str);
-										 line l;
-										 s >> l.start.x >>  l.start.y >> l.end.x >> l.end.y;
-										 std::string linename;
-										 s >> linename;
-										 l.name = gcnew String(linename.c_str());
-										 lines.Add(l);
-								 }
-								 getline(in, str);
-							 }
-						 }
-						 frame(Vx, Vy, Vcx, Vcy, Wx, Wy, Wcx, Wcy, T);
-						 this->Refresh();
+					polygon^ p = polygons[i];
+					polygon^ p1 = gcnew polygon(0);
+					point a, b, c;
+					vec A, B, A1, B1;
+					for (int j = 0; j < p->Count; j++)
+					{
+						point2vec(p[j], B);
+						timesMatVec(T, B, B1);
+						vec2point(B1, b);
+						p1->Add(b);
+					}
+					p1 = Pclip(p1, Pmin, Pmax);
+					if (p1->Count != 0)
+					{
+						a = p1[p1->Count - 1];
+						for (int j = 0; j < p1->Count; j++)
+						{
+							b = p1[j];
+							g->DrawLine(blackPen, a.x, a.y, b.x, b.y);
+							a = b;
+						}
+					}
 				 }
 			 }
 
