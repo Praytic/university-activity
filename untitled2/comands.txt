@@ -1,31 +1,37 @@
 frame 0 0 600 400
+scale 0.5
 
-translate 90 0
+translate 180 0
 rotate 45
 figure
 rotate -45
 
-translate 90 90
+translate 180 180
 rotate 45 
 figure
 rotate -45
 
-translate 90 90
+translate 180 180
 rotate 45 
 figure
 rotate -45
 
-translate 0 -180
+translate 0 -360
 rotate 45 
 figure
 rotate -45
 
-translate 90 90
+translate 180 180
 rotate 45 
 figure
 rotate -45
 
-translate 90 90
+translate 180 180
 rotate 45 
 figure
 rotate -45
+
+translate 360 -360
+scale 2
+rotate 90
+figure
