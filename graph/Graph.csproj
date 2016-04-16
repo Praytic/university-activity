@@ -43,10 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataStructure\AdjacencyMatrix.cs" />
     <Compile Include="DataStructure\Graph.cs" />
-    <Compile Include="DataStructure\GraphNode.cs" />
-    <Compile Include="DataStructure\Node.cs" />
-    <Compile Include="DataStructure\NodeList.cs" />
+    <Compile Include="DataStructure\GraphWeighted.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
