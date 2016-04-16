@@ -1,6 +1,8 @@
-﻿namespace graph.DataStructure {
+﻿using System.Data;
 
-    public class Graph<TValue> {
+namespace graph.DataStructure {
+
+    public class Graph<TValue> : DataSet {
         private readonly AdjacencyMatrix<TValue, byte> _adjacencyMatrix;
 
         public Graph() {

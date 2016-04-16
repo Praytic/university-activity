@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Data;
 using graph.DataStructure;
+using QuickGraph.Algorithms;
+using QuickGraph.Data;
 
 namespace graph {
     class Program {
@@ -30,7 +33,10 @@ namespace graph {
             web.AddDirectedEdge("Products.aspx", "Index.htm");  // Products -> Index
             web.AddDirectedEdge("Products.aspx", "People.aspx");// Products -> People
 
-            Console.WriteLine(web);
+            DataSet ds = web; // your dataset
+            var graph = ds.ToGraph();  // wraps the dataset into a DataSetGraph
+            foreach (DataTable table in graph.TopologicalSort()) // applies a topological sort to the dataset graph
+                Console.WriteLine(table.TableName); // in which order should we delete the tables?
         }
     }
 }
