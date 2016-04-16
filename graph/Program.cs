@@ -1,42 +1,97 @@
 ﻿using System;
-using System.Data;
+using System.IO;
+using System.Linq;
 using graph.DataStructure;
-using QuickGraph.Algorithms;
-using QuickGraph.Data;
 
 namespace graph {
     class Program {
         static void Main(string[] args) {
-            Graph<string> web = new Graph<string>();
-            web.AddNode("Privacy.htm");
-            web.AddNode("People.aspx");
-            web.AddNode("About.htm");
-            web.AddNode("Index.htm");
-            web.AddNode("Products.aspx");
-            web.AddNode("Contact.aspx");
+            string path = "../../Resources/input";
+            byte[,] matrix = ReadValueAndMatrixByte(path);
+            var adjacencyMatrix = new AdjacencyMatrixSimpleUnweighted(matrix);
+            Graph<int> graph = new Graph<int>(adjacencyMatrix);
+            Console.WriteLine(graph);
+            Console.WriteLine();
+            graph.RemoveNode(1);
+            Console.WriteLine(graph);
+        }
 
-            web.AddUndirectedEdge("People.aspx", "Privacy.htm");  // People <-> Privacy
+        private static int ReadValueInt(string path) {
+            int value;
+            using (var sr = new StreamReader(path)) {
+                value = int.Parse(sr.ReadLine());
+            }
+            return value;
+        }
 
-            web.AddDirectedEdge("People.aspx", "Privacy.htm");  // People -> Privacy
+        private static int[,] ReadValueAndMatrixInt(string path) {
+            int[,] matrix;
+            using (var sr = new StreamReader(path)) {
+                var value = int.Parse(sr.ReadLine());
+                matrix = new int[value, value];
+                int i = 0;
+                while (!sr.EndOfStream) {
+                    var readLine = sr.ReadLine();
+                    if (readLine != null) {
+                        var inputList = readLine
+                            .Split(" \t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                            .Select(int.Parse)
+                            .ToArray();
+                        for (int j = 0; j < inputList.Length; j++)
+                        {
+                            matrix[i, j] = inputList[j];
+                        }
+                    }
+                    i++;
+                }
+            }
+            return matrix;
+        }
 
-            web.AddDirectedEdge("Privacy.htm", "Index.htm");    // Privacy -> Index
-            web.AddDirectedEdge("Privacy.htm", "About.htm");    // Privacy -> About
+        private static byte[,] ReadValueAndMatrixByte(string path) {
+            byte[,] matrix;
+            using (var sr = new StreamReader(path)) {
+                var value = int.Parse(sr.ReadLine());
+                matrix = new byte[value, value];
+                int i = 0;
+                while (!sr.EndOfStream) {
+                    var readLine = sr.ReadLine();
+                    if (readLine != null) {
+                        var inputList = readLine
+                            .Split(" \t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                            .Select(byte.Parse)
+                            .ToArray();
+                        for (int j = 0; j < inputList.Length; j++) {
+                            matrix[i, j] = inputList[j];
+                        }
+                    }
+                    i++;
+                }
+            }
+            return matrix;
+        }
 
-            web.AddDirectedEdge("About.htm", "Privacy.htm");    // About -> Privacy
-            web.AddDirectedEdge("About.htm", "People.aspx");    // About -> People
-            web.AddDirectedEdge("About.htm", "Contact.aspx");   // About -> Contact
+        private static int[][] ReadMatrixInt(string path, int n) {
+            return ReadMatrixInt(new StreamReader(path), n);
+        }
 
-            web.AddDirectedEdge("Index.htm", "About.htm");      // Index -> About
-            web.AddDirectedEdge("Index.htm", "Contact.aspx");   // Index -> Contacts
-            web.AddDirectedEdge("Index.htm", "Products.aspx");  // Index -> Products
-
-            web.AddDirectedEdge("Products.aspx", "Index.htm");  // Products -> Index
-            web.AddDirectedEdge("Products.aspx", "People.aspx");// Products -> People
-
-            DataSet ds = web; // your dataset
-            var graph = ds.ToGraph();  // wraps the dataset into a DataSetGraph
-            foreach (DataTable table in graph.TopologicalSort()) // applies a topological sort to the dataset graph
-                Console.WriteLine(table.TableName); // in which order should we delete the tables?
+        private static int[][] ReadMatrixInt(StreamReader stream, int n) {
+            int[][] matrix = new int[n][];
+            using (var sr = stream) {
+                int i = 0;
+                while (!sr.EndOfStream) {
+                    var readLine = sr.ReadLine();
+                    if (readLine != null) {
+                        var inputList = readLine
+                            .Split(" \t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                            .Select(s => int.Parse(s))
+                            .ToArray();
+                        matrix[i] = inputList;
+                    }
+                    i++;
+                }
+            }
+            return matrix;
         }
     }
 }

@@ -71,19 +71,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataStructure\AdjacencyMatrixSimpleUnweighted.cs" />
+    <Compile Include="DataStructure\AdjacencyMatrixSimple.cs" />
+    <Compile Include="DataStructure\AdjacencyMatrixUnweighted.cs" />
     <Compile Include="DataStructure\AdjacencyMatrix.cs" />
-    <Compile Include="DataStructure\Graph.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="DataStructure\GraphWeighted.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="DataStructure\Graph.cs" />
+    <Compile Include="DataStructure\GraphWeighted.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\input" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

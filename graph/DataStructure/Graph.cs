@@ -1,8 +1,6 @@
-﻿using System.Data;
+﻿namespace graph.DataStructure {
 
-namespace graph.DataStructure {
-
-    public class Graph<TValue> : DataSet {
+    public class Graph<TValue> {
         private readonly AdjacencyMatrix<TValue, byte> _adjacencyMatrix;
 
         public Graph() {
@@ -37,7 +35,7 @@ namespace graph.DataStructure {
             return _adjacencyMatrix.Contains(value);
         }
 
-        public void Remove(TValue value) {
+        public void RemoveNode(TValue value) {
             _adjacencyMatrix.Remove(value);
         }
 
