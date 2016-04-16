@@ -1,4 +1,6 @@
-﻿namespace graph.DataStructure
+﻿using System.Text;
+
+namespace graph.DataStructure
 {
     public class Graph<T> {
         private readonly NodeList<T> _nodeSet;
@@ -30,16 +32,24 @@
         }
 
         public void AddDirectedEdge(T from, T to, int cost) {
-            AddDirectedEdge(new GraphNode<T>(from), new GraphNode<T>(to), cost);
+            AddDirectedEdge((GraphNode<T>) _nodeSet.FindByValue(from), (GraphNode<T>) _nodeSet.FindByValue(to), cost);
         }
 
         public void AddDirectedEdge(GraphNode<T> from, GraphNode<T> to, int cost) {
             from.Neighbors.Add(to);
             from.Costs.Add(cost);
         }
+        
+        public void AddUndirectedEdge(T from, T to) {
+            AddUndirectedEdge(from, to, 1);
+        }
+
+        public void AddUndirectedEdge(GraphNode<T> from, GraphNode<T> to) {
+            AddUndirectedEdge(from, to, 1);
+        }
 
         public void AddUndirectedEdge(T from, T to, int cost) {
-            AddUndirectedEdge(new GraphNode<T>(from), new GraphNode<T>(to), cost);
+            AddUndirectedEdge((GraphNode<T>)_nodeSet.FindByValue(from), (GraphNode<T>)_nodeSet.FindByValue(to), cost);
         }
 
         public void AddUndirectedEdge(GraphNode<T> from, GraphNode<T> to, int cost) {
@@ -85,6 +95,16 @@
 
         public int Count {
             get { return _nodeSet.Count; }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder graphPrint = new StringBuilder();
+            foreach (GraphNode<T> gnode in _nodeSet)
+            {
+                graphPrint.AppendLine(gnode.ToString());
+            }
+            return graphPrint.ToString();
         }
     }
 }

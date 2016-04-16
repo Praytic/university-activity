@@ -1,4 +1,5 @@
-﻿using graph.DataStructure;
+﻿using System;
+using graph.DataStructure;
 
 namespace graph {
     class Program {
@@ -10,6 +11,9 @@ namespace graph {
             web.AddNode("Index.htm");
             web.AddNode("Products.aspx");
             web.AddNode("Contact.aspx");
+
+            web.AddUndirectedEdge("People.aspx", "Privacy.htm");  // People <-> Privacy
+
             web.AddDirectedEdge("People.aspx", "Privacy.htm");  // People -> Privacy
 
             web.AddDirectedEdge("Privacy.htm", "Index.htm");    // Privacy -> Index
@@ -25,6 +29,8 @@ namespace graph {
 
             web.AddDirectedEdge("Products.aspx", "Index.htm");  // Products -> Index
             web.AddDirectedEdge("Products.aspx", "People.aspx");// Products -> People
+
+            Console.WriteLine(web);
         }
     }
 }
