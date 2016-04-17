@@ -1,46 +1,50 @@
-﻿namespace graph.DataStructure {
+﻿using System.Collections.Generic;
+using System.Security.Cryptography;
 
-    public class Graph<TValue> {
-        private readonly AdjacencyMatrix<TValue, byte> _adjacencyMatrix;
+namespace graph.DataStructure
+{
+    public class Graph<TValue, TWeight> {
+        protected AdjacencyMatrix<TValue, TWeight> AdjacencyMatrix;
 
         public Graph() {
-            _adjacencyMatrix = new AdjacencyMatrix<TValue, byte>();
+            AdjacencyMatrix = new AdjacencyMatrix<TValue, TWeight>();
         }
 
-        public Graph(AdjacencyMatrix<TValue, byte> adjacencyMatrix) {
-            _adjacencyMatrix = adjacencyMatrix;
+        public Graph(AdjacencyMatrix<TValue, TWeight> adjacencyMatrix) {
+            AdjacencyMatrix = adjacencyMatrix;
         }
 
         public void AddNode(TValue value) {
-            _adjacencyMatrix.Add(value);
+            AdjacencyMatrix.Add(value);
         }
 
-        public void AddDirectedEdge(TValue from, TValue to) {
-            AddDirectedEdge(from, to, 1);
+        public void AddDirectedEdge(TValue from, TValue to, TWeight cost) {
+            AdjacencyMatrix.AddDirectedEdge(from, to, cost);
         }
 
-        public void AddDirectedEdge(TValue from, TValue to, byte cost) {
-            _adjacencyMatrix.AddDirectedEdge(from, to, 1);
-        }
-
-        public void AddUndirectedEdge(TValue from, TValue to) {
-            AddUndirectedEdge(from, to, 1);
-        }
-
-        public void AddUndirectedEdge(TValue from, TValue to, byte cost) {
-            _adjacencyMatrix.AddUndirectedEdge(from, to, cost);
+        public void AddUndirectedEdge(TValue from, TValue to, TWeight cost) {
+            AdjacencyMatrix.AddUndirectedEdge(from, to, cost);
         }
 
         public bool Contains(TValue value) {
-            return _adjacencyMatrix.Contains(value);
+            return AdjacencyMatrix.Contains(value);
         }
 
         public void RemoveNode(TValue value) {
-            _adjacencyMatrix.Remove(value);
+            AdjacencyMatrix.Remove(value);
         }
 
         public override string ToString() {
-            return _adjacencyMatrix.ToString();
+            return AdjacencyMatrix.ToString();
+        }
+
+        public List<TValue> HamiltonCycle()
+        {
+            List<TValue> hamiltonCycle = new List<TValue>(new TValue[AdjacencyMatrix.Size + 1]);
+            var visitedVertexList = new List<bool>(new bool[AdjacencyMatrix.Size + 1]);
+            visitedVertexList[0] = true;
+            AdjacencyMatrix.HamiltonCycle(ref hamiltonCycle, ref visitedVertexList);
+            return hamiltonCycle;
         }
     }
 }

@@ -75,8 +75,8 @@
     <Compile Include="DataStructure\AdjacencyMatrixSimple.cs" />
     <Compile Include="DataStructure\AdjacencyMatrixUnweighted.cs" />
     <Compile Include="DataStructure\AdjacencyMatrix.cs" />
+    <Compile Include="DataStructure\GraphUnweighted.cs" />
     <Compile Include="DataStructure\Graph.cs" />
-    <Compile Include="DataStructure\GraphWeighted.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

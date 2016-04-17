@@ -8,12 +8,19 @@ namespace graph {
         static void Main(string[] args) {
             string path = "../../Resources/input";
             byte[,] matrix = ReadValueAndMatrixByte(path);
+
             var adjacencyMatrix = new AdjacencyMatrixSimpleUnweighted(matrix);
-            Graph<int> graph = new Graph<int>(adjacencyMatrix);
+            var graph = new GraphUnweighted<int>(adjacencyMatrix);
+
             Console.WriteLine(graph);
             Console.WriteLine();
+
             graph.RemoveNode(1);
+
             Console.WriteLine(graph);
+            Console.WriteLine();
+
+            graph.HamiltonCycle();
         }
 
         private static int ReadValueInt(string path) {
