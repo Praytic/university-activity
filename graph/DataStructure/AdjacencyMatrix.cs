@@ -6,13 +6,18 @@ using System.Text;
 
 namespace graph.DataStructure
 {
-    public class AdjacencyMatrix<TValue, TWeight> : IEnumerable
+    public class AdjacencyMatrix<TValue, TWeight> : IMatrix<TValue, TWeight>, IAdjacency<TValue, TWeight>
     {
-        public int Size { get; protected set; }
+        public int Count
+        {
+            get { return Schema.Count; }
+        }
 
-        public Dictionary<TValue, int> Schema { get; set; }
+        public bool IsReadOnly { get; protected set; }
 
-        protected TWeight[,] Matrix { get; set; }
+        public Dictionary<TValue, int> Schema { get; protected set; }
+
+        public TWeight[,] Matrix { get; protected set; }
 
         public AdjacencyMatrix()
         {
@@ -23,7 +28,7 @@ namespace graph.DataStructure
         public AdjacencyMatrix(TValue[] schema, TWeight[,] matrix) {
             Schema = new Dictionary<TValue, int>();
             foreach (var element in schema) {
-                Schema.Add(element, Size++);
+                Schema.Add(element, Count);
             }
             Matrix = matrix;
         }
@@ -34,42 +39,67 @@ namespace graph.DataStructure
             set { Matrix[Schema[i], Schema[j]] = value; }
         }
 
+        public void Clear()
+        {
+            Schema.Clear();
+            Matrix = new TWeight[0, 0];
+        }
+
         public bool Contains(TValue value)
         {
             return Schema.ContainsKey(value);
         }
 
-        public void Add(TValue value)
+        public void CopyTo(TValue[] array, int arrayIndex)
         {
-            Schema.Add(value, Size++);
-            Matrix = ResizeArray(Matrix, Size, Size);
+            Matrix.CopyTo(array, arrayIndex);
         }
 
-        public void Remove(TValue value) {
-            for (int i = 0, j = Schema[value]; i < Size; i++)
+        public void Add(TValue value)
+        {
+            Schema.Add(value, Count);
+            Matrix = ResizeArray(Matrix, Count, Count);
+        }
+
+        public bool Remove(TValue value) {
+            if (!Schema.ContainsKey(value))
             {
-                Matrix[i, j] = Matrix[i, Size - 1];
-                Matrix[j, i] = Matrix[Size - 1, i];
+                return false;
+            }
+            for (int i = 0, j = Schema[value]; i < Count; i++)
+            {
+                Matrix[i, j] = Matrix[i, Count - 1];
+                Matrix[j, i] = Matrix[Count - 1, i];
             }
             Schema[Schema.Last().Key] = Schema[value];
             Schema.Remove(value);
-            Size--;
-            Matrix = ResizeArray(Matrix, Size, Size);
+            Matrix = ResizeArray(Matrix, Count, Count);
+            return true;
         }
 
-        public void AddDirectedEdge(TValue @from, TValue to, TWeight cost)
+        public void AddDirectedEdge(TValue @from, TValue to, TWeight weight)
         {
-            Matrix[Schema[from], Schema[to]] = cost;
+            Matrix[Schema[from], Schema[to]] = weight;
         }
 
-        public void AddUndirectedEdge(TValue @from, TValue to, TWeight cost) {
-            Matrix[Schema[from], Schema[to]] = cost;
-            Matrix[Schema[to], Schema[from]] = cost;
+        public void AddUndirectedEdge(TValue @from, TValue to, TWeight weight) {
+            Matrix[Schema[from], Schema[to]] = weight;
+            Matrix[Schema[to], Schema[from]] = weight;
+        }
+
+        public void RemoveEdge(TValue @from, TValue to) {
+            Matrix[Schema[from], Schema[to]] = default(TWeight);
+            Matrix[Schema[to], Schema[from]] = default(TWeight);
         }
 
         public IEnumerator GetEnumerator()
         {
-            return Matrix.GetEnumerator();
+            return Schema.Keys.GetEnumerator();
+        }
+
+        IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator()
+        {
+            return Schema.Keys.GetEnumerator();
         }
 
         public override string ToString()
@@ -83,45 +113,6 @@ namespace graph.DataStructure
                 matrix.AppendLine();
             }
             return matrix.ToString();
-        }
-
-        protected T[,] ResizeArray<T>(T[,] original, int rows, int cols) {
-            var newArray = new T[rows, cols];
-            int minRows = Math.Min(rows, original.GetLength(0));
-            int minCols = Math.Min(cols, original.GetLength(1));
-            for (int i = 0; i < minRows; i++)
-                for (int j = 0; j < minCols; j++)
-                    newArray[i, j] = original[i, j];
-            return newArray;
-        }
-        
-        public void HamiltonCycle(ref List<TValue> cycle, ref List<bool> usedVertexList, int completeVertexCount = 1) {
-            TValue startVertex = cycle[completeVertexCount - 1];
-            foreach (var element in Schema.Keys)
-            {
-                if (!Matrix[Schema[startVertex], Schema[element]].Equals(default(TWeight)))
-                {
-                    if (completeVertexCount == Size && element.Equals(Schema.Keys.First()))
-                    {
-                        cycle[completeVertexCount] = element;
-                        foreach (var vertex in cycle)
-                        {
-                            Console.WriteLine("{0} ", vertex);
-                        }
-                        Console.WriteLine();
-                    }
-                    else
-                    {
-                        if (!usedVertexList[Schema[element]])
-                        {
-                            cycle[completeVertexCount] = element;
-                            usedVertexList[Schema[element]] = true;
-                            HamiltonCycle(ref cycle, ref usedVertexList, completeVertexCount + 1);
-                            usedVertexList[Schema[element]] = false;
-                        }
-                    }
-                }
-            }
         }
 
         public TValue GetFirstVertex()
@@ -145,6 +136,16 @@ namespace graph.DataStructure
                 }
             }
             return default(TValue);
+        }
+
+        protected T[,] ResizeArray<T>(T[,] original, int rows, int cols) {
+            var newArray = new T[rows, cols];
+            int minRows = Math.Min(rows, original.GetLength(0));
+            int minCols = Math.Min(cols, original.GetLength(1));
+            for (int i = 0; i < minRows; i++)
+                for (int j = 0; j < minCols; j++)
+                    newArray[i, j] = original[i, j];
+            return newArray;
         }
     }
 }

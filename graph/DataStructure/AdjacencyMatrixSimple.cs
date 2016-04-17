@@ -6,7 +6,6 @@
                 Schema[i] = i;
             }
             Matrix = matrix;
-            Size = matrix.GetLength(1);
         }
     }
 }

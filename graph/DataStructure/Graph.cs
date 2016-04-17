@@ -1,20 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace graph.DataStructure
 {
-    public class Graph<TValue, TWeight> {
+    public class Graph<TValue, TWeight> : IAdjacency<TValue, TWeight>, ICollection<TValue> {
+        
+        public int Count
+        {
+            get { return AdjacencyMatrix.Count; }
+        }
+
+        public bool IsReadOnly { get; protected set; }
+        
+        public AdjacencyMatrix<TValue, TWeight> AdjacencyMatrix { get; protected set; }
+
         public TWeight this[TValue i, TValue j]
         {
             get { return AdjacencyMatrix[i, j]; }
             set { AdjacencyMatrix[i, j] = value; }
         }
-
-        public int Size
-        {
-            get { return AdjacencyMatrix.Size; }
-        }
-
-        public AdjacencyMatrix<TValue, TWeight> AdjacencyMatrix;
 
         public Graph() {
             AdjacencyMatrix = new AdjacencyMatrix<TValue, TWeight>();
@@ -29,37 +33,53 @@ namespace graph.DataStructure
             AdjacencyMatrix = graph.AdjacencyMatrix;
         } 
 
-        public void AddNode(TValue value) {
+        public void Add(TValue value) {
             AdjacencyMatrix.Add(value);
         }
 
-        public void AddDirectedEdge(TValue from, TValue to, TWeight cost) {
-            AdjacencyMatrix.AddDirectedEdge(from, to, cost);
+        public void Clear()
+        {
+            AdjacencyMatrix.Clear();
         }
 
-        public void AddUndirectedEdge(TValue from, TValue to, TWeight cost) {
-            AdjacencyMatrix.AddUndirectedEdge(from, to, cost);
+        public void AddDirectedEdge(TValue @from, TValue @to, TWeight weight) {
+            AdjacencyMatrix.AddDirectedEdge(@from, @to, weight);
+        }
+
+        public void AddUndirectedEdge(TValue @from, TValue @to, TWeight weight) {
+            AdjacencyMatrix.AddUndirectedEdge(@from, @to, weight);
+        }
+
+        public void RemoveEdge(TValue @from, TValue @to)
+        {
+            AdjacencyMatrix.RemoveEdge(@from, @to);
         }
 
         public bool Contains(TValue value) {
             return AdjacencyMatrix.Contains(value);
         }
 
-        public void RemoveNode(TValue value) {
-            AdjacencyMatrix.Remove(value);
+        public void CopyTo(TValue[] array, int arrayIndex)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool Remove(TValue value) {
+            return AdjacencyMatrix.Remove(value);
+        }
+
+        public IEnumerator<TValue> GetEnumerator()
+        {
+            return (IEnumerator<TValue>)AdjacencyMatrix.GetEnumerator();
         }
 
         public override string ToString() {
             return AdjacencyMatrix.ToString();
         }
 
-        public List<TValue> HamiltonCycle()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            var hamiltonCycle = new List<TValue>(new TValue[AdjacencyMatrix.Size + 1]);
-            var visitedVertexList = new List<bool>(new bool[AdjacencyMatrix.Size + 1]);
-            visitedVertexList[0] = true;
-            AdjacencyMatrix.HamiltonCycle(ref hamiltonCycle, ref visitedVertexList);
-            return hamiltonCycle;
+            return AdjacencyMatrix.GetEnumerator();
         }
 
         public TValue GetFirstVertex()
@@ -75,17 +95,17 @@ namespace graph.DataStructure
         {
             foreach (var vertex in AdjacencyMatrix.Schema.Keys)
             {
-                var anyHamiltonianCycle = GetHamiltonianCycle(vertex);
-                if (anyHamiltonianCycle.Count > 0)
+                var anyCycle = GetHamiltonianCycle(vertex);
+                if (anyCycle.Count > 0)
                 {
-                    return anyHamiltonianCycle;
+                    return anyCycle;
                 }
             }
-            return new LinkedList<TValue>();
+            return GetHamiltonianCycle(GetFirstVertex());
         }
 
         public LinkedList<TValue> GetHamiltonianCycle(TValue vertex) {
-            int n = AdjacencyMatrix.Size;
+            int n = AdjacencyMatrix.Count;
             var added = new HashSet<TValue>();
             var path = new LinkedList<TValue>();
             path.AddFirst(vertex);

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using graph.DataStructure;
 
 namespace graph
 {
@@ -124,6 +125,18 @@ namespace graph
                 }
             }
             return matrix;
+        }
+
+        public static AdjacencyMatrix<T, T1> ReadAdjacencyMatrix<T, T1>(string path) {
+            AdjacencyMatrix<T, T1> adjacencyMatrix;
+            using (var sr = new StreamReader(path))
+            {
+                var size = ReadValue<int>(sr);
+                var schema = ReadArray<T>(sr, size);
+                var matrix = ReadMatrix<T1>(sr, size, size);
+                adjacencyMatrix = new AdjacencyMatrix<T, T1>(schema, matrix);
+            }
+            return adjacencyMatrix;
         }
     }
 }

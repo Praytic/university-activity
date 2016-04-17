@@ -77,6 +77,8 @@
     <Compile Include="DataStructure\AdjacencyMatrix.cs" />
     <Compile Include="DataStructure\GraphUnweighted.cs" />
     <Compile Include="DataStructure\Graph.cs" />
+    <Compile Include="DataStructure\IAdjacency.cs" />
+    <Compile Include="DataStructure\IMatrix.cs" />
     <Compile Include="LazyReaderLibrary.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

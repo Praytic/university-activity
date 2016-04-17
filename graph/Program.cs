@@ -5,7 +5,7 @@ namespace graph {
     class Program {
         static void Main(string[] args)
         {
-            Example4();
+            Example5();
         }
 
         public static void Example1()
@@ -82,7 +82,6 @@ namespace graph {
             Console.WriteLine();
         }
 
-
         public static void Example4() {
             int[] schema = { 0, 1, 2, 3, 4 };
             int[,] matrix =
@@ -96,6 +95,26 @@ namespace graph {
 
             var adjacencyMatrix = new AdjacencyMatrix<int, int>(schema, matrix);
             var graph = new Graph<int, int>(adjacencyMatrix);
+
+            Console.WriteLine(graph);
+            Console.WriteLine();
+
+            var resultPath = graph.GetHamiltonianCycle(3);
+            if (resultPath.Count == 0) {
+                Console.WriteLine("No hamiltonian cycle was found.");
+            } else {
+                Console.WriteLine("Hamiltionian cycle was found.");
+            }
+            foreach (var i in resultPath) {
+                Console.Write(i + " ");
+            }
+            Console.WriteLine();
+        }
+
+        public static void Example5() {
+            string path = "../../Resources/input3";
+            var adjacencyMatrix = LazyReaderLibrary.ReadAdjacencyMatrix<string, int>(path);
+            var graph = new Graph<string, int>(adjacencyMatrix);
 
             Console.WriteLine(graph);
             Console.WriteLine();
