@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization.Advanced;
 
 namespace graph.DataStructure
 {
@@ -10,7 +11,7 @@ namespace graph.DataStructure
     {
         public int Size { get; protected set; }
 
-        protected Dictionary<TValue, int> Schema { get; set; }
+        public Dictionary<TValue, int> Schema { get; set; }
 
         protected TWeight[,] Matrix { get; set; }
 
@@ -120,6 +121,24 @@ namespace graph.DataStructure
         public TValue GetFirstVertex()
         {
             return Schema.Keys.First();
+        }
+
+        public TValue GetNextVertex(TValue currentVertex)
+        {
+            var keysCollection = Schema.Keys;
+            bool isNextVertex = false;
+            foreach (var key in keysCollection)
+            {
+                if (isNextVertex)
+                {
+                    return key;
+                }
+                if (key.Equals(currentVertex))
+                {
+                    isNextVertex = true;
+                }
+            }
+            return default(TValue);
         }
     }
 }

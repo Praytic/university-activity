@@ -6,7 +6,7 @@ using graph.DataStructure;
 namespace graph {
     class Program {
         static void Main(string[] args) {
-            string path = "../../Resources/input";
+            string path = "../../Resources/input2";
             byte[,] matrix = ReadValueAndMatrixByte(path);
 
             var adjacencyMatrix = new AdjacencyMatrixSimpleUnweighted(matrix);
@@ -14,20 +14,21 @@ namespace graph {
 
             Console.WriteLine(graph);
             Console.WriteLine();
-
-            var hamiltonCycle = new HamiltonCycle(graph);
-            try
-            {
-                var resultPath = hamiltonCycle.Calculate();
-                foreach (var i in resultPath)
-                {
-                    Console.WriteLine(i + " ");
-                }
-            }
-            catch (Exception e)
+            
+            var resultPath = graph.GetHamiltonianCycle();
+            if (resultPath.Count == 0)
             {
                 Console.WriteLine("No hamiltonian cycle was found.");
             }
+            else
+            {
+                Console.WriteLine("Hamiltionian cycle was found.");
+            }
+            foreach (var i in resultPath)
+            {
+                Console.Write(i + " ");
+            }
+            Console.WriteLine();
         }
 
         private static int ReadValueInt(string path) {

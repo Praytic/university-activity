@@ -77,13 +77,13 @@
     <Compile Include="DataStructure\AdjacencyMatrix.cs" />
     <Compile Include="DataStructure\GraphUnweighted.cs" />
     <Compile Include="DataStructure\Graph.cs" />
-    <Compile Include="DataStructure\HamiltonCycle.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Resources\input2" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\input" />
