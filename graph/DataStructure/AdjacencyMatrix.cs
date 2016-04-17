@@ -94,7 +94,7 @@ namespace graph.DataStructure
             {
                 if (!Matrix[Schema[startVertex], Schema[element]].Equals(default(TWeight)))
                 {
-                    if (completeVertexCount == Size && element.Equals(default(TWeight)))
+                    if (completeVertexCount == Size && element.Equals(Schema.Keys.First()))
                     {
                         cycle[completeVertexCount] = element;
                         foreach (var vertex in cycle)
@@ -115,6 +115,11 @@ namespace graph.DataStructure
                     }
                 }
             }
+        }
+
+        public TValue GetFirstVertex()
+        {
+            return Schema.Keys.First();
         }
     }
 }

@@ -10,17 +10,24 @@ namespace graph {
             byte[,] matrix = ReadValueAndMatrixByte(path);
 
             var adjacencyMatrix = new AdjacencyMatrixSimpleUnweighted(matrix);
-            var graph = new GraphUnweighted<int>(adjacencyMatrix);
+            var graph = new Graph<int, byte>(adjacencyMatrix);
 
             Console.WriteLine(graph);
             Console.WriteLine();
 
-            graph.RemoveNode(1);
-
-            Console.WriteLine(graph);
-            Console.WriteLine();
-
-            graph.HamiltonCycle();
+            var hamiltonCycle = new HamiltonCycle(graph);
+            try
+            {
+                var resultPath = hamiltonCycle.Calculate();
+                foreach (var i in resultPath)
+                {
+                    Console.WriteLine(i + " ");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("No hamiltonian cycle was found.");
+            }
         }
 
         private static int ReadValueInt(string path) {

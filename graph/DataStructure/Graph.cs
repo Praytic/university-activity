@@ -1,10 +1,20 @@
 ﻿using System.Collections.Generic;
-using System.Security.Cryptography;
 
 namespace graph.DataStructure
 {
     public class Graph<TValue, TWeight> {
-        protected AdjacencyMatrix<TValue, TWeight> AdjacencyMatrix;
+        public TWeight this[TValue i, TValue j]
+        {
+            get { return AdjacencyMatrix[i, j]; }
+            set { AdjacencyMatrix[i, j] = value; }
+        }
+
+        public int Size
+        {
+            get { return AdjacencyMatrix.Size; }
+        }
+
+        public AdjacencyMatrix<TValue, TWeight> AdjacencyMatrix;
 
         public Graph() {
             AdjacencyMatrix = new AdjacencyMatrix<TValue, TWeight>();
@@ -13,6 +23,11 @@ namespace graph.DataStructure
         public Graph(AdjacencyMatrix<TValue, TWeight> adjacencyMatrix) {
             AdjacencyMatrix = adjacencyMatrix;
         }
+
+        public Graph(Graph<TValue, TWeight> graph)
+        {
+            AdjacencyMatrix = graph.AdjacencyMatrix;
+        } 
 
         public void AddNode(TValue value) {
             AdjacencyMatrix.Add(value);
@@ -40,11 +55,16 @@ namespace graph.DataStructure
 
         public List<TValue> HamiltonCycle()
         {
-            List<TValue> hamiltonCycle = new List<TValue>(new TValue[AdjacencyMatrix.Size + 1]);
+            var hamiltonCycle = new List<TValue>(new TValue[AdjacencyMatrix.Size + 1]);
             var visitedVertexList = new List<bool>(new bool[AdjacencyMatrix.Size + 1]);
             visitedVertexList[0] = true;
             AdjacencyMatrix.HamiltonCycle(ref hamiltonCycle, ref visitedVertexList);
             return hamiltonCycle;
+        }
+
+        public TValue GetFirstVertex()
+        {
+            return AdjacencyMatrix.GetFirstVertex();
         }
     }
 }
