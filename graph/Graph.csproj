@@ -85,6 +85,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Resources\input2" />
+    <None Include="Resources\input3" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\input" />

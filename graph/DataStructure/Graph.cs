@@ -71,12 +71,25 @@ namespace graph.DataStructure
             return AdjacencyMatrix.GetNextVertex(currentVertex);
         }
 
-        public LinkedList<TValue> GetHamiltonianCycle() {
+        public LinkedList<TValue> GetHamiltonianCycle()
+        {
+            foreach (var vertex in AdjacencyMatrix.Schema.Keys)
+            {
+                var anyHamiltonianCycle = GetHamiltonianCycle(vertex);
+                if (anyHamiltonianCycle.Count > 0)
+                {
+                    return anyHamiltonianCycle;
+                }
+            }
+            return new LinkedList<TValue>();
+        }
+
+        public LinkedList<TValue> GetHamiltonianCycle(TValue vertex) {
             int n = AdjacencyMatrix.Size;
             var added = new HashSet<TValue>();
             var path = new LinkedList<TValue>();
-            path.AddFirst(GetFirstVertex());
-            added.Add(GetFirstVertex());
+            path.AddFirst(vertex);
+            added.Add(vertex);
 
             while (path.Count < n) {
                 while (true) {

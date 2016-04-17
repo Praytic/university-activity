@@ -30,7 +30,7 @@ namespace graph
                 if (readLine != null) {
                     var converter = TypeDescriptor.GetConverter(typeof(T));
                     var inputList = readLine
-                        .Split(" \t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                        .Split(" \t".ToCharArray())
                         .Select(s => (T)converter.ConvertFrom(s))
                         .ToArray();
                     array = inputList;
@@ -65,7 +65,7 @@ namespace graph
             if (readLine != null) {
                 var converter = TypeDescriptor.GetConverter(typeof(T));
                 var inputList = readLine
-                    .Split(" \t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                    .Split(" \t".ToCharArray())
                     .Select(s => (T)converter.ConvertFrom(s))
                     .Take(n)
                     .ToArray();
@@ -115,7 +115,7 @@ namespace graph
                 if (readLine != null) {
                     var converter = TypeDescriptor.GetConverter(typeof(T));
                     var inputList = readLine
-                        .Split(" \t".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                        .Split(" \t".ToCharArray())
                         .Select(s => (T)converter.ConvertFrom(s))
                         .ToArray();
                     for (int j = 0; j < m; j++) {

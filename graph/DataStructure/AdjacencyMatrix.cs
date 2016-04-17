@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml.Serialization.Advanced;
 
 namespace graph.DataStructure
 {
@@ -21,6 +20,14 @@ namespace graph.DataStructure
             Matrix = new TWeight[0, 0];
         }
 
+        public AdjacencyMatrix(TValue[] schema, TWeight[,] matrix) {
+            Schema = new Dictionary<TValue, int>();
+            foreach (var element in schema) {
+                Schema.Add(element, Size++);
+            }
+            Matrix = matrix;
+        }
+
         public TWeight this[TValue i, TValue j]
         {
             get { return Matrix[Schema[i], Schema[j]]; }
@@ -34,8 +41,7 @@ namespace graph.DataStructure
 
         public void Add(TValue value)
         {
-            Schema.Add(value, Size);
-            Size++;
+            Schema.Add(value, Size++);
             Matrix = ResizeArray(Matrix, Size, Size);
         }
 
@@ -72,7 +78,7 @@ namespace graph.DataStructure
             foreach (var elementRow in Schema) {
                 matrix.Append(string.Format("{0, 20} | ", elementRow.Key));
                 foreach (var elementColumn in Schema) {
-                    matrix.Append(string.Format("{0, 3}", Matrix[elementRow.Value, elementColumn.Value]));
+                    matrix.Append(string.Format("{0} ", Matrix[elementRow.Value, elementColumn.Value]));
                 }
                 matrix.AppendLine();
             }

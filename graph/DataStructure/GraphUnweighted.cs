@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace graph.DataStructure {
+﻿namespace graph.DataStructure {
 
     public class GraphUnweighted<TValue> : Graph<TValue, byte> {
 
