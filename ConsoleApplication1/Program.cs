@@ -26,7 +26,6 @@ namespace ConsoleApplication1 {
         static void Main(string[] args) {
             var testArrayOfStrings = new[] { "aaa", "aaf", "bba", "aa", "bbbb", "bbba", "z", "zab", "ababab" };
             var testArray = new[] { 2, 4, 5, 1, 0, 10, 30, 14, 3 };
-        
 
             SortComparer<int> intComparer = (ob1, ob2) => (ob1 > ob2) ? 1 : (ob1 == ob2) ? 0 : -1;
             SortComparer<string> stringComparer = (ob1, ob2) => (ob1.Length > ob2.Length) ? 1 : (ob1.Length == ob2.Length) ? string.Compare(ob1, ob2, StringComparison.Ordinal) : -1;
@@ -53,10 +52,13 @@ namespace ConsoleApplication1 {
 
             private readonly SortComparer<T> _comparer; 
 
-            public BubbleSort(T[] sortedArray, SortComparer<T> comparer) {
+            public BubbleSort() {
+                SortComplete = x => Console.WriteLine(string.Join(", ", x));
+            }
+
+            public BubbleSort(T[] sortedArray, SortComparer<T> comparer) : this() {
                 SortedArray = sortedArray;
                 _comparer = comparer;
-                SortComplete = x => Console.WriteLine(string.Join(", ", x));
             }
 
             public void Run() {
