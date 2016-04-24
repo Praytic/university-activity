@@ -11,44 +11,36 @@ namespace graph {
         public static void Example1() {
             string path = "../../Resources/input3";
             var adjacencyMatrix = LazyReaderLibrary.ReadAdjacencyMatrix<string, int>(path);
-            var graph = new Graph<string, int>(adjacencyMatrix);
+            var graph = new GraphSimple<string>(adjacencyMatrix);
 
             Console.WriteLine(graph);
             Console.WriteLine();
-            
-            Console.WriteLine("Count of connected components: " + graph.GetConnectedComponentsCount());
+
+            string first = "Рузаевка";
+            string second = "Березовка";
+            Console.WriteLine("Count of paths from {0} to {1} equals {2}", first, second, graph.GetAllPaths(first, second).Count);
         }
 
         public static void Example2() {
             char[] schema = { 'A', 'B', 'C', 'D', 'E' };
-            char[,] matrix =
+            int[,] matrix =
             {
-                {'\0', 'a', '\0', '\0', '\0' },
-                {'a', '\0', 'a', '\0', '\0' },
-                {'\0', 'a', '\0', 'a', '\0' },
-                {'\0', '\0', 'a', '\0', 'a' },
-                {'\0', '\0', '\0', 'a', '\0' }
+                {0, 1, 0, 0, 1 },
+                {1, 0, 1, 0, 0 },
+                {0, 1, 0, 1, 0 },
+                {0, 0, 1, 0, 1 },
+                {1, 0, 0, 1, 0 }
             };
 
-            var adjacencyMatrix = new AdjacencyMatrix<char, char>(schema, matrix);
-            var graph = new Graph<char, char>(adjacencyMatrix);
+            var adjacencyMatrix = new AdjacencyMatrix<char, int>(schema, matrix);
+            var graph = new GraphSimple<char>(adjacencyMatrix);
 
             Console.WriteLine(graph);
             Console.WriteLine();
 
-            Console.WriteLine("Count of connected components: " + graph.GetConnectedComponentsCount());
-        }
-
-
-        public static void Example3() {
-            string path = "../../Resources/input";
-            var adjacencyMatrix = LazyReaderLibrary.ReadAdjacencyMatrix<int, byte>(path);
-            var graph = new Graph<int, byte>(adjacencyMatrix);
-
-            Console.WriteLine(graph);
-            Console.WriteLine();
-
-            Console.WriteLine("Count of connected components: " + graph.GetConnectedComponentsCount());
+            char first = 'A';
+            char second = 'C';
+            Console.WriteLine("Count of paths from {0} to {1} equals {2}", first, second, graph.GetAllPaths(first, second).Count);
         }
     }
 }

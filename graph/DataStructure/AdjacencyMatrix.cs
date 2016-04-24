@@ -6,7 +6,7 @@ using System.Text;
 
 namespace graph.DataStructure
 {
-    public class AdjacencyMatrix<TValue, TWeight> : IMatrix<TValue, TWeight>, IAdjacency<TValue, TWeight>
+    public class AdjacencyMatrix<TValue, TWeight> : IMatrix<TValue, TWeight>, IAdjacency<TValue, TWeight> where TWeight : IComparable
     {
         public int Count
         {
@@ -23,6 +23,25 @@ namespace graph.DataStructure
         {
             Schema = new Dictionary<TValue, int>();
             Matrix = new TWeight[0, 0];
+        }
+
+        public AdjacencyMatrix(TValue[] schema) {
+            Schema = new Dictionary<TValue, int>();
+            foreach (var element in schema) {
+                Schema.Add(element, Count);
+            }
+            Matrix = new TWeight[Count, Count];
+        }
+
+        public AdjacencyMatrix(Dictionary<TValue, int> schema)
+        {
+            Schema = schema;
+            Matrix = new TWeight[Count, Count];
+        }
+
+        public AdjacencyMatrix(IMatrix<TValue, TWeight> matrix) {
+            Schema = matrix.Schema;
+            Matrix = matrix.Matrix;
         }
 
         public AdjacencyMatrix(TValue[] schema, TWeight[,] matrix) {

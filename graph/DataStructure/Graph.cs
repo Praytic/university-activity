@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
+using System.Data;
+using System.Reflection;
 
 namespace graph.DataStructure
 {
-    public class Graph<TValue, TWeight> : IAdjacency<TValue, TWeight>, ICollection<TValue> {
+    public class Graph<TValue, TWeight> : IAdjacency<TValue, TWeight>, ICollection<TValue> where TWeight : IComparable {
         
         public int Count
         {

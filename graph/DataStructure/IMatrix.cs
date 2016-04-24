@@ -2,7 +2,7 @@
 
 namespace graph.DataStructure
 {
-    public interface IMatrix<TValue, TWeight> : ICollection<TValue>
+    public interface IMatrix<TValue, TWeight> : ICollection<TValue> 
     {
         TWeight this[TValue i, TValue j] { get; set; }
         

@@ -1,6 +1,8 @@
-﻿namespace graph.DataStructure
+﻿using System;
+
+namespace graph.DataStructure
 {
-    public interface IAdjacency<TValue, in TWeight>
+    public interface IAdjacency<TValue, in TWeight> where TWeight : IComparable
     {
         void AddDirectedEdge(TValue  @from, TValue @to, TWeight weight);
 
