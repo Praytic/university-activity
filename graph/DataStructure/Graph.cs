@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace graph.DataStructure
 {
@@ -227,6 +229,47 @@ namespace graph.DataStructure
             }
             cycle.AddLast(path.First.Value);
             return cycle;
+        }
+
+        public int GetConnectedComponentsCount()
+        {
+            int cnt = 1;
+            var q = new Queue<TValue>();
+            var used = new Dictionary<TValue, int>();
+            foreach (var key in AdjacencyMatrix.Schema.Keys)
+            {
+                used.Add(key, 0);
+            }
+            foreach (var irl in AdjacencyMatrix.Schema.Keys) {
+                if (used[irl] == 0)
+                {
+                    q.Enqueue(irl);
+                    used[irl] = cnt;
+                    while (q.Count > 0)
+                    {
+                        TValue v = q.Dequeue();
+                        foreach (var i in AdjacencyMatrix.Schema.Keys)
+                        {
+                            TValue to;
+                            if (!AdjacencyMatrix[v, i].Equals(default(TWeight)))
+                            {
+                                to = i;
+                            }
+                            else
+                            {
+                                continue;;
+                            }
+                            if (used[to] == 0)
+                            {
+                                used[to] = cnt;
+                                q.Enqueue(to);
+                            }
+                        }
+                    }
+                    cnt++;
+                }
+            }
+            return cnt;
         }
     }
 }
