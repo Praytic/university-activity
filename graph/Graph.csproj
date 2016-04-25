@@ -71,15 +71,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataStructure\AdjacencyMatrixSimpleUnweighted.cs" />
-    <Compile Include="DataStructure\AdjacencyMatrixSimple.cs" />
-    <Compile Include="DataStructure\AdjacencyMatrixUnweighted.cs" />
-    <Compile Include="DataStructure\AdjacencyMatrix.cs" />
-    <Compile Include="DataStructure\GraphSimple.cs" />
-    <Compile Include="DataStructure\GraphUnweighted.cs" />
+    <Compile Include="DataStructure\AdjacencyList.cs" />
+    <Compile Include="DataStructure\AdjacencyListSimplified.cs" />
+    <Compile Include="DataStructure\GraphSimplified.cs" />
     <Compile Include="DataStructure\Graph.cs" />
     <Compile Include="DataStructure\IAdjacency.cs" />
-    <Compile Include="DataStructure\IMatrix.cs" />
+    <Compile Include="DataStructure\IAdjacencyList.cs" />
+    <Compile Include="DataStructure\IGraph.cs" />
+    <Compile Include="DataStructure\ISimplified.cs" />
+    <Compile Include="DataStructure\IUnweighted.cs" />
     <Compile Include="LazyReaderLibrary.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

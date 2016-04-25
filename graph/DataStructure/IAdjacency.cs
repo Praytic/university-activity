@@ -2,16 +2,16 @@
 
 namespace graph.DataStructure
 {
-    public interface IAdjacency<TValue, in TWeight> where TWeight : IComparable
+    public interface IAdjacency<TVertex, in TWeight> where TWeight : IComparable
     {
-        void AddDirectedEdge(TValue  @from, TValue @to, TWeight weight);
+        void AddDirectedEdge(TVertex  @from, TVertex @to, TWeight weight);
 
-        void AddUndirectedEdge(TValue @from, TValue @to, TWeight weight);
+        void AddUndirectedEdge(TVertex @from, TVertex @to, TWeight weight);
 
-        void RemoveEdge(TValue @from, TValue @to);
+        void RemoveEdge(TVertex @from, TVertex @to);
 
-        TValue GetFirstVertex();
+        TVertex GetFirstVertex();
 
-        TValue GetNextVertex(TValue currentVertex);
+        TVertex GetNextVertex(TVertex currentVertex);
     }
 }
