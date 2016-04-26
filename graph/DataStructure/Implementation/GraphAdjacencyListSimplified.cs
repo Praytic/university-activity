@@ -1,50 +1,39 @@
 ﻿using System.Collections.Generic;
 
-namespace graph.DataStructure {
+namespace graph.DataStructure.Implementation {
 
-    public class GraphSimplified<TVertex> : 
-        Graph<TVertex, int>,
-        IGraph<AdjacencyListSimplified<TVertex>>,
+    public class GraphAdjacencyListSimplified<TVertex> : 
+        Graph<TVertex, int, AdjacencyListSimplified<TVertex>>,
         ISimplified
     {
-        public new AdjacencyListSimplified<TVertex> AdjacencyList { get; }
-
-        public GraphSimplified()
+        public GraphAdjacencyListSimplified()
         {
         }
 
-        public GraphSimplified(AdjacencyListSimplified<TVertex> adjacencyList) : base(adjacencyList)
+        public GraphAdjacencyListSimplified(AdjacencyListSimplified<TVertex> adjacencyMatrix) : base(adjacencyMatrix)
         {
         }
 
-        public GraphSimplified(GraphSimplified<TVertex> graph) : base(graph)
+        public GraphAdjacencyListSimplified(Graph<TVertex, int, AdjacencyListSimplified<TVertex>> graph) : base(graph)
         {
-        }
-
-        public void AddDirectedEdge(TVertex @from, TVertex to) {
-            AdjacencyList.AddDirectedEdge(@from, to);
-        }
-
-        public void AddUndirectedEdge(TVertex @from, TVertex to) {
-            AdjacencyList.AddUndirectedEdge(@from, to);
         }
 
         public List<TVertex> GetShortestPathDijkstra(TVertex start, TVertex finish)
         {
             var done1 = new Dictionary<TVertex, bool>();
-            foreach (TVertex i in AdjacencyList) {
+            foreach (TVertex i in Storage) {
                 done1.Add(i, false);
             }
             var parent1 = new Dictionary<TVertex, TVertex>();
-            foreach (TVertex i in AdjacencyList) {
+            foreach (TVertex i in Storage) {
                 parent1[i] = default(TVertex);
             }
             var distances1 = new Dictionary<TVertex, int>();
-            foreach (TVertex i in AdjacencyList) {
+            foreach (TVertex i in Storage) {
                 distances1[i] = int.MaxValue;
             }
             distances1[start] = 0;
-            return GetShortestPathDijkstra(start, finish, done1, parent1, distances1, AdjacencyList);
+            return GetShortestPathDijkstra(start, finish, done1, parent1, distances1, Storage);
         }
 
         private List<TVertex> GetShortestPathDijkstra(TVertex start, TVertex finish, Dictionary<TVertex, bool> done, 

@@ -1,4 +1,6 @@
-﻿namespace graph.DataStructure
+﻿using graph.DataStructure.Implementation;
+
+namespace graph.DataStructure
 {
     public class AdjacencyListSimplified<TVertex> :
         AdjacencyList<TVertex, int>,
@@ -10,15 +12,6 @@
 
         public AdjacencyListSimplified(IAdjacencyList<TVertex, int> adjacencyList) : base(adjacencyList)
         {
-        }
-
-        public void AddDirectedEdge(TVertex @from, TVertex to) {
-            List[@from].Add(to, 1);
-        }
-
-        public void AddUndirectedEdge(TVertex @from, TVertex to) {
-            List[@from].Add(to, 1);
-            List[to].Add(@from, 1);
         }
     }
 }

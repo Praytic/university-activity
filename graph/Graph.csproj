@@ -71,14 +71,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataStructure\AdjacencyList.cs" />
-    <Compile Include="DataStructure\AdjacencyListSimplified.cs" />
-    <Compile Include="DataStructure\GraphSimplified.cs" />
-    <Compile Include="DataStructure\Graph.cs" />
+    <Compile Include="DataStructure\Implementation\AlgorithmContract.cs" />
+    <Compile Include="DataStructure\Implementation\DijkstraAdjacencyMatrixAlgorithm.cs" />
+    <Compile Include="DataStructure\Implementation\DijkstraAlgorithmAdjacencyList.cs" />
+    <Compile Include="DataStructure\Implementation\Graph.cs" />
+    <Compile Include="DataStructure\Implementation\AdjacencyListSimplified.cs" />
+    <Compile Include="DataStructure\Implementation\GraphAdjacencyMatrixSimplified.cs" />
+    <Compile Include="DataStructure\Implementation\GraphAdjacencyMatrix.cs" />
+    <Compile Include="DataStructure\Implementation\GraphAdjacencyListSimplified.cs" />
+    <Compile Include="DataStructure\Implementation\GraphAdjacencyList.cs" />
     <Compile Include="DataStructure\IAdjacency.cs" />
-    <Compile Include="DataStructure\IAdjacencyList.cs" />
-    <Compile Include="DataStructure\IGraph.cs" />
+    <Compile Include="DataStructure\Implementation\AdjacencyList.cs" />
+    <Compile Include="DataStructure\IAlgorithm.cs" />
+    <Compile Include="DataStructure\Implementation\AdjacencyMatrix.cs" />
     <Compile Include="DataStructure\ISimplified.cs" />
+    <Compile Include="DataStructure\IStorage.cs" />
     <Compile Include="DataStructure\IUnweighted.cs" />
     <Compile Include="LazyReaderLibrary.cs" />
     <Compile Include="Program.cs" />
