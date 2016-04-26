@@ -11,7 +11,7 @@ namespace graph.DataStructure.Implementation
         where TWeight : IComparable 
     {
 
-        Dictionary<TVertex, TWeight> this[TVertex i]
+        public Dictionary<TVertex, TWeight> this[TVertex i]
         {
             get { return Storage[i]; }
             set { Storage[i] = value; }

@@ -1,19 +1,24 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace graph.DataStructure.Implementation
 {
     public class GraphAdjacencyMatrixSimplified<TVertex> :
-        Graph<TVertex, int, AdjacencyMatrix<TVertex, int>>
+        GraphAdjacencyMatrix<TVertex, int>,
+        ISimplified
     {
         public GraphAdjacencyMatrixSimplified()
         {
         }
 
-        public GraphAdjacencyMatrixSimplified(AdjacencyMatrix<TVertex, int> adjacencyMatrix) : base(adjacencyMatrix)
+        public GraphAdjacencyMatrixSimplified(TVertex[] schema) : base(schema)
         {
         }
 
-        public GraphAdjacencyMatrixSimplified(Graph<TVertex, int, AdjacencyMatrix<TVertex, int>> graph) : base(graph)
+        public GraphAdjacencyMatrixSimplified(Dictionary<TVertex, int> schema) : base(schema)
+        {
+        }
+
+        public GraphAdjacencyMatrixSimplified(TVertex[] schema, int[,] matrix) : base(schema, matrix)
         {
         }
     }

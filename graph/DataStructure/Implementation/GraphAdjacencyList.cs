@@ -4,7 +4,8 @@ using System.Collections.Generic;
 namespace graph.DataStructure.Implementation
 {
     public class GraphAdjacencyList<TVertex, TWeight> :
-        AdjacencyList<TVertex, TWeight> 
+        AdjacencyList<TVertex, TWeight>,
+        IGraph<TVertex, TWeight>
         where TWeight : IComparable 
     {
         public GraphAdjacencyList()

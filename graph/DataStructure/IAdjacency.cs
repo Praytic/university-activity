@@ -2,7 +2,8 @@
 
 namespace graph.DataStructure
 {
-    public interface IAdjacency<TVertex, in TWeight> where TWeight : IComparable
+    public interface IAdjacency<TVertex, in TWeight> 
+        where TWeight : IComparable
     {
         void AddDirectedEdge(TVertex  @from, TVertex @to, TWeight weight);
 

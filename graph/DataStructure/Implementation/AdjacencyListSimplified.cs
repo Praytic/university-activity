@@ -1,6 +1,6 @@
-﻿using graph.DataStructure.Implementation;
+﻿using System.Collections.Generic;
 
-namespace graph.DataStructure
+namespace graph.DataStructure.Implementation
 {
     public class AdjacencyListSimplified<TVertex> :
         AdjacencyList<TVertex, int>,
@@ -10,7 +10,11 @@ namespace graph.DataStructure
         {
         }
 
-        public AdjacencyListSimplified(IAdjacencyList<TVertex, int> adjacencyList) : base(adjacencyList)
+        public AdjacencyListSimplified(Dictionary<TVertex, Dictionary<TVertex, int>> storage) : base(storage)
+        {
+        }
+
+        public AdjacencyListSimplified(IStorage<TVertex, Dictionary<TVertex, Dictionary<TVertex, int>>> storage) : base(storage)
         {
         }
     }

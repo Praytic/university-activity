@@ -1,4 +1,5 @@
 ﻿using System;
+using graph.Algorithms.Implementation;
 using graph.DataStructure;
 using graph.DataStructure.Implementation;
 
@@ -9,8 +10,9 @@ namespace graph {
             Example1();
         }
 
-        public static void Example1() {
-            var graph = new GraphAdjacencyList<string, int>
+        public static void Example1()
+        {
+            var graph = new GraphAdjacencyMatrixSimplified<string>
             {
                 "Березовка",
                 "Сосновка",
@@ -18,7 +20,6 @@ namespace graph {
                 "Октябрьское",
                 "Рузаевка"
             };
-            new AdjacencyList<string, int>()
             graph.AddUndirectedEdge("Березовка", "Еремеевка", 70);
             graph.AddUndirectedEdge("Березовка", "Сосновка", 20);
             graph.AddUndirectedEdge("Сосновка", "Октябрьское", 60);
@@ -32,7 +33,11 @@ namespace graph {
 
             string first = "Рузаевка";
             string second = "Березовка";
-            Console.WriteLine("Count of paths from {0} to {1} equals {2}", first, second, graph.GetShortestPathDijkstra(first, second).Count);
+            DijkstraAdjacencyMatrixAlgorithm<string> shortestPath = 
+                new DijkstraAdjacencyMatrixAlgorithm<string>(graph, first, second);
+            shortestPath.Run();
+            Console.WriteLine("Count of paths from {0} to {1} equals {2}", 
+                first, second, string.Join(", ", shortestPath.Result));
         }
     }
 }

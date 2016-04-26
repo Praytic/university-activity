@@ -11,19 +11,67 @@ namespace graph.DataStructure.Implementation {
     {
         public int Count
         {
-            get { return Storage.Count; }
+            get { return Schema.Count; }
         }
 
         public bool IsReadOnly { get; }
 
         public List<List<TWeight>> Storage { get; }
 
-        TWeight this[TVertex i, TVertex j] {
+        private Dictionary<TVertex, int> Schema { get; } 
+
+        public TWeight this[TVertex i, TVertex j] {
             get { return Storage[Schema[i]][Schema[j]]; }
             set { Storage[Schema[i]][Schema[j]] = value; }
         }
 
-        private Dictionary<TVertex, int> Schema { get; } 
+        public AdjacencyMatrix()
+        {
+            Storage = new List<List<TWeight>>();
+            Schema = new Dictionary<TVertex, int>();
+        }
+
+        public AdjacencyMatrix(TVertex[] schema) {
+            Schema = new Dictionary<TVertex, int>();
+            Storage = new List<List<TWeight>>();
+            foreach (var element in schema) {
+                Schema.Add(element, Count);
+                var newRow = new List<TWeight>();
+                foreach (var i in schema)
+                {
+                    newRow.Add(default(TWeight));
+                }
+                Storage.Add(newRow);
+            }
+        }
+
+        public AdjacencyMatrix(Dictionary<TVertex, int> schema) {
+            Schema = schema;
+            Storage = new List<List<TWeight>>();
+            foreach (var i in schema) {
+                var newRow = new List<TWeight>();
+                foreach (var j in schema) {
+                    newRow.Add(default(TWeight));
+                }
+                Storage.Add(newRow);
+            }
+        }
+
+        public AdjacencyMatrix(TVertex[] schema, TWeight[,] matrix) {
+            Schema = new Dictionary<TVertex, int>();
+            foreach (var element in schema) {
+                Schema.Add(element, Count);
+            }
+            Storage = new List<List<TWeight>>();
+            for (int i = 0; i < Count; i++) {
+                var newRow = new List<TWeight>();
+                for (int j = 0; j < Count; j++) {
+                    newRow.Add(matrix[i, j]);
+                }
+                Storage.Add(newRow);
+            }
+        }
+
 
         public void AddDirectedEdge(TVertex @from, TVertex to, TWeight weight)
         {
