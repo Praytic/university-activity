@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace graph.DataStructure.Implementation
 {
@@ -98,6 +99,18 @@ namespace graph.DataStructure.Implementation
         IEnumerator IEnumerable.GetEnumerator()
         {
             return Storage.GetEnumerator();
+        }
+
+        public override string ToString() {
+            StringBuilder matrix = new StringBuilder();
+            foreach (var elementRow in this) {
+                matrix.Append(string.Format("{0, 20} | ", elementRow));
+                foreach (var elementColumn in this[elementRow]) {
+                    matrix.Append(string.Format("{0} ", elementColumn.Value));
+                }
+                matrix.AppendLine();
+            }
+            return matrix.ToString();
         }
     }
 }

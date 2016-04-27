@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace graph.DataStructure.Implementation {
     public class AdjacencyMatrix<TVertex, TWeight> :
@@ -166,6 +167,18 @@ namespace graph.DataStructure.Implementation {
                 return true;
             }
             return false;
+        }
+
+        public override string ToString() {
+            StringBuilder matrix = new StringBuilder();
+            foreach (var elementRow in this) {
+                matrix.Append(string.Format("{0, 20} | ", elementRow));
+                foreach (var elementColumn in this) {
+                    matrix.Append(string.Format("{0} ", this[elementRow, elementColumn]));
+                }
+                matrix.AppendLine();
+            }
+            return matrix.ToString();
         }
     }
 }

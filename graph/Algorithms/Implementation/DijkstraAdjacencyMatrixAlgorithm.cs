@@ -13,23 +13,12 @@ namespace graph.Algorithms.Implementation {
         {
             bool flag = false;
             foreach (var i in Graph) {
-                if (Graph[Start, i] != 0) {
+                if (Graph[Start, i] != 0 || Graph[Finish, i] != 0) {
                     flag = true;
                     break;
                 }
             }
             if (!flag) {
-                Result = new List<TVertex>();
-                return;
-            }
-            foreach (var i in Graph) {
-                if (Graph[Finish, i] != 0) {
-                    flag = true;
-                    break;
-                }
-            }
-            if (!flag) {
-                Result = new List<TVertex>();
                 return;
             }
             TVertex current = Start;

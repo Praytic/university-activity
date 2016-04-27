@@ -88,14 +88,15 @@
     <Compile Include="DataStructure\Implementation\AdjacencyMatrix.cs" />
     <Compile Include="DataStructure\ISimplified.cs" />
     <Compile Include="DataStructure\IStorage.cs" />
-    <Compile Include="DataStructure\IUnweighted.cs" />
     <Compile Include="LazyReaderLibrary.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Resources\input2" />
     <None Include="Resources\input3" />
   </ItemGroup>

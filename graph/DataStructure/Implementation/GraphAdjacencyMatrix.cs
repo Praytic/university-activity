@@ -24,17 +24,5 @@ namespace graph.DataStructure.Implementation
         public GraphAdjacencyMatrix(TVertex[] schema, TWeight[,] matrix) : base(schema, matrix)
         {
         }
-
-        public override string ToString() {
-            StringBuilder matrix = new StringBuilder();
-            foreach (var elementRow in this) {
-                matrix.Append(string.Format("{0, 20} | ", elementRow));
-                foreach (var elementColumn in this) {
-                    matrix.Append(string.Format("{0} ", this[elementRow, elementColumn]));
-                }
-                matrix.AppendLine();
-            }
-            return matrix.ToString();
-        }
     }
 }
