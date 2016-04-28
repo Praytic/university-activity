@@ -24,5 +24,9 @@ namespace graph.DataStructure.Implementation
         public GraphAdjacencyMatrix(TVertex[] schema, TWeight[,] matrix) : base(schema, matrix)
         {
         }
+
+        public GraphAdjacencyMatrix(AdjacencyMatrix<TVertex, TWeight> storage) : base(storage)
+        {
+        }
     }
 }

@@ -20,5 +20,9 @@ namespace graph.DataStructure.Implementation {
         public AdjacencyMatrixSimplified(TVertex[] schema, int[,] matrix) : base(schema, matrix)
         {
         }
+
+        public AdjacencyMatrixSimplified(AdjacencyMatrix<TVertex, int> storage) : base(storage)
+        {
+        }
     }
 }

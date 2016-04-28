@@ -2,7 +2,7 @@
 using graph.DataStructure;
 
 namespace graph.Algorithms.Implementation {
-    public abstract class DijkstraAlgorithm<TGraph, TVertex> :
+    public abstract class DijkstraShortestPath<TGraph, TVertex> :
         AlgorithmContract<TGraph, TVertex, int>
         where TGraph : IGraph<TVertex, int> 
     {
@@ -13,7 +13,7 @@ namespace graph.Algorithms.Implementation {
         public Dictionary<TVertex, int> Distances { get; }
         public List<TVertex> Result { get; protected set; }
 
-        public DijkstraAlgorithm(TGraph graph, TVertex start, TVertex finish) {
+        public DijkstraShortestPath(TGraph graph, TVertex start, TVertex finish) {
             Start = start;
             Finish = finish;
             Graph = graph;

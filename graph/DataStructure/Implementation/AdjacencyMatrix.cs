@@ -19,7 +19,7 @@ namespace graph.DataStructure.Implementation {
 
         public List<List<TWeight>> Storage { get; }
 
-        private Dictionary<TVertex, int> Schema { get; } 
+        public Dictionary<TVertex, int> Schema { get; } 
 
         public TWeight this[TVertex i, TVertex j] {
             get { return Storage[Schema[i]][Schema[j]]; }
@@ -73,6 +73,11 @@ namespace graph.DataStructure.Implementation {
             }
         }
 
+        public AdjacencyMatrix(AdjacencyMatrix<TVertex, TWeight> storage)
+        {
+            Storage = storage.Storage;
+            Schema = storage.Schema;
+        }
 
         public void AddDirectedEdge(TVertex @from, TVertex to, TWeight weight)
         {

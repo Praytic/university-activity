@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using graph.DataStructure.Implementation;
 
 namespace graph.Algorithms.Implementation {
-    public class DijkstraAdjacencyMatrixAlgorithm<TVertex> :
-        DijkstraAlgorithm<GraphAdjacencyMatrixSimplified<TVertex>, TVertex>
+    public class DijkstraShortestPathAdjacencyMatrix<TVertex> :
+        DijkstraShortestPath<GraphAdjacencyMatrix<TVertex, int>, TVertex>
     {
-        public DijkstraAdjacencyMatrixAlgorithm(GraphAdjacencyMatrixSimplified<TVertex> graph, TVertex start, TVertex finish) : base(graph, start, finish)
+        public DijkstraShortestPathAdjacencyMatrix(GraphAdjacencyMatrix<TVertex, int> graph, TVertex start, TVertex finish) : base(graph, start, finish)
         {
         }
 

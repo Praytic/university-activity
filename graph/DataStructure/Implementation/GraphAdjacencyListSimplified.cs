@@ -14,6 +14,10 @@ namespace graph.DataStructure.Implementation {
         {
         }
 
+        public GraphAdjacencyListSimplified(AdjacencyList<TVertex, int> storage) : base(storage)
+        {
+        }
+
         public GraphAdjacencyListSimplified(IStorage<TVertex, Dictionary<TVertex, Dictionary<TVertex, int>>> storage) : base(storage)
         {
         }

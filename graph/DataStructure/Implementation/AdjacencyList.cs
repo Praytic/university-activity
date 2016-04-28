@@ -39,6 +39,10 @@ namespace graph.DataStructure.Implementation
             Storage = storage.Storage;
         }
 
+        public AdjacencyList(AdjacencyList<TVertex, TWeight> storage) {
+            Storage = storage.Storage;
+        }
+
         public void Add(TVertex item) {
             Storage.Add(item, new Dictionary<TVertex, TWeight>());
         }

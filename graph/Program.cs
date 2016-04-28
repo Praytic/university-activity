@@ -1,14 +1,20 @@
 ﻿using System;
+using graph.Algorithms;
 using graph.Algorithms.Implementation;
 using graph.DataStructure;
 using graph.DataStructure.Implementation;
 
 namespace graph {
-    class Program {
+    class Program
+    {
+        public static DataStructureFactory Data { get; } = new DataStructureFactory();
+        public static AlgorithmsFactory Algorithms { get; } = new AlgorithmsFactory();
+
         static void Main(string[] args) {
-            Example2();
+            Example3();
         }
 
+        //Example of Dijkstra Shortest Path Algorithm with Adjacency Matrix Graph
         public static void Example1() {
             var graph = new GraphAdjacencyMatrixSimplified<string>
             {
@@ -31,14 +37,15 @@ namespace graph {
 
             string first = "Рузаевка";
             string second = "Березовка";
-            var shortestPath = new DijkstraAdjacencyMatrixAlgorithm<string>(graph, first, second);
+            var shortestPath = new DijkstraShortestPathAdjacencyMatrix<string>(graph, first, second);
             shortestPath.Run();
             Console.WriteLine("Count of paths from {0} to {1} equals {2}",
                 first, second, string.Join(", ", shortestPath.Result));
         }
 
+        //Example of Dijkstra Shortest Path Algorithm with Adjacency List Graph
         public static void Example2() {
-            var graph = new GraphAdjacencyListSimplified<string>()
+            var graph = new GraphAdjacencyListSimplified<string>
             {
                 "Березовка",
                 "Сосновка",
@@ -59,11 +66,32 @@ namespace graph {
 
             string first = "Рузаевка";
             string second = "Березовка";
-            var shortestPath = new DijkstraAdjacencyListAlgorithm<string>(graph, first, second);
+            var shortestPath = new DijkstraShortestPathAdjacencyList<string>(graph, first, second);
             shortestPath.Run();
             Console.WriteLine("Count of paths from {0} to {1} equals {2}",
                 first, second, string.Join(", ", shortestPath.Result));
         }
 
+        //Example of Finding Hamiltonian Cycle in the Specified Vertex with Adjacency Matrix
+        public static void Example3()
+        {
+            var path = "../../Resources/adjacencyMatrixStringInt";
+            var storage = LazyReaderLibrary.ReadAdjacencyMatrix<string, int>(path);
+            var matrix = Data.CreateAdjacencyMatrix(storage);
+            var graph = new GraphAdjacencyMatrixSimplified<string>(storage);
+
+            Console.WriteLine(matrix);
+            Console.WriteLine();
+            Console.WriteLine(graph);
+            Console.WriteLine();
+
+            var first = "Рузаевка";
+            var second = "Березовка";
+            var shortestPath = new FloydShortestPathAdjacencyMatrix<string>(graph, first, second);
+            shortestPath.Run();
+            Console.WriteLine("Count of paths from {0} to {1} equals\n{2}",
+                first, second, shortestPath.Result);
+
+        }
     }
 }

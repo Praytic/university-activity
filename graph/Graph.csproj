@@ -71,13 +71,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\AlgorithmFactory.cs" />
     <Compile Include="Algorithms\IAlgorithm.cs" />
     <Compile Include="Algorithms\AlgorithmContract.cs" />
+    <Compile Include="Algorithms\Implementation\FloydShortestPathAdjacencyMatrix.cs" />
+    <Compile Include="Algorithms\Implementation\FloydShortestPathAdjacencyList.cs" />
+    <Compile Include="Algorithms\Implementation\FloydShortestPath.cs" />
+    <Compile Include="DataStructure\DataStructureFactory.cs" />
     <Compile Include="DataStructure\IGraph.cs" />
     <Compile Include="DataStructure\Implementation\AdjacencyMatrixSimplified.cs" />
-    <Compile Include="Algorithms\Implementation\DijkstraAlgorithm.cs" />
-    <Compile Include="Algorithms\Implementation\DijkstraAdjacencyMatrixAlgorithm.cs" />
-    <Compile Include="Algorithms\Implementation\DijkstraAlgorithmAdjacencyList.cs" />
+    <Compile Include="Algorithms\Implementation\DijkstraShortestPath.cs" />
+    <Compile Include="Algorithms\Implementation\DijkstraShortestPathAdjacencyMatrix.cs" />
+    <Compile Include="Algorithms\Implementation\DijkstraShortestPathAdjacencyList.cs" />
     <Compile Include="DataStructure\Implementation\AdjacencyListSimplified.cs" />
     <Compile Include="DataStructure\Implementation\GraphAdjacencyMatrixSimplified.cs" />
     <Compile Include="DataStructure\Implementation\GraphAdjacencyMatrix.cs" />
@@ -97,11 +102,11 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Resources\input2" />
-    <None Include="Resources\input3" />
+    <None Include="Resources\adjacencyMatrixCharInt" />
+    <None Include="Resources\adjacencyMatrixStringInt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\input" />
+    <None Include="Resources\adjacencyMatrixIntInt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
