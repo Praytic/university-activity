@@ -78,6 +78,8 @@
     <Compile Include="Algorithms\Implementation\FloydShortestPathAdjacencyList.cs" />
     <Compile Include="Algorithms\Implementation\FloydShortestPath.cs" />
     <Compile Include="DataStructure\DataStructureFactory.cs" />
+    <Compile Include="DataStructure\IAdjacencyList.cs" />
+    <Compile Include="DataStructure\IAdjacencyMatrix.cs" />
     <Compile Include="DataStructure\IGraph.cs" />
     <Compile Include="DataStructure\Implementation\AdjacencyMatrixSimplified.cs" />
     <Compile Include="Algorithms\Implementation\DijkstraShortestPath.cs" />

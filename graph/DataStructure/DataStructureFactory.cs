@@ -4,29 +4,17 @@ using graph.DataStructure.Implementation;
 
 namespace graph.DataStructure {
     public class DataStructureFactory {
-        public IStorage<TVertex, List<List<TWeight>>>
-            CreateAdjacencyMatrix<TVertex, TWeight>() 
-            where TWeight : IComparable
-        {
-            if (typeof (TWeight) == typeof (int))
-            {
+        public IDataStructure<TVertex, List<List<TWeight>>>
+            CreateAdjacencyMatrix<TVertex, TWeight>()
+            where TWeight : IComparable {
+            if (typeof(TWeight) == typeof(int)) {
                 return new AdjacencyMatrixSimplified<TVertex>() as AdjacencyMatrix<TVertex, TWeight>;
             }
             return new AdjacencyMatrix<TVertex, TWeight>();
         }
 
-        public IStorage<TVertex, List<List<TWeight>>>
-            CreateAdjacencyMatrix<TVertex, TWeight>(TVertex[] schema) 
-            where TWeight : IComparable {
-            if (typeof (TWeight) == typeof (int))
-            {
-                return new AdjacencyMatrixSimplified<TVertex>(schema) as AdjacencyMatrix<TVertex, TWeight>;
-            }
-            return new AdjacencyMatrix<TVertex, TWeight>(schema);
-        }
-
-        public IStorage<TVertex, List<List<TWeight>>>
-            CreateAdjacencyMatrix<TVertex, TWeight>(Dictionary<TVertex, int> schema) 
+        public IDataStructure<TVertex, List<List<TWeight>>>
+            CreateAdjacencyMatrix<TVertex, TWeight>(TVertex[] schema)
             where TWeight : IComparable {
             if (typeof(TWeight) == typeof(int)) {
                 return new AdjacencyMatrixSimplified<TVertex>(schema) as AdjacencyMatrix<TVertex, TWeight>;
@@ -34,8 +22,17 @@ namespace graph.DataStructure {
             return new AdjacencyMatrix<TVertex, TWeight>(schema);
         }
 
-        public IStorage<TVertex, List<List<TWeight>>>
-            CreateAdjacencyMatrix<TVertex, TWeight>(TVertex[] schema, TWeight[,] matrix) 
+        public IDataStructure<TVertex, List<List<TWeight>>>
+            CreateAdjacencyMatrix<TVertex, TWeight>(Dictionary<TVertex, int> schema)
+            where TWeight : IComparable {
+            if (typeof(TWeight) == typeof(int)) {
+                return new AdjacencyMatrixSimplified<TVertex>(schema) as AdjacencyMatrix<TVertex, TWeight>;
+            }
+            return new AdjacencyMatrix<TVertex, TWeight>(schema);
+        }
+
+        public IDataStructure<TVertex, List<List<TWeight>>>
+            CreateAdjacencyMatrix<TVertex, TWeight>(TVertex[] schema, TWeight[,] matrix)
             where TWeight : IComparable {
             if (typeof(TWeight) == typeof(int)) {
                 return new AdjacencyMatrixSimplified<TVertex>(schema, matrix as int[,]) as AdjacencyMatrix<TVertex, TWeight>;
@@ -43,16 +40,16 @@ namespace graph.DataStructure {
             return new AdjacencyMatrix<TVertex, TWeight>(schema, matrix);
         }
 
-        public IStorage<TVertex, List<List<TWeight>>>
-            CreateAdjacencyMatrix<TVertex, TWeight>(AdjacencyMatrix<TVertex, TWeight> storage) 
+        public IDataStructure<TVertex, List<List<TWeight>>>
+            CreateAdjacencyMatrix<TVertex, TWeight>(AdjacencyMatrix<TVertex, TWeight> storage)
             where TWeight : IComparable {
             if (typeof(TWeight) == typeof(int)) {
                 return new AdjacencyMatrixSimplified<TVertex>(storage as AdjacencyMatrix<TVertex, int>) as AdjacencyMatrix<TVertex, TWeight>;
             }
             return new AdjacencyMatrix<TVertex, TWeight>(storage);
         }
-        
-        public AdjacencyList<TVertex, TWeight>
+
+        public IDataStructure<TVertex, >
             CreateAdjacencyList<TVertex, TWeight>()
             where TWeight : IComparable {
             if (typeof(TWeight) == typeof(int)) {
@@ -78,5 +75,6 @@ namespace graph.DataStructure {
             }
             return new AdjacencyList<TVertex, TWeight>(storage);
         }
+        
     }
 }

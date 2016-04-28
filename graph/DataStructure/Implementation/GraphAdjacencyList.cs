@@ -20,7 +20,7 @@ namespace graph.DataStructure.Implementation
         {
         }
 
-        public GraphAdjacencyList(IStorage<TVertex, Dictionary<TVertex, Dictionary<TVertex, TWeight>>> storage) : base(storage)
+        public GraphAdjacencyList(IDataStructure<TVertex, Dictionary<TVertex, Dictionary<TVertex, TWeight>>> storage) : base(storage)
         {
         }
     }

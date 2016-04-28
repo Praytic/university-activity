@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace graph.DataStructure
 {
-    public interface IStorage<TVertex, out TStorage> : 
+    public interface IDataStructure<TVertex, out TStorage> : 
         ICollection<TVertex>
         where TStorage : ICollection
     {

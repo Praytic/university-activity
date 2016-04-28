@@ -7,8 +7,7 @@ using System.Text;
 namespace graph.DataStructure.Implementation
 {
     public class AdjacencyList<TVertex, TWeight> :
-        IAdjacency<TVertex, TWeight>,
-        IStorage<TVertex, Dictionary<TVertex, Dictionary<TVertex, TWeight>>> 
+        IAdjacencyList<TVertex, TWeight> 
         where TWeight : IComparable 
     {
 
@@ -35,7 +34,7 @@ namespace graph.DataStructure.Implementation
             Storage = storage;
         }
 
-        public AdjacencyList(IStorage<TVertex, Dictionary<TVertex, Dictionary<TVertex, TWeight>>> storage) {
+        public AdjacencyList(IDataStructure<TVertex, Dictionary<TVertex, Dictionary<TVertex, TWeight>>> storage) {
             Storage = storage.Storage;
         }
 

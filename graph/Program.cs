@@ -77,11 +77,8 @@ namespace graph {
         {
             var path = "../../Resources/adjacencyMatrixStringInt";
             var storage = LazyReaderLibrary.ReadAdjacencyMatrix<string, int>(path);
-            var matrix = Data.CreateAdjacencyMatrix(storage);
             var graph = new GraphAdjacencyMatrixSimplified<string>(storage);
-
-            Console.WriteLine(matrix);
-            Console.WriteLine();
+            
             Console.WriteLine(graph);
             Console.WriteLine();
 
@@ -91,7 +88,6 @@ namespace graph {
             shortestPath.Run();
             Console.WriteLine("Count of paths from {0} to {1} equals\n{2}",
                 first, second, shortestPath.Result);
-
         }
     }
 }

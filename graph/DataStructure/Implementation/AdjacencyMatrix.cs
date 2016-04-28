@@ -6,9 +6,7 @@ using System.Text;
 
 namespace graph.DataStructure.Implementation {
     public class AdjacencyMatrix<TVertex, TWeight> :
-        IAdjacency<TVertex, TWeight>,
-        IStorage<TVertex, List<List<TWeight>>>
-        where TWeight : IComparable 
+        IAdjacencyMatrix<TVertex, TWeight> where TWeight : IComparable 
     {
         public int Count
         {
