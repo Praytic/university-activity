@@ -38,7 +38,7 @@ namespace graph.DataStructure.Implementation
             Storage = storage.Storage;
         }
 
-        public AdjacencyList(AdjacencyList<TVertex, TWeight> storage) {
+        public AdjacencyList(IAdjacencyList<TVertex, TWeight> storage) {
             Storage = storage.Storage;
         }
 

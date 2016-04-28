@@ -22,7 +22,7 @@ namespace graph.DataStructure.Implementation
         {
         }
 
-        public GraphAdjacencyMatrixSimplified(AdjacencyMatrix<TVertex, int> storage) : base(storage)
+        public GraphAdjacencyMatrixSimplified(IAdjacencyMatrix<TVertex, int> storage) : base(storage)
         {
         }
     }

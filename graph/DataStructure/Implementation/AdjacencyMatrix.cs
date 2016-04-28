@@ -71,7 +71,7 @@ namespace graph.DataStructure.Implementation {
             }
         }
 
-        public AdjacencyMatrix(AdjacencyMatrix<TVertex, TWeight> storage)
+        public AdjacencyMatrix(IAdjacencyMatrix<TVertex, TWeight> storage)
         {
             Storage = storage.Storage;
             Schema = storage.Schema;

@@ -5,10 +5,14 @@ using graph.DataStructure;
 using graph.DataStructure.Implementation;
 
 namespace graph {
+    public static class Factory
+    {
+        public static readonly DataStructureFactory Data = new DataStructureFactory();
+        public static readonly AlgorithmsFactory Algorithms = new AlgorithmsFactory();
+    }
+
     class Program
     {
-        public static DataStructureFactory Data { get; } = new DataStructureFactory();
-        public static AlgorithmsFactory Algorithms { get; } = new AlgorithmsFactory();
 
         static void Main(string[] args) {
             Example3();
@@ -77,17 +81,17 @@ namespace graph {
         {
             var path = "../../Resources/adjacencyMatrixStringInt";
             var storage = LazyReaderLibrary.ReadAdjacencyMatrix<string, int>(path);
-            var graph = new GraphAdjacencyMatrixSimplified<string>(storage);
+            var graph = Factory.Data.CreateGraph(storage);
             
             Console.WriteLine(graph);
             Console.WriteLine();
 
             var first = "Рузаевка";
             var second = "Березовка";
-            var shortestPath = new FloydShortestPathAdjacencyMatrix<string>(graph, first, second);
+            var shortestPath = Factory.Algorithms.CreateFloydShortestPath(graph, first, second);
             shortestPath.Run();
-            Console.WriteLine("Count of paths from {0} to {1} equals\n{2}",
-                first, second, shortestPath.Result);
+            //Console.WriteLine("Count of paths from {0} to {1} equals\n{2}",
+            //    first, second, shortestPath.Result);
         }
     }
 }
