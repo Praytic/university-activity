@@ -130,7 +130,7 @@ namespace graph.DataStructure.Implementation {
                 row.Add(default(TWeight));
             }
             var newRow = new List<TWeight>();
-            for (int i = 0; i <= Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 newRow.Add(default(TWeight));
             }
@@ -155,21 +155,24 @@ namespace graph.DataStructure.Implementation {
 
         public bool Remove(TVertex item)
         {
-            if (Schema.ContainsKey(item))
+            if (!Schema.ContainsKey(item)) return false;
+            var lastElement = Schema.Last();
+            foreach (var vertex in this)
             {
-                var lastElement = Schema.Last();
-                foreach (var vertex in this)
+                if (!Equals(vertex, item))
                 {
                     this[vertex, item] = this[vertex, lastElement.Key];
                     this[item, vertex] = this[lastElement.Key, vertex];
-                    Remove(lastElement.Key);
                 }
-                Storage.RemoveAt(lastElement.Value);
-                Schema[Schema.Last().Key] = Schema[item];
-                Schema.Remove(lastElement.Key);
-                return true;
             }
-            return false;
+            foreach (var vertex in this)
+            {
+                Storage[Schema[vertex]].RemoveAt(lastElement.Value);
+            }
+            Storage.RemoveAt(lastElement.Value);
+            Schema[lastElement.Key] = Schema[item];
+            Schema.Remove(item);
+            return true;
         }
 
         public override string ToString() {

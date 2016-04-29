@@ -15,19 +15,19 @@ namespace graph {
     {
 
         static void Main(string[] args) {
-            Example3();
+            Example4();
         }
 
         //Example of Dijkstra Shortest Path Algorithm with Adjacency Matrix Graph
         public static void Example1() {
-            var graph = new GraphAdjacencyMatrixSimplified<string>
+            var graph = Factory.Data.CreateGraph(new []
             {
                 "Березовка",
                 "Сосновка",
                 "Еремеевка",
                 "Октябрьское",
                 "Рузаевка"
-            };
+            });
             graph.AddUndirectedEdge("Березовка", "Еремеевка", 70);
             graph.AddUndirectedEdge("Березовка", "Сосновка", 20);
             graph.AddUndirectedEdge("Сосновка", "Октябрьское", 60);
@@ -41,22 +41,22 @@ namespace graph {
 
             string first = "Рузаевка";
             string second = "Березовка";
-            var shortestPath = new DijkstraShortestPathAdjacencyMatrix<string>(graph, first, second);
+            var shortestPath = Factory.Algorithms.CreateDijkstraShortestPath(graph, first, second);
             shortestPath.Run();
-            Console.WriteLine("Count of paths from {0} to {1} equals {2}",
-                first, second, string.Join(", ", shortestPath.Result));
+            Console.WriteLine("Count of paths from {0} to {1} equals\n{2}",
+                first, second, string.Join(", ", shortestPath.Result.ToString()));
         }
 
         //Example of Dijkstra Shortest Path Algorithm with Adjacency List Graph
         public static void Example2() {
-            var graph = new GraphAdjacencyListSimplified<string>
+            var graph = Factory.Data.CreateGraph(new []
             {
                 "Березовка",
                 "Сосновка",
                 "Еремеевка",
                 "Октябрьское",
                 "Рузаевка"
-            };
+            });
             graph.AddUndirectedEdge("Березовка", "Еремеевка", 70);
             graph.AddUndirectedEdge("Березовка", "Сосновка", 20);
             graph.AddUndirectedEdge("Сосновка", "Октябрьское", 60);
@@ -70,10 +70,10 @@ namespace graph {
 
             string first = "Рузаевка";
             string second = "Березовка";
-            var shortestPath = new DijkstraShortestPathAdjacencyList<string>(graph, first, second);
+            var shortestPath = Factory.Algorithms.CreateFloydShortestPath(graph, first, second);
             shortestPath.Run();
-            Console.WriteLine("Count of paths from {0} to {1} equals {2}",
-                first, second, string.Join(", ", shortestPath.Result));
+            Console.WriteLine("Count of paths from {0} to {1} equals\n{2}",
+                first, second, string.Join(", ", shortestPath.Result.ToString()));
         }
 
         //Example of Finding Hamiltonian Cycle in the Specified Vertex with Adjacency Matrix
@@ -90,8 +90,24 @@ namespace graph {
             var second = "Березовка";
             var shortestPath = Factory.Algorithms.CreateFloydShortestPath(graph, first, second);
             shortestPath.Run();
-            //Console.WriteLine("Count of paths from {0} to {1} equals\n{2}",
-            //    first, second, shortestPath.Result);
+            Console.WriteLine("Count of paths from {0} to {1} equals\n{2}",
+                first, second, shortestPath.Result);
+        }
+
+        //Example of Removing & Adding New Vertex with Adjacency Matrix
+        public static void Example4() {
+            var path = "../../Resources/adjacencyMatrixStringInt";
+            var storage = LazyReaderLibrary.ReadAdjacencyMatrix<string, int>(path);
+            var graph = Factory.Data.CreateGraph(storage);
+
+            Console.WriteLine(graph);
+            Console.WriteLine();
+
+            graph.Add("Буряковка");
+            graph.Remove("Еремеевка");
+
+            Console.WriteLine(graph);
+            Console.WriteLine();
         }
     }
 }

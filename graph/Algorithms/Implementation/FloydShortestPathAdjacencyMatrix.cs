@@ -1,27 +1,34 @@
 ﻿using graph.DataStructure.Implementation;
 
-namespace graph.Algorithms.Implementation {
-
+namespace graph.Algorithms.Implementation
+{
     public class FloydShortestPathAdjacencyMatrix<TVertex> :
-        FloydShortestPath<GraphAdjacencyMatrix<TVertex, int>, TVertex> {
-
-        public FloydShortestPathAdjacencyMatrix(GraphAdjacencyMatrix<TVertex, int> graph, TVertex start, TVertex finish) : base(graph, start, finish) {
+        FloydShortestPath<GraphAdjacencyMatrix<TVertex, int>, TVertex>
+    {
+        public FloydShortestPathAdjacencyMatrix(GraphAdjacencyMatrix<TVertex, int> graph, TVertex start, TVertex finish)
+            : base(graph, start, finish)
+        {
         }
 
         public override void Run()
         {
             Result = new AdjacencyMatrix<TVertex, int>(Graph.Schema);
-            int count = 0;
             foreach (var i in Graph)
             {
-                foreach (var j in Graph) {
-                    if (Graph[i, j] != 0 && Graph[i, j] != int.MaxValue) {
-                        Result[i, j] = count;
-                    } else {
-                        Result[i, j] = -1;
+                foreach (var j in Graph)
+                {
+                    if (Graph[i, j] != 0)
+                    {
+                        Result[i, j] = Graph[i, j];
+                    }
+                    else
+                    {
+                        if (!Equals(i, j))
+                        {
+                            Result[i, j] = int.MaxValue;
+                        }
                     }
                 }
-                count++;
             }
 
             foreach (var k in Graph)
@@ -30,15 +37,9 @@ namespace graph.Algorithms.Implementation {
                 {
                     foreach (var j in Graph)
                     {
-                        if (Graph[i, k] == int.MaxValue || Graph[k, j] == int.MaxValue)
+                        if (Result[i, j] > Result[i, k] + Result[k, j])
                         {
-                            continue;
-                        }
-
-                        if (Graph[i, j] > Graph[i, k] + Graph[k, j])
-                        {
-                            Graph[i, j] = Graph[i, k] + Graph[k, j];
-                            Result[i, j] = Result[k, j];
+                            Result[i, j] = Result[i, k] + Result[k, j];
                         }
                     }
                 }

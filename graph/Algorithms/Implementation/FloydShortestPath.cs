@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using graph.DataStructure;
-using graph.DataStructure.Implementation;
 
 namespace graph.Algorithms.Implementation {
     public abstract class FloydShortestPath<TGraph, TVertex> :
@@ -12,9 +11,8 @@ namespace graph.Algorithms.Implementation {
         public Dictionary<TVertex, bool> Done { get; }
         public Dictionary<TVertex, TVertex> Parent { get; }
         public Dictionary<TVertex, int> Distances { get; }
-        public AdjacencyMatrix<TVertex, int> Result { get; protected set; }
 
-        public FloydShortestPath(TGraph graph, TVertex start, TVertex finish) {
+        protected FloydShortestPath(TGraph graph, TVertex start, TVertex finish) {
             Start = start;
             Finish = finish;
             Graph = graph;

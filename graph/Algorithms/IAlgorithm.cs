@@ -9,6 +9,8 @@ namespace graph.Algorithms
     {
         TGraph Graph { get; }
 
+        dynamic Result { get; }
+
         void Run();
     }
 }

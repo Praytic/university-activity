@@ -11,9 +11,8 @@ namespace graph.Algorithms.Implementation {
         public Dictionary<TVertex, bool> Done { get; }
         public Dictionary<TVertex, TVertex> Parent { get; }
         public Dictionary<TVertex, int> Distances { get; }
-        public List<TVertex> Result { get; protected set; }
 
-        public DijkstraShortestPath(TGraph graph, TVertex start, TVertex finish) {
+        protected DijkstraShortestPath(TGraph graph, TVertex start, TVertex finish) {
             Start = start;
             Finish = finish;
             Graph = graph;
