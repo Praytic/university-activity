@@ -8,66 +8,66 @@ namespace graph.DataStructure
     {
         #region CreateAdjacencyMatrix
         
-        public IAdjacencyMatrix<TVertex, int>
+        public AdjacencyMatrix<TVertex, int>
             CreateAdjacencyMatrix<TVertex>()
         {
             return new AdjacencyMatrix<TVertex, int>();
         }
 
-        public IAdjacencyMatrix<TVertex, int>
+        public AdjacencyMatrix<TVertex, int>
             CreateAdjacencyMatrix<TVertex>(TVertex[] schema)
         {
             return new AdjacencyMatrix<TVertex, int>(schema);
         }
 
-        public IAdjacencyMatrix<TVertex, int>
+        public AdjacencyMatrix<TVertex, int>
             CreateAdjacencyMatrix<TVertex>(Dictionary<TVertex, int> schema)
         {
             return new AdjacencyMatrix<TVertex, int>(schema);
         }
 
-        public IAdjacencyMatrix<TVertex, int>
+        public AdjacencyMatrix<TVertex, int>
             CreateAdjacencyMatrix<TVertex>(TVertex[] schema, int[,] matrix)
         {
             return new AdjacencyMatrix<TVertex, int>(schema, matrix);
         }
 
-        public IAdjacencyMatrix<TVertex, int>
-            CreateAdjacencyMatrix<TVertex>(IAdjacencyMatrix<TVertex, int> storage)
+        public AdjacencyMatrix<TVertex, int>
+            CreateAdjacencyMatrix<TVertex>(AdjacencyMatrix<TVertex, int> storage)
         {
             return new AdjacencyMatrix<TVertex, int>(storage);
         }
 
-        public IAdjacencyMatrix<TVertex, TWeight>
+        public AdjacencyMatrix<TVertex, TWeight>
             CreateAdjacencyMatrix<TVertex, TWeight>()
             where TWeight : IComparable
         {
             return new AdjacencyMatrix<TVertex, TWeight>();
         }
 
-        public IAdjacencyMatrix<TVertex, TWeight>
+        public AdjacencyMatrix<TVertex, TWeight>
             CreateAdjacencyMatrix<TVertex, TWeight>(TVertex[] schema)
             where TWeight : IComparable
         {
             return new AdjacencyMatrix<TVertex, TWeight>(schema);
         }
 
-        public IAdjacencyMatrix<TVertex, TWeight>
+        public AdjacencyMatrix<TVertex, TWeight>
             CreateAdjacencyMatrix<TVertex, TWeight>(Dictionary<TVertex, int> schema)
             where TWeight : IComparable
         {
             return new AdjacencyMatrix<TVertex, TWeight>(schema);
         }
 
-        public IAdjacencyMatrix<TVertex, TWeight>
+        public AdjacencyMatrix<TVertex, TWeight>
             CreateAdjacencyMatrix<TVertex, TWeight>(TVertex[] schema, TWeight[,] matrix)
             where TWeight : IComparable
         {
             return new AdjacencyMatrix<TVertex, TWeight>(schema, matrix);
         }
 
-        public IAdjacencyMatrix<TVertex, TWeight>
-            CreateAdjacencyMatrix<TVertex, TWeight>(IAdjacencyMatrix<TVertex, TWeight> storage)
+        public AdjacencyMatrix<TVertex, TWeight>
+            CreateAdjacencyMatrix<TVertex, TWeight>(AdjacencyMatrix<TVertex, TWeight> storage)
             where TWeight : IComparable
         {
             return new AdjacencyMatrix<TVertex, TWeight>(storage);
@@ -81,6 +81,16 @@ namespace graph.DataStructure
             CreateAdjacencyList<TVertex>()
         {
             return new AdjacencyList<TVertex, int>();
+        }
+
+        public AdjacencyList<TVertex, int>
+            CreateAdjacencyList<TVertex>(TVertex[] vertexes) {
+            var storage = new Dictionary<TVertex, Dictionary<TVertex, int>>();
+            foreach (var vertex in vertexes)
+            {
+                storage.Add(vertex, new Dictionary<TVertex, int>());
+            }
+            return new AdjacencyList<TVertex, int>(storage);
         }
 
         public AdjacencyList<TVertex, int>
@@ -140,7 +150,7 @@ namespace graph.DataStructure
         }
 
         public GraphAdjacencyMatrix<TVertex, TWeight>
-            CreateGraph<TVertex, TWeight>(TVertex[] schema)
+            CreateGraphAdjacencyMatrix<TVertex, TWeight>(TVertex[] schema)
             where TWeight : IComparable
         {
             return new GraphAdjacencyMatrix<TVertex, TWeight>(schema);
@@ -173,13 +183,13 @@ namespace graph.DataStructure
         }
 
         public GraphAdjacencyMatrix<TVertex, int>
-            CreateGraph<TVertex>(IAdjacencyMatrix<TVertex, int> storage)
+            CreateGraph<TVertex>(AdjacencyMatrix<TVertex, int> storage)
         {
             return new GraphAdjacencyMatrix<TVertex, int>(storage);
         }
 
         public GraphAdjacencyMatrix<TVertex, TWeight>
-            CreateGraph<TVertex, TWeight>(IAdjacencyMatrix<TVertex, TWeight> storage)
+            CreateGraph<TVertex, TWeight>(AdjacencyMatrix<TVertex, TWeight> storage)
             where TWeight : IComparable
         {
             return new GraphAdjacencyMatrix<TVertex, TWeight>(storage);
@@ -196,6 +206,11 @@ namespace graph.DataStructure
             where TWeight : IComparable
         {
             return new GraphAdjacencyMatrix<TVertex, TWeight>();
+        }
+
+        public GraphAdjacencyList<TVertex, int>
+            CreateGraphAdjacencyList<TVertex>(TVertex[] vertexes) {
+            return new GraphAdjacencyList<TVertex, int>(CreateAdjacencyList(vertexes));
         }
 
         public GraphAdjacencyList<TVertex, int>

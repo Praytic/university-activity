@@ -25,7 +25,7 @@ namespace graph.DataStructure.Implementation
         {
         }
 
-        public GraphAdjacencyMatrix(IAdjacencyMatrix<TVertex, TWeight> storage) : base(storage)
+        public GraphAdjacencyMatrix(AdjacencyMatrix<TVertex, TWeight> storage) : base(storage)
         {
         }
     }

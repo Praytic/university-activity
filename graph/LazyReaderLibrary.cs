@@ -128,7 +128,7 @@ namespace graph
             return matrix;
         }
 
-        public static IAdjacencyMatrix<T, T1> ReadAdjacencyMatrix<T, T1>(string path) where T1 : IComparable {
+        public static AdjacencyMatrix<T, T1> ReadAdjacencyMatrix<T, T1>(string path) where T1 : IComparable {
             using (var sr = new StreamReader(path)) {
                 var size = ReadValue<int>(sr);
                 var schema = ReadArray<T>(sr, size);
