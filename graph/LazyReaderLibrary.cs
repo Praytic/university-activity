@@ -86,56 +86,56 @@ namespace graph
             return (Matrix) ReadMatrix<int>(path);
         }
 
-        public static Matrix ReadMatrix(string path, int n)
+        public static Matrix<int, int> ReadMatrix(string path, int n)
         {
-            return (Matrix) ReadMatrix<int>(path, n);
+            return ReadMatrix<int>(path, n);
         }
 
-        public static Matrix ReadMatrix(string path, int[] scheme, int n) {
-            return (Matrix)ReadMatrix<int>(path, scheme, n);
+        public static Matrix<int, int> ReadMatrix(string path, int[] scheme, int n) {
+            return ReadMatrix<int>(path, scheme, n);
         }
 
-        public static Matrix ReadMatrix(StreamReader reader)
+        public static Matrix<int, int> ReadMatrix(StreamReader reader)
         {
             var size = ReadValue(reader);
-            return (Matrix)ReadMatrix<int>(reader, size);
+            return ReadMatrix<int>(reader, size);
         }
 
-        public static Matrix ReadMatrix(StreamReader reader, int n)
+        public static Matrix<int, int> ReadMatrix(StreamReader reader, int n)
         {
-            return (Matrix) ReadMatrix<int>(reader, n);
+            return ReadMatrix<int>(reader, n);
         }
 
-        public static Matrix ReadMatrix(StreamReader reader, int[] scheme, int n) {
-            return (Matrix)ReadMatrix<int>(reader, scheme, n);
+        public static Matrix<int, int> ReadMatrix(StreamReader reader, int[] scheme, int n) {
+            return ReadMatrix<int>(reader, scheme, n);
         }
 
-        public static Matrix<T> ReadMatrix<T>(string path)
+        public static Matrix<T, int> ReadMatrix<T>(string path)
         {
-            return (Matrix<T>) ReadMatrix<T, int>(path);
+            return ReadMatrix<T, int>(path);
         }
 
-        public static Matrix<T> ReadMatrix<T>(string path, int n)
+        public static Matrix<T, int> ReadMatrix<T>(string path, int n)
         {
-            return (Matrix<T>) ReadMatrix<T, int>(path, n);
+            return ReadMatrix<T, int>(path, n);
         }
 
-        public static Matrix<T> ReadMatrix<T>(string path, T[] scheme, int n) {
-            return (Matrix<T>) ReadMatrix<T, int>(path, scheme, n);
+        public static Matrix<T, int> ReadMatrix<T>(string path, T[] scheme, int n) {
+            return ReadMatrix<T, int>(path, scheme, n);
         }
 
-        public static Matrix<T> ReadMatrix<T>(StreamReader reader)
+        public static Matrix<T, int> ReadMatrix<T>(StreamReader reader)
         {
-            return (Matrix<T>) ReadMatrix<T, int>(reader);
+            return ReadMatrix<T, int>(reader);
         }
 
-        public static Matrix<T> ReadMatrix<T>(StreamReader reader, int n)
+        public static Matrix<T, int> ReadMatrix<T>(StreamReader reader, int n)
         {
-            return (Matrix<T>) ReadMatrix<T, int>(reader, n);
+            return ReadMatrix<T, int>(reader, n);
         }
 
-        public static Matrix<T> ReadMatrix<T>(StreamReader reader, T[] scheme, int n) {
-            return (Matrix<T>) ReadMatrix<T, int>(reader, scheme, n);
+        public static Matrix<T, int> ReadMatrix<T>(StreamReader reader, T[] scheme, int n) {
+            return ReadMatrix<T, int>(reader, scheme, n);
         }
 
         public static Matrix<T, TW> ReadMatrix<T, TW>(string path) where TW : IComparable

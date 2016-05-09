@@ -23,11 +23,11 @@ namespace graph.Storages.Implementation
         {
         }
 
-        public GraphAdjacencyMatrix(AdjacencyMatrix storage) : base(storage)
+        public GraphAdjacencyMatrix(AdjacencyMatrix<int, int> storage) : base(storage)
         {
         }
 
-        public GraphAdjacencyMatrix(Matrix matrix) : base(matrix) {
+        public GraphAdjacencyMatrix(Matrix<int, int> matrix) : base(matrix) {
         }
     }
 
@@ -50,11 +50,11 @@ namespace graph.Storages.Implementation
         {
         }
 
-        public GraphAdjacencyMatrix(AdjacencyMatrix<TVertex> storage) : base(storage)
+        public GraphAdjacencyMatrix(AdjacencyMatrix<TVertex, int> storage) : base(storage)
         {
         }
 
-        public GraphAdjacencyMatrix(Matrix<TVertex> matrix) : base(matrix) {
+        public GraphAdjacencyMatrix(Matrix<TVertex, int> matrix) : base(matrix) {
         }
     }
 

@@ -26,7 +26,7 @@ namespace graph.Storages.Implementation {
         {
         }
 
-        public AdjacencyMatrix(Matrix matrix) : base(matrix) {
+        public AdjacencyMatrix(Matrix<int, int> matrix) : base(matrix) {
         }
     }
 
@@ -53,7 +53,7 @@ namespace graph.Storages.Implementation {
         {
         }
 
-        public AdjacencyMatrix(Matrix<TVertex> matrix) : base(matrix)
+        public AdjacencyMatrix(Matrix<TVertex, int> matrix) : base(matrix)
         {
         }
     }

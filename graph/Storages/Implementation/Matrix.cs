@@ -245,8 +245,9 @@ namespace graph.Storages.Implementation {
                 Storage[Scheme[vertex]].RemoveAt(lastElement.Value);
             }
             Storage.RemoveAt(lastElement.Value);
-            Scheme[lastElement.Key] = Scheme[item];
+            var tmp = Scheme[item];
             Scheme.Remove(item);
+            Scheme[lastElement.Key] = tmp;
             return true;
         }
 

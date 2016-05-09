@@ -51,9 +51,6 @@ namespace graph.Storages.Implementation
             get { return _reversedScheme[i]; }
             set
             {
-                if (_scheme.ContainsKey(value)) {
-                    throw new ArgumentException("This value already exists in this scheme");
-                }
                 if (_reversedScheme.ContainsKey(i)) {
                     throw new ArgumentException("This key already exists in this scheme");
                 }
@@ -66,10 +63,6 @@ namespace graph.Storages.Implementation
             get { return _scheme[i]; }
             set
             {
-                if (_scheme.ContainsKey(i))
-                {
-                    throw new ArgumentException("This key already exists in this scheme");
-                }
                 if (_reversedScheme.ContainsKey(value))
                 {
                     throw new ArgumentException("This value already exists in this scheme");
