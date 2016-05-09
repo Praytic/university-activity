@@ -2,13 +2,24 @@
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Runtime.Remoting.Messaging;
 using graph.DataStructure;
-using graph.DataStructure.Implementation;
+using graph.Storages.Implementation;
 
 namespace graph
 {
-    public static class LazyReaderLibrary
-    {
+    public static class LazyReaderLibrary {
+
+        public static int ReadValue(string path)
+        {
+            return ReadValue<int>(path);
+        }
+
+        public static int ReadValue(StreamReader reader) {
+            return ReadValue<int>(reader);
+        }
+
         public static T ReadValue<T>(string path) {
             T value;
             using (var sr = new StreamReader(path))
@@ -24,118 +35,158 @@ namespace graph
             return value;
         }
 
-        public static T[] ReadArray<T>(string path)
+        public static int[] ReadArray(string path)
         {
-            T[] array = new T[0];
-            using (var sr = new StreamReader(path)) {
-                var readLine = sr.ReadLine();
-                if (readLine != null) {
-                    var converter = TypeDescriptor.GetConverter(typeof(T));
-                    var inputList = readLine
-                        .Split(" \t".ToCharArray())
-                        .Select(s => (T)converter.ConvertFrom(s))
-                        .ToArray();
-                    array = inputList;
-                }
-            }
-            return array;
+            return ReadArray<int>(path);
         }
 
-        public static T[] ReadSizeAndArray<T>(string path) {
-            T[] array;
+        public static int[] ReadArray(string path, int n) {
+            return ReadArray<int>(path, n);
+        }
+
+        public static int[] ReadArray(StreamReader reader) {
+            return ReadArray<int>(reader);
+        }
+
+        public static int[] ReadArray(StreamReader reader, int n) {
+            return ReadArray<int>(reader, n);
+        }
+
+        public static T[] ReadArray<T>(string path) {
             using (var sr = new StreamReader(path))
             {
-                var size = ReadValue<int>(sr);
-                array = ReadArray<T>(sr, size);
+                return ReadArray<T>(sr);
             }
-            return array;
         }
 
         public static T[] ReadArray<T>(string path, int n) {
-            T[] array;
-            using (var sr = new StreamReader(path))
-            {
-                array = ReadArray<T>(sr, n);
+            using (var sr = new StreamReader(path)) {
+                return ReadArray<T>(sr, n);
             }
-            return array;
+        }
+
+        public static T[] ReadArray<T>(StreamReader reader) {
+            var size = ReadValue(reader);
+            return ReadArray<T>(reader, size);
         }
 
         public static T[] ReadArray<T>(StreamReader reader, int n)
         {
-            T[] array = new T[n];
             var readLine = reader.ReadLine();
-            if (readLine != null) {
-                var converter = TypeDescriptor.GetConverter(typeof(T));
-                var inputList = readLine
-                    .Split(" \t".ToCharArray())
-                    .Select(s => (T)converter.ConvertFrom(s))
-                    .Take(n)
-                    .ToArray();
-                array = inputList;
-            }
-            return array;
+            if (readLine == null) return null;
+            var converter = TypeDescriptor.GetConverter(typeof(T));
+            return readLine
+                .Split(" \t".ToCharArray())
+                .Select(s => (T)converter.ConvertFrom(s))
+                .Take(n)
+                .ToArray();
         }
 
-        public static T[,] ReadOneSizeAndMatrix<T>(string path) {
-            T[,] matrix;
+        public static Matrix ReadMatrix(string path) {
+            return (Matrix) ReadMatrix<int>(path);
+        }
+
+        public static Matrix ReadMatrix(string path, int n)
+        {
+            return (Matrix) ReadMatrix<int>(path, n);
+        }
+
+        public static Matrix ReadMatrix(string path, int[] scheme, int n) {
+            return (Matrix)ReadMatrix<int>(path, scheme, n);
+        }
+
+        public static Matrix ReadMatrix(StreamReader reader)
+        {
+            var size = ReadValue(reader);
+            return (Matrix)ReadMatrix<int>(reader, size);
+        }
+
+        public static Matrix ReadMatrix(StreamReader reader, int n)
+        {
+            return (Matrix) ReadMatrix<int>(reader, n);
+        }
+
+        public static Matrix ReadMatrix(StreamReader reader, int[] scheme, int n) {
+            return (Matrix)ReadMatrix<int>(reader, scheme, n);
+        }
+
+        public static Matrix<T> ReadMatrix<T>(string path)
+        {
+            return (Matrix<T>) ReadMatrix<T, int>(path);
+        }
+
+        public static Matrix<T> ReadMatrix<T>(string path, int n)
+        {
+            return (Matrix<T>) ReadMatrix<T, int>(path, n);
+        }
+
+        public static Matrix<T> ReadMatrix<T>(string path, T[] scheme, int n) {
+            return (Matrix<T>) ReadMatrix<T, int>(path, scheme, n);
+        }
+
+        public static Matrix<T> ReadMatrix<T>(StreamReader reader)
+        {
+            return (Matrix<T>) ReadMatrix<T, int>(reader);
+        }
+
+        public static Matrix<T> ReadMatrix<T>(StreamReader reader, int n)
+        {
+            return (Matrix<T>) ReadMatrix<T, int>(reader, n);
+        }
+
+        public static Matrix<T> ReadMatrix<T>(StreamReader reader, T[] scheme, int n) {
+            return (Matrix<T>) ReadMatrix<T, int>(reader, scheme, n);
+        }
+
+        public static Matrix<T, TW> ReadMatrix<T, TW>(string path) where TW : IComparable
+        {
             using (var sr = new StreamReader(path)) {
-                var size = ReadValue<int>(sr);
-                matrix = ReadMatrix<T>(sr, size, size);
+                return ReadMatrix<T, TW>(sr);
             }
-            return matrix;
         }
 
-        public static T[,] ReadTwoSizeAndMatrix<T>(string path)
+        public static Matrix<T, TW> ReadMatrix<T, TW>(string path, int n) where TW : IComparable
         {
-            T[,] matrix;
             using (var sr = new StreamReader(path)) {
-                var size = ReadArray<int>(sr, 2);
-                matrix = ReadMatrix<T>(sr, size[0], size[1]);
+                return ReadMatrix<T, TW>(sr, n);
             }
-            return matrix;
         }
 
-        public static T[,] ReadMatrix<T>(string path, int n)
-        {
-            return ReadMatrix<T>(path, n, n);
-        }
-
-        public static T[,] ReadMatrix<T>(string path, int n, int m) {
-            T[,] matrix;
-            using (var sr = new StreamReader(path))
-            {
-                matrix = ReadMatrix<T>(sr, n, m);
+        public static Matrix<T, TW> ReadMatrix<T, TW>(string path, T[] scheme, int n) where TW : IComparable {
+            using (var sr = new StreamReader(path)) {
+                return ReadMatrix<T, TW>(sr, scheme, n);
             }
-            return matrix;
         }
 
-        public static T[,] ReadMatrix<T>(StreamReader reader, int n, int m)
+        public static Matrix<T, TW> ReadMatrix<T, TW>(StreamReader reader) where TW : IComparable
         {
-            T[,] matrix = new T[n, m];
+            var size = ReadValue(reader);
+            return ReadMatrix<T, TW>(reader, size);
+        }
+
+        public static Matrix<T, TW> ReadMatrix<T, TW>(StreamReader reader, int n) where TW : IComparable
+        {
+            var scheme = ReadArray<T>(reader, n);
+            return ReadMatrix<T, TW>(reader, scheme, n);
+        }
+
+        public static Matrix<T, TW> ReadMatrix<T, TW>(StreamReader reader, T[] scheme, int n) where TW : IComparable
+        {
+            var matrix = new TW[n, n];
             for (int i = 0; i < n; i++) {
                 var readLine = reader.ReadLine();
                 if (readLine != null) {
-                    var converter = TypeDescriptor.GetConverter(typeof(T));
+                    var converter = TypeDescriptor.GetConverter(typeof(TW));
                     var inputList = readLine
                         .Split(" \t".ToCharArray())
-                        .Select(s => (T)converter.ConvertFrom(s))
+                        .Select(s => (TW)converter.ConvertFrom(s))
                         .ToArray();
-                    for (int j = 0; j < m; j++) {
+                    for (int j = 0; j < n; j++) {
                         matrix[i, j] = inputList[j];
                     }
                 }
             }
-            return matrix;
-        }
-
-        public static AdjacencyMatrix<T, T1> ReadAdjacencyMatrix<T, T1>(string path) where T1 : IComparable {
-            using (var sr = new StreamReader(path)) {
-                var factory = new StorageFactory.AdjacencyMatrix();
-                var size = ReadValue<int>(sr);
-                var Scheme = ReadArray<T>(sr, size);
-                var matrix = ReadMatrix<T1>(sr, size, size);
-                return factory.CreateAdjacencyMatrix(Scheme, matrix);
-            }
+            return new Matrix<T, TW>(scheme, matrix);
         }
     }
 }

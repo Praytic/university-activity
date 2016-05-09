@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using graph.DataStructure;
+using graph.Storages.Implementation;
 
 namespace graph.Algorithms.Implementation {
     public abstract class FloydShortestPath<TGraph, TVertex> :
@@ -17,7 +18,7 @@ namespace graph.Algorithms.Implementation {
             Graph = graph;
 
             Result = new List<TVertex>();
-            Distances = Data.CreateMatrix<TVertex, long>(Graph.Vertices);
+            Distances = new Matrix<TVertex, long>(Graph.Vertices);
         }
     }
 }

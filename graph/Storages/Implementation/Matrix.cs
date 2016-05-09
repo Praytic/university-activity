@@ -2,12 +2,92 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using graph.DataStructure;
 
-namespace graph.DataStructure.Implementation {
+namespace graph.Storages.Implementation {
+
+    public class Matrix : Matrix<int> {
+        public Matrix(int[,] matrix)
+        {
+            var array = new int[matrix.Length];
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                array[i] = i;
+            }
+            Scheme = new Scheme<int>(array);
+            Storage = new List<List<int>>();
+            for (int i = 0; i < Count; i++) {
+                var newRow = new List<int>();
+                for (int j = 0; j < Count; j++) {
+                    newRow.Add(matrix[i, j]);
+                }
+                Storage.Add(newRow);
+            }
+        }
+
+        public Matrix()
+        {
+        }
+
+        public Matrix(int[] scheme) : base(scheme)
+        {
+        }
+
+        public Matrix(Dictionary<int, int> scheme) : base(scheme)
+        {
+        }
+
+        public Matrix(int[] scheme, int[,] matrix) : base(scheme, matrix)
+        {
+        }
+
+        public Matrix(IMatrix<int, int> storage) : base(storage)
+        {
+        }
+
+        public Matrix(Scheme<int> scheme) : base(scheme)
+        {
+        }
+
+        public Matrix(ICollection<int> scheme) : base(scheme)
+        {
+        }
+    }
+
+    public class Matrix<T> : Matrix<T, int> {
+        public Matrix()
+        {
+        }
+
+        public Matrix(T[] scheme) : base(scheme)
+        {
+        }
+
+        public Matrix(Dictionary<T, int> scheme) : base(scheme)
+        {
+        }
+
+        public Matrix(T[] scheme, int[,] matrix) : base(scheme, matrix)
+        {
+        }
+
+        public Matrix(IMatrix<T, int> storage) : base(storage)
+        {
+        }
+
+        public Matrix(Scheme<T> scheme) : base(scheme)
+        {
+        }
+
+        public Matrix(ICollection<T> scheme) : base(scheme)
+        {
+        }
+    }
+
     public class Matrix<T, TW> :
         IMatrix<T, TW>
     {
-#region Overriden Fields
+        #region Overriden Fields
 
         public int Count {
             get { return Scheme.Count; }
@@ -15,9 +95,9 @@ namespace graph.DataStructure.Implementation {
 
         public bool IsReadOnly { get; }
 
-        public List<List<TW>> Storage { get; }
+        public List<List<TW>> Storage { get; protected set; }
 
-        public Scheme<T> Scheme { get; }
+        public Scheme<T> Scheme { get; protected set; }
 
         int ISchemable<T>.this[T key]
         {
@@ -43,7 +123,7 @@ namespace graph.DataStructure.Implementation {
 
 #endregion
 
-#region Constructors
+        #region Constructors
         
         public Matrix() {
             Storage = new List<List<TW>>();
@@ -171,8 +251,8 @@ namespace graph.DataStructure.Implementation {
         }
 
         #endregion
-
-#region Overriden Methods
+    
+        #region Overriden Methods
 
         public override string ToString() {
             StringBuilder matrix = new StringBuilder();

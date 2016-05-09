@@ -1,7 +1,63 @@
 ﻿using System;
 using System.Collections.Generic;
+using graph.DataStructure;
 
-namespace graph.DataStructure.Implementation {
+namespace graph.Storages.Implementation {
+    public class AdjacencyMatrix :
+        AdjacencyMatrix<int, int>
+    {
+        public AdjacencyMatrix()
+        {
+        }
+
+        public AdjacencyMatrix(int[] scheme) : base(scheme)
+        {
+        }
+
+        public AdjacencyMatrix(Dictionary<int, int> scheme) : base(scheme)
+        {
+        }
+
+        public AdjacencyMatrix(int[] scheme, int[,] matrix) : base(scheme, matrix)
+        {
+        }
+
+        public AdjacencyMatrix(IMatrix<int, int> storage) : base(storage)
+        {
+        }
+
+        public AdjacencyMatrix(Matrix matrix) : base(matrix) {
+        }
+    }
+
+    public class AdjacencyMatrix<TVertex> :
+        AdjacencyMatrix<TVertex, int>
+    {
+        public AdjacencyMatrix()
+        {
+        }
+
+        public AdjacencyMatrix(TVertex[] scheme) : base(scheme)
+        {
+        }
+
+        public AdjacencyMatrix(Dictionary<TVertex, int> scheme) : base(scheme)
+        {
+        }
+
+        public AdjacencyMatrix(TVertex[] scheme, int[,] matrix) : base(scheme, matrix)
+        {
+        }
+
+        public AdjacencyMatrix(IMatrix<TVertex, int> storage) : base(storage)
+        {
+        }
+
+        public AdjacencyMatrix(Matrix<TVertex> matrix) : base(matrix)
+        {
+        }
+    }
+
     public class AdjacencyMatrix<TVertex, TWeight> :
         Matrix<TVertex, TWeight>,
         IAdjacency<TVertex, TWeight> 
@@ -23,8 +79,11 @@ namespace graph.DataStructure.Implementation {
         {
         }
 
-        public AdjacencyMatrix(IMatrix<TVertex, TWeight> storage) : base(storage)
+        public AdjacencyMatrix(IMatrix<TVertex, TWeight> matrix) : base(matrix)
         {
+        }
+
+        public AdjacencyMatrix(Matrix<TVertex, TWeight> matrix) : base(matrix) {
         }
 
         public void AddDirectedEdge(TVertex @from, TVertex to, TWeight weight)

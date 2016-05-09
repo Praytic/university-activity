@@ -3,8 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace graph.DataStructure.Implementation
+namespace graph.Storages.Implementation
 {
+    public class Scheme : Scheme<int>
+    {
+        public Scheme()
+        {
+        }
+
+        public Scheme(int[] scheme) : base(scheme)
+        {
+        }
+
+        public Scheme(Dictionary<int, int> scheme) : base(scheme)
+        {
+        }
+
+        public Scheme(ICollection<int> scheme) : base(scheme)
+        {
+        }
+    }
+
     public class Scheme<T> : ICollection<T> {
 
         private readonly Dictionary<T, int> _scheme;

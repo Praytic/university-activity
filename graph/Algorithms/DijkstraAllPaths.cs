@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using graph.DataStructure;
-using graph.DataStructure.Implementation;
 
-namespace graph.Algorithms.Implementation
+namespace graph.Algorithms
 {
     public abstract class DijkstraAllPaths<TGraph, TVertex> :
         AlgorithmContract<TGraph, TVertex, int>

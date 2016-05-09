@@ -3,9 +3,56 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using graph.DataStructure;
 
-namespace graph.DataStructure.Implementation
+namespace graph.Storages.Implementation
 {
+    public class AdjacencyList :
+        AdjacencyList<int, int>
+    {
+        public AdjacencyList()
+        {
+        }
+
+        public AdjacencyList(int[] vertices) : base(vertices) {
+        }
+
+        public AdjacencyList(Dictionary<int, Dictionary<int, int>> storage) : base(storage)
+        {
+        }
+
+        public AdjacencyList(IStorage<int, Dictionary<int, Dictionary<int, int>>> storage) : base(storage)
+        {
+        }
+
+        public AdjacencyList(IAdjacencyList<int, int> adjacencyList) : base(adjacencyList)
+        {
+        }
+    }
+
+    public class AdjacencyList<TVertex> :
+        AdjacencyList<TVertex, int>
+    {
+        public AdjacencyList()
+        {
+        }
+
+        public AdjacencyList(TVertex[] vertices) : base(vertices) {
+        }
+
+        public AdjacencyList(Dictionary<TVertex, Dictionary<TVertex, int>> storage) : base(storage)
+        {
+        }
+
+        public AdjacencyList(IStorage<TVertex, Dictionary<TVertex, Dictionary<TVertex, int>>> storage) : base(storage)
+        {
+        }
+
+        public AdjacencyList(IAdjacencyList<TVertex, int> adjacencyList) : base(adjacencyList)
+        {
+        }
+    }
+
     public class AdjacencyList<TVertex, TWeight> :
         IAdjacencyList<TVertex, TWeight> 
         where TWeight : IComparable 
@@ -34,6 +81,14 @@ namespace graph.DataStructure.Implementation
             Storage = new Dictionary<TVertex, Dictionary<TVertex, TWeight>>();
         }
 
+        public AdjacencyList(TVertex[] vertices) {
+            var storage = new Dictionary<TVertex, Dictionary<TVertex, TWeight>>();
+            foreach (var vertex in vertices)
+            {
+                storage.Add(vertex, new Dictionary<TVertex, TWeight>());
+            }
+        }
+
         public AdjacencyList(Dictionary<TVertex, Dictionary<TVertex, TWeight>> storage)
         {
             Storage = storage;
@@ -43,8 +98,8 @@ namespace graph.DataStructure.Implementation
             Storage = storage.Storage;
         }
 
-        public AdjacencyList(IAdjacencyList<TVertex, TWeight> storage) {
-            Storage = storage.Storage;
+        public AdjacencyList(IAdjacencyList<TVertex, TWeight> adjacencyList) {
+            Storage = adjacencyList.Storage;
         }
 
 #endregion

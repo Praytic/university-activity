@@ -1,4 +1,4 @@
-﻿using graph.DataStructure.Implementation;
+﻿using graph.Storages.Implementation;
 
 namespace graph.Algorithms.Implementation
 {

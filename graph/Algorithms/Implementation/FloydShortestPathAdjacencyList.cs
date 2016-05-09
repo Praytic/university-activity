@@ -1,11 +1,11 @@
-﻿using graph.DataStructure.Implementation;
+﻿using graph.Storages.Implementation;
 
 namespace graph.Algorithms.Implementation
 {
     public class FloydShortestPathAdjacencyList<TVertex> :
-        FloydShortestPath<GraphAdjacencyList<TVertex, int>, TVertex>
+        FloydShortestPath<GraphAdjacencyList<TVertex>, TVertex>
     {
-        public FloydShortestPathAdjacencyList(GraphAdjacencyList<TVertex, int> graph, TVertex start, TVertex finish)
+        public FloydShortestPathAdjacencyList(GraphAdjacencyList<TVertex> graph, TVertex start, TVertex finish)
             : base(graph, start, finish)
         {
         }

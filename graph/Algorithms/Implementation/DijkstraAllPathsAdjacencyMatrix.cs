@@ -1,4 +1,4 @@
-﻿using graph.DataStructure.Implementation;
+﻿using graph.Storages.Implementation;
 
 namespace graph.Algorithms.Implementation
 {
@@ -10,21 +10,20 @@ namespace graph.Algorithms.Implementation
         }
 
         public override void Run() {
-            var algorithmsFactory = new AlgorithmsFactory();
             var copyGraph = Graph;
             while (true)
             {
-                var shortestPath = algorithmsFactory.CreateDijkstraShortestPath(copyGraph, Start, Finish);
+                var shortestPath = new DijkstraShortestPathAdjacencyMatrix<TVertex>(copyGraph, Start, Finish);
                 shortestPath.Run();
                 if (shortestPath.Result.Count == 0) break;
 
                 Result.Add(shortestPath.Result);
-                foreach (var vertex in shortestPath.Result)
+                var previousVertex = Start;
+                var path = shortestPath.Result;
+                for (int i = 1; i < path.Count; i++)
                 {
-                    if (!Equals(vertex, Start) || !Equals(vertex, Finish))
-                    {
-                        copyGraph.Remove(vertex);
-                    }
+                    copyGraph.RemoveEdge(previousVertex, path[i]);
+                    previousVertex = path[i];
                 }
             }
         }

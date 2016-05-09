@@ -71,20 +71,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithms\AlgorithmFactory.cs" />
+    <Compile Include="Algorithms\HamiltonianCycle.cs" />
     <Compile Include="Algorithms\IAlgorithm.cs" />
     <Compile Include="Algorithms\AlgorithmContract.cs" />
-    <Compile Include="Algorithms\Implementation\DijkstraAllPaths.cs" />
+    <Compile Include="Algorithms\DijkstraAllPaths.cs" />
     <Compile Include="Algorithms\Implementation\DijkstraAllPathsAdjacencyMatrix.cs" />
     <Compile Include="Algorithms\Implementation\FloydShortestPathAdjacencyMatrix.cs" />
     <Compile Include="Algorithms\Implementation\FloydShortestPathAdjacencyList.cs" />
-    <Compile Include="Algorithms\Implementation\FloydShortestPath.cs" />
+    <Compile Include="Algorithms\FloydShortestPath.cs" />
+    <Compile Include="Algorithms\Implementation\HamiltonianCycleAdjacencyMatrix.cs" />
     <Compile Include="Storages\Implementation\Scheme.cs" />
     <Compile Include="Storages\ISchemable.cs" />
-    <Compile Include="Storages\StorageFactory.cs" />
     <Compile Include="Storages\IAdjacencyList.cs" />
     <Compile Include="Storages\IGraph.cs" />
-    <Compile Include="Algorithms\Implementation\DijkstraShortestPath.cs" />
+    <Compile Include="Algorithms\DijkstraShortestPath.cs" />
     <Compile Include="Algorithms\Implementation\DijkstraShortestPathAdjacencyMatrix.cs" />
     <Compile Include="Algorithms\Implementation\DijkstraShortestPathAdjacencyList.cs" />
     <Compile Include="Storages\IMatrix.cs" />
@@ -110,6 +110,7 @@
   <ItemGroup>
     <None Include="Resources\adjacencyMatrixIntInt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

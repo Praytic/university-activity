@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using graph.DataStructure.Implementation;
+using graph.Storages.Implementation;
 
 namespace graph.Algorithms.Implementation {
     public class DijkstraShortestPathAdjacencyMatrix<TVertex> :

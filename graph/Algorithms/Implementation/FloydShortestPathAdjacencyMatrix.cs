@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using graph.DataStructure;
-using graph.DataStructure.Implementation;
+using graph.Storages.Implementation;
 
 namespace graph.Algorithms.Implementation
 {
@@ -12,7 +12,7 @@ namespace graph.Algorithms.Implementation
 
         public FloydShortestPathAdjacencyMatrix(GraphAdjacencyMatrix<TVertex, int> graph, TVertex start, TVertex finish)
             : base(graph, start, finish) {
-            ParentIds = Data.CreateMatrix(Graph.VerticesIds);
+            ParentIds = new Matrix(Graph.VerticesIds);
         }
 
         public override void Run()
