@@ -1,24 +1,26 @@
 ﻿using System.Collections.Generic;
 using graph.DataStructure;
+using graph.DataStructure.Implementation;
 
-namespace graph.Algorithms.Implementation {
-    public abstract class DijkstraShortestPath<TGraph, TVertex> :
+namespace graph.Algorithms.Implementation
+{
+    public abstract class DijkstraAllPaths<TGraph, TVertex> :
         AlgorithmContract<TGraph, TVertex, int>
         where TGraph : IGraph<TVertex, int>
     {
-        public List<TVertex> Result { get; } 
+        public List<List<TVertex>> Result { get; }
         public TVertex Start { get; }
         public TVertex Finish { get; }
         public Dictionary<TVertex, bool> Done { get; }
         public Dictionary<TVertex, TVertex> Parent { get; }
         public Dictionary<TVertex, int> Distances { get; }
 
-        protected DijkstraShortestPath(TGraph graph, TVertex start, TVertex finish) {
+        protected DijkstraAllPaths(TGraph graph, TVertex start, TVertex finish) {
             Start = start;
             Finish = finish;
             Graph = graph;
 
-            Result = new List<TVertex>();
+            Result = new List<List<TVertex>>();
             Done = new Dictionary<TVertex, bool>();
             foreach (var i in Graph) {
                 Done.Add(i, false);

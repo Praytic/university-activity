@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace graph.DataStructure.Implementation {
     public class AdjacencyMatrix<TVertex, TWeight> :
@@ -14,15 +11,15 @@ namespace graph.DataStructure.Implementation {
         {
         }
 
-        public AdjacencyMatrix(TVertex[] schema) : base(schema)
+        public AdjacencyMatrix(TVertex[] scheme) : base(scheme)
         {
         }
 
-        public AdjacencyMatrix(Dictionary<TVertex, int> schema) : base(schema)
+        public AdjacencyMatrix(Dictionary<TVertex, int> scheme) : base(scheme)
         {
         }
 
-        public AdjacencyMatrix(TVertex[] schema, TWeight[,] matrix) : base(schema, matrix)
+        public AdjacencyMatrix(TVertex[] scheme, TWeight[,] matrix) : base(scheme, matrix)
         {
         }
 
@@ -47,12 +44,12 @@ namespace graph.DataStructure.Implementation {
 
         public TVertex GetFirstVertex()
         {
-            return Schema.First().Key;
+            return Scheme.GetFirst().Key;
         }
 
         public TVertex GetNextVertex(TVertex currentVertex)
         {
-            var keysCollection = Schema.Keys;
+            var keysCollection = Scheme;
             bool isNextVertex = false;
             foreach (var key in keysCollection) {
                 if (isNextVertex) {

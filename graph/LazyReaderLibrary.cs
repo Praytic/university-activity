@@ -130,10 +130,11 @@ namespace graph
 
         public static AdjacencyMatrix<T, T1> ReadAdjacencyMatrix<T, T1>(string path) where T1 : IComparable {
             using (var sr = new StreamReader(path)) {
+                var factory = new StorageFactory.AdjacencyMatrix();
                 var size = ReadValue<int>(sr);
-                var schema = ReadArray<T>(sr, size);
+                var Scheme = ReadArray<T>(sr, size);
                 var matrix = ReadMatrix<T1>(sr, size, size);
-                return Factory.Data.CreateAdjacencyMatrix(schema, matrix);
+                return factory.CreateAdjacencyMatrix(Scheme, matrix);
             }
         }
     }

@@ -10,12 +10,7 @@ namespace graph.DataStructure.Implementation
         IAdjacencyList<TVertex, TWeight> 
         where TWeight : IComparable 
     {
-
-        public Dictionary<TVertex, TWeight> this[TVertex i]
-        {
-            get { return Storage[i]; }
-            set { Storage[i] = value; }
-        }
+#region Fields
 
         public int Count {
             get { return Storage.Count; }
@@ -24,6 +19,16 @@ namespace graph.DataStructure.Implementation
         public bool IsReadOnly { get; }
 
         public Dictionary<TVertex, Dictionary<TVertex, TWeight>> Storage { get; }
+
+        public Dictionary<TVertex, TWeight> this[TVertex key]
+        {
+            get { return Storage[key]; }
+            set { Storage[key] = value; }
+        }
+
+#endregion
+
+#region Constructors
 
         public AdjacencyList() {
             Storage = new Dictionary<TVertex, Dictionary<TVertex, TWeight>>();
@@ -34,13 +39,17 @@ namespace graph.DataStructure.Implementation
             Storage = storage;
         }
 
-        public AdjacencyList(IDataStructure<TVertex, Dictionary<TVertex, Dictionary<TVertex, TWeight>>> storage) {
+        public AdjacencyList(IStorage<TVertex, Dictionary<TVertex, Dictionary<TVertex, TWeight>>> storage) {
             Storage = storage.Storage;
         }
 
         public AdjacencyList(IAdjacencyList<TVertex, TWeight> storage) {
             Storage = storage.Storage;
         }
+
+#endregion
+
+#region Implemented Methods
 
         public void Add(TVertex item) {
             Storage.Add(item, new Dictionary<TVertex, TWeight>());
@@ -104,6 +113,10 @@ namespace graph.DataStructure.Implementation
             return Storage.GetEnumerator();
         }
 
+#endregion
+
+#region Overriden Methods
+
         public override string ToString() {
             StringBuilder matrix = new StringBuilder();
             foreach (var elementRow in this) {
@@ -115,5 +128,7 @@ namespace graph.DataStructure.Implementation
             }
             return matrix.ToString();
         }
+
+#endregion
     }
 }

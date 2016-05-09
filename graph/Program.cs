@@ -1,25 +1,21 @@
 ﻿using System;
 using graph.Algorithms;
-using graph.Algorithms.Implementation;
 using graph.DataStructure;
-using graph.DataStructure.Implementation;
 
 namespace graph {
-    public static class Factory
-    {
-        public static readonly DataStructureFactory Data = new DataStructureFactory();
-        public static readonly AlgorithmsFactory Algorithms = new AlgorithmsFactory();
-    }
 
     class Program
     {
         static void Main(string[] args) {
-            Example2();
+            Program program = new Program();
+            program.Example7();
         }
 
         //Example of Dijkstra Shortest Path Algorithm with Adjacency Matrix Graph
-        public static void Example1() {
-            var graph = Factory.Data.CreateGraph(new []
+        public void Example1() {
+            StorageFactory.Graph storageFactory = new StorageFactory.Graph();
+            AlgorithmsFactory algorithmsFactory = new AlgorithmsFactory();
+            var graph = storageFactory.CreateGraph(new []
             {
                 "Березовка",
                 "Сосновка",
@@ -40,15 +36,17 @@ namespace graph {
 
             string first = "Рузаевка";
             string second = "Березовка";
-            var shortestPath = Factory.Algorithms.CreateDijkstraShortestPath(graph, first, second);
+            var shortestPath = algorithmsFactory.CreateDijkstraShortestPath(graph, first, second);
             shortestPath.Run();
             Console.WriteLine("Path from {0} to {1} equals\n{2}",
                 first, second, string.Join(", ", shortestPath.Result));
         }
 
         //Example of Floyd Shortest Path Algorithm with Adjacency Matrix Graph
-        public static void Example2() {
-            var graph = Factory.Data.CreateGraph(new []
+        public void Example2() {
+            StorageFactory.Graph storageFactory = new StorageFactory.Graph();
+            AlgorithmsFactory algorithmsFactory = new AlgorithmsFactory();
+            var graph = storageFactory.CreateGraph(new []
             {
                 "Березовка",
                 "Сосновка",
@@ -69,35 +67,57 @@ namespace graph {
 
             string first = "Рузаевка";
             string second = "Березовка";
-            var shortestPath = Factory.Algorithms.CreateFloydShortestPath(graph, first, second);
+            var shortestPath = algorithmsFactory.CreateFloydShortestPath(graph, first, second);
             shortestPath.Run();
             Console.WriteLine("Path from {0} to {1} equals\n{2}",
                 first, second, string.Join(", ", shortestPath.Result));
         }
 
+        //Example of Dijkstra Find All Paths Algorithm with Adjacency Matrix Graph
+        public void Example7() {
+            StorageFactory.Graph storageFactory = new StorageFactory.Graph();
+            AlgorithmsFactory algorithmsFactory = new AlgorithmsFactory();
+            var path = "../../Resources/adjacencyMatrixIntInt";
+            var adjacencyMatrix = LazyReaderLibrary.ReadAdjacencyMatrix<int, int>(path);
+            var graph = storageFactory.CreateGraph(adjacencyMatrix);
+
+            Console.WriteLine(graph);
+            Console.WriteLine();
+
+            var first = 4;
+            var second = 3;
+            var shortestPath = algorithmsFactory.CreateDijkstraAllPaths(graph, first, second);
+            shortestPath.Run();
+            Console.WriteLine("Count of paths from {0} to {1} equals\n{2}",
+                first, second, string.Join(", ", shortestPath.Result.Count));
+        }
+
         //Example of Finding Hamiltonian Cycle in the Specified Vertex with Adjacency Matrix
-        public static void Example3()
-        {
+        public void Example3() {
+            StorageFactory.Graph storageFactory = new StorageFactory.Graph();
+            AlgorithmsFactory algorithmsFactory = new AlgorithmsFactory();
             var path = "../../Resources/adjacencyMatrixStringInt";
             var storage = LazyReaderLibrary.ReadAdjacencyMatrix<string, int>(path);
-            var graph = Factory.Data.CreateGraph(storage);
+            var graph = storageFactory.CreateGraph(storage);
             
             Console.WriteLine(graph);
             Console.WriteLine();
 
             var first = "Рузаевка";
             var second = "Березовка";
-            var shortestPath = Factory.Algorithms.CreateFloydShortestPath(graph, first, second);
+            var shortestPath = algorithmsFactory.CreateFloydShortestPath(graph, first, second);
             shortestPath.Run();
             Console.WriteLine("Count of paths from {0} to {1} equals\n{2}",
                 first, second, shortestPath.Result);
         }
 
         //Example of Removing & Adding New Vertex with Adjacency Matrix
-        public static void Example4() {
+        public void Example4() {
+            StorageFactory.Graph storageFactory = new StorageFactory.Graph();
+            AlgorithmsFactory algorithmsFactory = new AlgorithmsFactory();
             var path = "../../Resources/adjacencyMatrixStringInt";
             var storage = LazyReaderLibrary.ReadAdjacencyMatrix<string, int>(path);
-            var graph = Factory.Data.CreateGraph(storage);
+            var graph = storageFactory.CreateGraph(storage);
 
             Console.WriteLine(graph);
             Console.WriteLine();
@@ -110,8 +130,10 @@ namespace graph {
         }
 
         //Example of Dijkstra Shortest Path Algorithm with Adjacency List Graph
-        public static void Example5() {
-            var graph = Factory.Data.CreateGraphAdjacencyList(new[]
+        public void Example5() {
+            StorageFactory.Graph storageFactory = new StorageFactory.Graph();
+            AlgorithmsFactory algorithmsFactory = new AlgorithmsFactory();
+            var graph = storageFactory.CreateGraphAdjacencyList(new[]
             {
                 "Березовка",
                 "Сосновка",
@@ -132,16 +154,18 @@ namespace graph {
 
             string first = "Рузаевка";
             string second = "Березовка";
-            var shortestPath = Factory.Algorithms.CreateDijkstraShortestPath(graph, first, second);
+            var shortestPath = algorithmsFactory.CreateDijkstraShortestPath(graph, first, second);
             shortestPath.Run();
             Console.WriteLine("Path from {0} to {1} equals\n{2}",
                 first, second, string.Join(", ", shortestPath.Result));
         }
 
         //Example of Floyd Shortest Path Algorithm with Adjacency List Graph
-        public static void Example6()
-        {
-            var adjacencyList = Factory.Data.CreateAdjacencyList(new[]
+        public void Example6() {
+            StorageFactory.AdjacencyList adjacencyListFactory = new StorageFactory.AdjacencyList();
+            StorageFactory.Graph graphFactory = new StorageFactory.Graph();
+            AlgorithmsFactory algorithmsFactory = new AlgorithmsFactory();
+            var adjacencyList = adjacencyListFactory.CreateAdjacencyList(new[]
             {
                 "Березовка",
                 "Сосновка",
@@ -156,14 +180,14 @@ namespace graph {
             adjacencyList.AddUndirectedEdge("Октябрьское", "Еремеевка", 75);
             adjacencyList.AddUndirectedEdge("Рузаевка", "Еремеевка", 25);
             adjacencyList.AddUndirectedEdge("Рузаевка", "Октябрьское", 40);
-            var graph = Factory.Data.CreateGraph(adjacencyList);
+            var graph = graphFactory.CreateGraph(adjacencyList);
 
             Console.WriteLine(graph);
             Console.WriteLine();
 
             string first = "Рузаевка";
             string second = "Березовка";
-            var shortestPath = Factory.Algorithms.CreateFloydShortestPath(graph, first, second);
+            var shortestPath = algorithmsFactory.CreateFloydShortestPath(graph, first, second);
             shortestPath.Run();
             Console.WriteLine("Path from {0} to {1} equals\n{2}",
                 first, second, string.Join(", ", shortestPath.Result));

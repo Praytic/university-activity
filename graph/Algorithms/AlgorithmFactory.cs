@@ -24,5 +24,10 @@ namespace graph.Algorithms
             CreateDijkstraShortestPath<TVertex>(GraphAdjacencyList<TVertex, int> graph, TVertex start, TVertex finish) {
             return new DijkstraShortestPathAdjacencyList<TVertex>(graph, start, finish);
         }
+
+        public DijkstraAllPathsAdjacencyMatrix<TVertex>
+            CreateDijkstraAllPaths<TVertex>(GraphAdjacencyMatrix<TVertex, int> graph, TVertex start, TVertex finish) {
+            return new DijkstraAllPathsAdjacencyMatrix<TVertex>(graph, start, finish);
+        }
     }
 }

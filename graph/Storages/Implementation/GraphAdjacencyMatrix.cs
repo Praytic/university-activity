@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace graph.DataStructure.Implementation
 {
@@ -9,19 +8,29 @@ namespace graph.DataStructure.Implementation
         IGraph<TVertex, TWeight>
         where TWeight : IComparable 
     {
+
+        public ICollection<TVertex> Vertices
+        {
+            get { return Scheme.Keys; }
+        }
+
+        public ICollection<int> VerticesIds {
+            get { return Scheme.Values; }
+        }
+
         public GraphAdjacencyMatrix()
         {
         }
 
-        public GraphAdjacencyMatrix(TVertex[] schema) : base(schema)
+        public GraphAdjacencyMatrix(TVertex[] scheme) : base(scheme)
         {
         }
 
-        public GraphAdjacencyMatrix(Dictionary<TVertex, int> schema) : base(schema)
+        public GraphAdjacencyMatrix(Dictionary<TVertex, int> scheme) : base(scheme)
         {
         }
 
-        public GraphAdjacencyMatrix(TVertex[] schema, TWeight[,] matrix) : base(schema, matrix)
+        public GraphAdjacencyMatrix(TVertex[] scheme, TWeight[,] matrix) : base(scheme, matrix)
         {
         }
 

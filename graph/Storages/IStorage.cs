@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace graph.DataStructure
 {
-    public interface IDataStructure<TVertex, out TStorage> : 
-        ICollection<TVertex>
+    public interface IStorage<T, out TStorage> : 
+        ICollection<T>
         where TStorage : ICollection
     {
         TStorage Storage { get; }

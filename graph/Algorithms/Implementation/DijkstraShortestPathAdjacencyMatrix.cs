@@ -43,7 +43,6 @@ namespace graph.Algorithms.Implementation {
                 }
             }
             var tmp = Finish;
-            Result = new List<TVertex>();
             while (!tmp.Equals(Start)) {
                 Result.Add(tmp);
                 tmp = Parent[tmp];

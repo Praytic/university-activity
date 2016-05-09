@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using graph.DataStructure;
 using graph.DataStructure.Implementation;
 
 namespace graph.Algorithms.Implementation
@@ -9,72 +8,53 @@ namespace graph.Algorithms.Implementation
     public class FloydShortestPathAdjacencyMatrix<TVertex> :
         FloydShortestPath<GraphAdjacencyMatrix<TVertex, int>, TVertex>
     {
-        public Matrix<TVertex, TVertex> Vert { get; }
+        public IMatrix<int, int> ParentIds { get; set; }
 
         public FloydShortestPathAdjacencyMatrix(GraphAdjacencyMatrix<TVertex, int> graph, TVertex start, TVertex finish)
-            : base(graph, start, finish)
-        {
-            Vert = new Matrix<TVertex, TVertex>(Graph.Schema);
-            Result = new List<TVertex>();
+            : base(graph, start, finish) {
+            ParentIds = Data.CreateMatrix(Graph.VerticesIds);
         }
 
         public override void Run()
         {
-            var a = new Matrix<TVertex, int>(Graph.Schema);
-            var p = new Matrix<int, int>(Graph.Schema.Values.ToArray());
-            foreach (var i in Graph)
-            {
-                foreach (var j in Graph)
-                {
-                    if (Equals(i, j))
-                    {
-                        a[i, j] = 0;
-                    }
-                    else
-                    {
-                        if (Graph[i, j] == 0)
-                        {
-                            a[i, j] = int.MaxValue;
-                        }
-                        else
-                        {
-                            a[i, j] = Graph[i, j];
+            foreach (TVertex i in Graph.Scheme) {
+                foreach (TVertex j in Graph.Scheme) {
+                    if (Equals(i, j)) {
+                        Distances[i, j] = 0;
+                    } else {
+                        if (Graph[i, j] == 0) {
+                            Distances[i, j] = int.MaxValue;
+                        } else {
+                            Distances[i, j] = Graph[i, j];
                         }
                     }
-                    p[Graph.Schema[i], Graph.Schema[j]] = -1;
+                    ParentIds[Graph.Scheme[i], Graph.Scheme[j]] = -1;
                 }
             }
-
-            foreach (var k in Graph)
-            {
-                foreach (var i in Graph)
-                {
-                    foreach (var j in Graph)
-                    {
-                        int distance = a[i, j] + a[k, j];
-                        if (a[i, j] > distance)
-                        {
-                            a[i, j] = distance;
-                            p[Graph.Schema[i], Graph.Schema[j]] = Graph.Schema[k];
+            foreach (TVertex k in Graph.Scheme) {
+                foreach (TVertex i in Graph.Scheme) {
+                    foreach (TVertex j in Graph.Scheme) {
+                        long distance = Distances[i, k] + Distances[k, j];
+                        if (Distances[i, j] > distance) {
+                            Distances[i, j] = distance;
+                            ParentIds[Graph.Scheme[i], Graph.Scheme[j]] = Graph.Scheme[k];
                         }
                     }
                 }
             }
-            
-            Queue lol = new Queue();
-            lol.Enqueue(Start);
-            ExecutePath(Start, Finish, p, ref lol);
-            lol.Enqueue(Finish);
-            Result = lol.ToArray().ToList();
+            Result.Add(Start);
+            ExecutePath(Start, Finish, ParentIds);
+            Result.Add(Finish);
+            Result = Result.ToArray().ToList();
         }
 
-        private void ExecutePath(TVertex i, TVertex j, Matrix<int, int> p, ref Queue lol)
+        private void ExecutePath(TVertex i, TVertex j, IMatrix<int, int> p)
         {
-            int k = p[Graph.Schema[i], Graph.Schema[j]];
+            int k = p[Graph.Scheme[i], Graph.Scheme[j]];
             if (k != -1) {
-                ExecutePath(i, Graph.Schema.ToDictionary(x => x.Value, x => x.Key)[k], p, ref lol);
-                lol.Enqueue(Graph.Schema.ToDictionary(x => x.Value, x => x.Key)[k]);
-                ExecutePath(Graph.Schema.ToDictionary(x => x.Value, x => x.Key)[k], j, p, ref lol);
+                ExecutePath(i, Graph.Scheme[k], p);
+                Result.Add(Graph.Scheme[k]);
+                ExecutePath(Graph.Scheme[k], j, p);
             }
         }
     }

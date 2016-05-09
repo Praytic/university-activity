@@ -8,6 +8,11 @@ namespace graph.DataStructure.Implementation
         IGraph<TVertex, TWeight>
         where TWeight : IComparable 
     {
+        public ICollection<TVertex> Vertices
+        {
+            get { return Storage.Keys; }
+        }
+
         public GraphAdjacencyList()
         {
         }
@@ -20,7 +25,7 @@ namespace graph.DataStructure.Implementation
         {
         }
 
-        public GraphAdjacencyList(IDataStructure<TVertex, Dictionary<TVertex, Dictionary<TVertex, TWeight>>> storage) : base(storage)
+        public GraphAdjacencyList(IStorage<TVertex, Dictionary<TVertex, Dictionary<TVertex, TWeight>>> storage) : base(storage)
         {
         }
     }

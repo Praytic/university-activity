@@ -12,7 +12,6 @@ namespace graph.Algorithms.Implementation
 
         public override void Run()
         {
-            
         }
     }
 }

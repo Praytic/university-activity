@@ -7,9 +7,9 @@ namespace graph.Algorithms
         where TGraph : IGraph<TVertex, TWeight>
         where TWeight : IComparable 
     {
-        public TGraph Graph { get; protected set; }
-
-        public dynamic Result { get; protected set; }
+        public StorageFactory.Matrix Data { get; } = new StorageFactory.Matrix();
+        
+        public TGraph Graph;
 
         public abstract void Run();
     }
