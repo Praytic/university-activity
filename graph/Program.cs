@@ -10,7 +10,7 @@ namespace graph {
     {
         static void Main(string[] args) {
             Program program = new Program();
-            program.Example4();
+            program.Example1();
         }
 
         //Example of Dijkstra Shortest Path Algorithm with Adjacency Matrix Graph
