@@ -1,6 +1,6 @@
 ﻿using graph.Storages.Implementation;
 
-namespace graph.DataStructure
+namespace graph.Storages
 {
     public interface ISchemable<T>
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace graph.DataStructure
+namespace graph.Storages
 {
     public interface IAdjacency<TVertex, in TWeight> 
         where TWeight : IComparable

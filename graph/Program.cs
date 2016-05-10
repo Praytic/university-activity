@@ -1,7 +1,5 @@
 ﻿using System;
-using graph.Algorithms;
 using graph.Algorithms.Implementation;
-using graph.Storages;
 using graph.Storages.Implementation;
 
 namespace graph {
@@ -10,7 +8,7 @@ namespace graph {
     {
         static void Main(string[] args) {
             Program program = new Program();
-            program.Example1();
+            program.Example5();
         }
 
         //Example of Dijkstra Shortest Path Algorithm with Adjacency Matrix Graph
@@ -73,8 +71,8 @@ namespace graph {
 
         //Example of Dijkstra Find All Paths Algorithm with Adjacency Matrix Graph
         public void Example7() {
-            var path = "../../Resources/adjacencyMatrixIntInt";
-            var matrix = LazyReaderLibrary.ReadMatrix(path);
+            var filePath = "../../Resources/adjacencyMatrixIntInt";
+            var matrix = LazyReaderLibrary.ReadMatrix(filePath);
             var adjacencyMatrix = new AdjacencyMatrix(matrix);
             var graph = new GraphAdjacencyMatrix(adjacencyMatrix);
 
@@ -83,10 +81,47 @@ namespace graph {
 
             var first = 4;
             var second = 3;
-            var shortestPath = new DijkstraAllPathsAdjacencyMatrix<int>(graph, first, second);
-            shortestPath.Run();
-            Console.WriteLine("Count of paths from {0} to {1} equals\n{2}",
-                first, second, string.Join(", ", shortestPath.Result.Count));
+            var allPaths = new DijkstraAllPathsAdjacencyMatrix<int>(graph, first, second);
+            allPaths.Run();
+            Console.WriteLine("Count of paths from {0} to {1} equals {2}",
+                first, second, allPaths.Result.Count);
+            foreach (var path in allPaths.Result)
+            {
+                Console.WriteLine(string.Join(", ", path));
+            }
+        }
+
+        //Example of Dijkstra Find All Paths Algorithm with Adjacency Matrix Graph
+        public void Example8() {
+            var adjacencyMatrix = new AdjacencyMatrix<string>(new[]
+            {
+                "Березовка",
+                "Сосновка",
+                "Еремеевка",
+                "Октябрьское",
+                "Рузаевка"
+            });
+            adjacencyMatrix.AddUndirectedEdge("Березовка", "Еремеевка", 70);
+            adjacencyMatrix.AddUndirectedEdge("Березовка", "Сосновка", 20);
+            adjacencyMatrix.AddUndirectedEdge("Сосновка", "Октябрьское", 60);
+            adjacencyMatrix.AddUndirectedEdge("Сосновка", "Еремеевка", 15);
+            adjacencyMatrix.AddUndirectedEdge("Октябрьское", "Еремеевка", 75);
+            adjacencyMatrix.AddUndirectedEdge("Рузаевка", "Еремеевка", 25);
+            adjacencyMatrix.AddUndirectedEdge("Рузаевка", "Октябрьское", 40);
+            var graph = new GraphAdjacencyMatrix<string>(adjacencyMatrix);
+
+            Console.WriteLine(graph);
+            Console.WriteLine();
+
+            string first = "Рузаевка";
+            string second = "Березовка";
+            var allPaths = new DijkstraAllPathsAdjacencyMatrix<string>(graph, first, second);
+            allPaths.Run();
+            Console.WriteLine("Count of paths from {0} to {1} equals {2}",
+                first, second, allPaths.Result.Count);
+            foreach (var path in allPaths.Result) {
+                Console.WriteLine(string.Join(", ", path));
+            }
         }
 
         //Example of Finding Hamiltonian Cycle in the Specified Vertex with Adjacency Matrix

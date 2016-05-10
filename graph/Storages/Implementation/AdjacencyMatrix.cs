@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using graph.DataStructure;
 
 namespace graph.Storages.Implementation {
     public class AdjacencyMatrix :

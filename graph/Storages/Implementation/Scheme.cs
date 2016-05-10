@@ -24,8 +24,8 @@ namespace graph.Storages.Implementation
         }
     }
 
-    public class Scheme<T> : ICollection<T> {
-
+    public class Scheme<T> : ICollection<T>
+    {
         private readonly Dictionary<T, int> _scheme;
 
         private readonly Dictionary<int, T> _reversedScheme;
@@ -128,12 +128,11 @@ namespace graph.Storages.Implementation
 
         public void Add(T item)
         {
-            var tmp = GetLast().Value;
             if (_scheme.ContainsKey(item)) {
                 throw new ArgumentException("This key already exists in this scheme");
             }
-            _scheme[item] = GetLast().Value;
-            _reversedScheme[GetLast().Value] = item;
+            _scheme[item] = Count;
+            _reversedScheme[Count] = item;
         }
 
         public bool Contains(T item)

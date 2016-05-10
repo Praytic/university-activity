@@ -1,12 +1,28 @@
-﻿using graph.Storages.Implementation;
+﻿using System;
+using System.Collections.Generic;
+using graph.Storages.Implementation;
 
 namespace graph.Algorithms.Implementation
 {
     public class DijkstraAllPathsAdjacencyMatrix<TVertex> :
         DijkstraAllPaths<GraphAdjacencyMatrix<TVertex, int>, TVertex>
     {
-        public DijkstraAllPathsAdjacencyMatrix(GraphAdjacencyMatrix<TVertex, int> graph, TVertex start, TVertex finish) : base(graph, start, finish)
-        {
+        public DijkstraAllPathsAdjacencyMatrix(GraphAdjacencyMatrix<TVertex, int> graph, TVertex start, TVertex finish) : base(graph, start, finish) {
+
+            Result = new List<List<TVertex>>();
+            Done = new Dictionary<TVertex, bool>();
+            foreach (var i in graph) {
+                Done.Add(i, false);
+            }
+            ParentIds = new Dictionary<int, int>();
+            foreach (var i in graph) {
+                ParentIds[graph.Scheme[i]] = -1;
+            }
+            Distances = new Dictionary<TVertex, int>();
+            foreach (var i in Graph) {
+                Distances[i] = int.MaxValue;
+            }
+            Distances[start] = 0;
         }
 
         public override void Run() {
@@ -25,6 +41,9 @@ namespace graph.Algorithms.Implementation
                     copyGraph.RemoveEdge(previousVertex, path[i]);
                     previousVertex = path[i];
                 }
+
+                Console.WriteLine(copyGraph);
+                Console.WriteLine();
             }
         }
     }

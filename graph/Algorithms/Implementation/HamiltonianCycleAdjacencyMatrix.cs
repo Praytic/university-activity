@@ -8,8 +8,10 @@ namespace graph.Algorithms.Implementation
         HamiltonianCycle<GraphAdjacencyMatrix<TVertex, TWeight>, TVertex, TWeight> 
         where TWeight : IComparable
     {
-        public HamiltonianCycleAdjacencyMatrix(GraphAdjacencyMatrix<TVertex, TWeight> graph, TVertex start) : base(graph, start)
-        {
+        public HamiltonianCycleAdjacencyMatrix(GraphAdjacencyMatrix<TVertex, TWeight> graph, TVertex start) : base(graph, start) {
+            Result = new LinkedList<TVertex>();
+            Used = new HashSet<TVertex>();
+            Parents = new LinkedList<TVertex>();
         }
 
         public override void Run()

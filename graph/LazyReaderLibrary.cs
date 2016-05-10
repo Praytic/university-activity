@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.Remoting.Messaging;
-using graph.DataStructure;
 using graph.Storages.Implementation;
 
 namespace graph
@@ -82,8 +81,8 @@ namespace graph
                 .ToArray();
         }
 
-        public static Matrix ReadMatrix(string path) {
-            return (Matrix) ReadMatrix<int>(path);
+        public static Matrix<int, int> ReadMatrix(string path) {
+            return ReadMatrix<int>(path);
         }
 
         public static Matrix<int, int> ReadMatrix(string path, int n)

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using graph.DataStructure;
+using graph.Storages;
 
 namespace graph.Algorithms
 {
@@ -9,18 +9,14 @@ namespace graph.Algorithms
         where TGraph : IGraph<TVertex, TWeight> 
         where TWeight : IComparable
     {
-        public LinkedList<TVertex> Result { get; }
+        public LinkedList<TVertex> Result { get; protected set; }
         public TVertex Start { get; }
-        public HashSet<TVertex> Used { get; }
-        public LinkedList<TVertex> Parents { get; } 
+        public HashSet<TVertex> Used { get; protected set; }
+        public LinkedList<TVertex> Parents { get; protected set; } 
 
         protected HamiltonianCycle(TGraph graph, TVertex start) {
             Start = start;
             Graph = graph;
-
-            Result = new LinkedList<TVertex>();
-            Used = new HashSet<TVertex>();
-            Parents = new LinkedList<TVertex>();
         }
     }
 }

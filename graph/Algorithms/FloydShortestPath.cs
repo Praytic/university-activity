@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using graph.DataStructure;
-using graph.Storages.Implementation;
+using graph.Storages;
 
-namespace graph.Algorithms.Implementation {
+namespace graph.Algorithms {
     public abstract class FloydShortestPath<TGraph, TVertex> :
         AlgorithmContract<TGraph, TVertex, int>
         where TGraph : IGraph<TVertex, int> 
@@ -10,15 +9,12 @@ namespace graph.Algorithms.Implementation {
         public List<TVertex> Result { get; protected set; } 
         public TVertex Start { get; set; }
         public TVertex Finish { get; set; }
-        public IMatrix<TVertex, long> Distances { get; }
+        public IMatrix<TVertex, long> Distances { get; protected set; }
 
         protected FloydShortestPath(TGraph graph, TVertex start, TVertex finish) {
             Start = start;
             Finish = finish;
             Graph = graph;
-
-            Result = new List<TVertex>();
-            Distances = new Matrix<TVertex, long>(Graph.Vertices);
         }
     }
 }

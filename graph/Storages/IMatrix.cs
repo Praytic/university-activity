@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace graph.DataStructure {
+namespace graph.Storages {
     public interface IMatrix<TVertex, TWeight> :
         IStorage<TVertex, List<List<TWeight>>>,
         ISchemable<TVertex> 

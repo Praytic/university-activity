@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using graph.DataStructure;
 
 namespace graph.Storages.Implementation
 {
@@ -67,6 +66,8 @@ namespace graph.Storages.Implementation
 
         public Dictionary<TVertex, Dictionary<TVertex, TWeight>> Storage { get; }
 
+        public Scheme<TVertex> Scheme { get; }
+
         public Dictionary<TVertex, TWeight> this[TVertex key]
         {
             get { return Storage[key]; }
@@ -82,24 +83,28 @@ namespace graph.Storages.Implementation
         }
 
         public AdjacencyList(TVertex[] vertices) {
-            var storage = new Dictionary<TVertex, Dictionary<TVertex, TWeight>>();
+            Storage = new Dictionary<TVertex, Dictionary<TVertex, TWeight>>();
             foreach (var vertex in vertices)
             {
-                storage.Add(vertex, new Dictionary<TVertex, TWeight>());
+                Storage.Add(vertex, new Dictionary<TVertex, TWeight>());
             }
+            Scheme = new Scheme<TVertex>(vertices);
         }
 
         public AdjacencyList(Dictionary<TVertex, Dictionary<TVertex, TWeight>> storage)
         {
             Storage = storage;
+            Scheme = new Scheme<TVertex>(storage.Keys);
         }
 
         public AdjacencyList(IStorage<TVertex, Dictionary<TVertex, Dictionary<TVertex, TWeight>>> storage) {
             Storage = storage.Storage;
+            Scheme = new Scheme<TVertex>(storage.Storage.Keys);
         }
 
         public AdjacencyList(IAdjacencyList<TVertex, TWeight> adjacencyList) {
             Storage = adjacencyList.Storage;
+            Scheme = new Scheme<TVertex>(adjacencyList.Scheme);
         }
 
 #endregion
@@ -108,6 +113,7 @@ namespace graph.Storages.Implementation
 
         public void Add(TVertex item) {
             Storage.Add(item, new Dictionary<TVertex, TWeight>());
+            Scheme.Add(item);
         }
 
         public void AddDirectedEdge(TVertex from, TVertex to, TWeight weight) {
@@ -156,7 +162,11 @@ namespace graph.Storages.Implementation
 
         public bool Remove(TVertex item)
         {
-            return Storage.Remove(item);
+            foreach (var vertices in Storage.Values)
+            {
+                vertices.Remove(item);
+            }
+            return Storage.Remove(item) && Scheme.Remove(item);
         }
 
         public void RemoveEdge(TVertex from, TVertex to) {

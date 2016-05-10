@@ -1,13 +1,25 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using graph.Storages.Implementation;
 
 namespace graph.Algorithms.Implementation {
     public class DijkstraShortestPathAdjacencyMatrix<TVertex> :
         DijkstraShortestPath<GraphAdjacencyMatrix<TVertex, int>, TVertex>
     {
-        public DijkstraShortestPathAdjacencyMatrix(GraphAdjacencyMatrix<TVertex, int> graph, TVertex start, TVertex finish) : base(graph, start, finish)
-        {
+        public DijkstraShortestPathAdjacencyMatrix(GraphAdjacencyMatrix<TVertex, int> graph, TVertex start, TVertex finish) : base(graph, start, finish) {
+            Result = new List<TVertex>();
+            Done = new Dictionary<TVertex, bool>();
+            foreach (var i in Graph) {
+                Done.Add(i, false);
+            }
+            ParentIds = new Dictionary<int, int>();
+            foreach (var i in Graph) {
+                ParentIds[Graph.Scheme[i]] = -1;
+            }
+            Distances = new Dictionary<TVertex, int>();
+            foreach (var i in Graph) {
+                Distances[i] = int.MaxValue;
+            }
+            Distances[start] = 0;
         }
 
         public override void Run()
@@ -30,7 +42,7 @@ namespace graph.Algorithms.Implementation {
                         int dist = Graph[current, i] + Distances[current];
                         if (dist < Distances[i]) {
                             Distances[i] = dist;
-                            Parent[i] = current;
+                            ParentIds[Graph.Scheme[i]] = Graph.Scheme[current];
                         }
                     }
                 }
@@ -42,12 +54,16 @@ namespace graph.Algorithms.Implementation {
                     }
                 }
             }
-            var tmp = Finish;
-            while (!tmp.Equals(Start)) {
-                Result.Add(tmp);
-                tmp = Parent[tmp];
+            if (ParentIds[Graph.Scheme[Finish]] == -1)
+            {
+                return;
             }
-            Result.Add(tmp);
+            var tmp = Graph.Scheme[Finish];
+            while (tmp != Graph.Scheme[Start] || tmp == -1) {
+                Result.Add(Graph.Scheme[tmp]);
+                tmp = ParentIds[tmp];
+            }
+            Result.Add(Graph.Scheme[tmp]);
             Result.Reverse();
         }
     }

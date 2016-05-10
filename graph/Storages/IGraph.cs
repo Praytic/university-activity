@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace graph.DataStructure
+namespace graph.Storages
 {
     public interface IGraph<TVertex, in TWeight> :
         ICollection<TVertex>,

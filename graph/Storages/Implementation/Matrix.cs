@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using graph.DataStructure;
 
 namespace graph.Storages.Implementation {
 
@@ -99,13 +98,13 @@ namespace graph.Storages.Implementation {
 
         public Scheme<T> Scheme { get; protected set; }
 
-        int ISchemable<T>.this[T key]
+        public int this[T key]
         {
             get { return Scheme[key]; }
             set { Scheme[key] = value; }
         }
 
-        T ISchemable<T>.this[int key]
+        public T this[int key]
         {
             get { return Scheme[key]; }
         }
@@ -115,7 +114,7 @@ namespace graph.Storages.Implementation {
             set { Storage[Scheme[i]][Scheme[j]] = value; }
         }
 
-        TW IMatrix<T, TW>.this[int i, int j]
+        public TW this[int i, int j]
         {
             get { return Storage[i][j]; }
             set { Storage[i][j] = value; }

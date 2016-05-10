@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using graph.DataStructure;
+using graph.Storages;
 using graph.Storages.Implementation;
 
 namespace graph.Algorithms.Implementation
@@ -13,6 +14,8 @@ namespace graph.Algorithms.Implementation
         public FloydShortestPathAdjacencyMatrix(GraphAdjacencyMatrix<TVertex, int> graph, TVertex start, TVertex finish)
             : base(graph, start, finish) {
             ParentIds = new Matrix(Graph.VerticesIds);
+            Result = new List<TVertex>();
+            Distances = new Matrix<TVertex, long>(Graph.Vertices);
         }
 
         public override void Run()
